@@ -1,0 +1,91 @@
+.home-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+
+.search-bar {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-bar input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    width: 15%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+.popular-recipes, .new-recipes {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popular-recipes h2, .new-recipes h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.popular-recipes ul, .new-recipes ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.popular-recipes li, .new-recipes li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.popular-recipes li:last-child, .new-recipes li:last-child {
+    border-bottom: none;
+}

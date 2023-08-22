@@ -1,0 +1,53 @@
+.profile-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+.profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-picture input[type="file"] {
+    cursor: pointer;
+}
+
+.user-info, .shared-recipes, .saved-recipes {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info h2, .shared-recipes h2, .saved-recipes h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shared-recipes ul, .saved-recipes ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.shared-recipes li, .saved-recipes li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.shared-recipes li:last-child, .saved-recipes li:last-child {
+    border-bottom: none;
+}
