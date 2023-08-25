@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './SearchResultsPage.css';
 
 const SearchResultsPage = () => {
@@ -47,16 +48,19 @@ const RecipeCard = ({ recipe }) => {
             <img src={recipe.thumbnail} alt={recipe.name} />
             <h3>{recipe.name}</h3>
             <p>{recipe.description}</p>
-            <button>View Recipe</button>
+            <Link to={`/recipe-detail/${recipe.id}`}>
+                <button>View Recipe</button>
+            </Link>
         </div>
     );
 }
 
 // Sample data for demonstration
 const sampleData = [
-    { id: 1, name: 'Recipe A', description: 'Description A', thumbnail: 'imageA.jpg' },
+    { id: 1, name: 'Recipe A', description: 'Description A', thumbnail: 'imageA.jpg' },//If we want to use images hosted on AWS, then use: thumbnail: 'https://your-image-hosting.com/path/to/imageA.jpg' },
     { id: 2, name: 'Recipe B', description: 'Description B', thumbnail: 'imageB.jpg' },
-    { id: 3, name: 'Recipe C', description: 'Description C', thumbnail: 'imageC.jpg' }
+    { id: 3, name: 'Recipe C', description: 'Description C', thumbnail: 'imageC.jpg' },
+    { id: 4, name: 'Recipe D', description: 'Description D', thumbnail: 'imageD.jpg' } // Added fourth recipe
 ];
 
 export default SearchResultsPage;

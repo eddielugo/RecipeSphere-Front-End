@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './AddEditRecipePage.css';
+import './AddRecipePage.css';
 
-const AddEditRecipePage = () => {
+const AddRecipePage = () => {
     const [recipe, setRecipe] = useState({
         name: '',
         image: null,
@@ -25,8 +25,8 @@ const AddEditRecipePage = () => {
     }
 
     return (
-        <div className="add-edit-recipe-page">
-            <h2>Add/Edit Recipe</h2>
+        <div className="add-recipe-page">
+            <h2>Add Recipe</h2>
             <form onSubmit={handleSubmit}>
                 <input 
                     type="text" 
@@ -59,4 +59,4 @@ const AddEditRecipePage = () => {
     );
 }
 
-export default AddEditRecipePage;
+export default AddRecipePage;

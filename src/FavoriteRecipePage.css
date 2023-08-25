@@ -63,6 +63,21 @@
     background-color: #0056b3;
 }
 
+.recipe-card .edit-btn {
+    padding: 10px 20px;
+    background-color: #FFC107; /* Gold color for edit */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+.recipe-card .edit-btn:hover {
+    background-color: #e0a800; /* Darker gold for hover effect */
+}
+
 .recipe-card .remove-btn {
     padding: 10px 20px;
     margin-left: 10px;

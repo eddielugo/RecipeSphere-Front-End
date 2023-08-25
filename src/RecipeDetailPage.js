@@ -1,27 +1,28 @@
 import React from 'react';
 import './RecipeDetailPage.css';
-import { jsPDF } from "jspdf";// For PDF generation
-import emailjs from 'emailjs-com';// For sending emails
+import { sampleData } from './sampleData'; // Adjust the path if necessary
+import { useParams } from 'react-router-dom';
+import { jsPDF } from "jspdf";
+import emailjs from 'emailjs-com';
 
 const RecipeDetailPage = () => {
-    // Sample data for demonstration
-    const recipe = {
-        name: 'Sample Recipe',
-        image: '/path/to/recipe/image.jpg',
-        ingredients: ['Ingredient 1', 'Ingredient 2', 'Ingredient 3'],
-        instructions: 'Step 1: ...\nStep 2: ...\nStep 3: ...',
-        comments: ['Great recipe!', 'Loved it!', 'Thanks for sharing!']
-    };
+    const { recipeId } = useParams();
+
+
+    let recipe = sampleData.find(r => r.id === parseInt(recipeId));
+
+    // If no recipe matches the provided recipeId, use the first recipe from sampleData as a fallback
+    if (!recipe) {
+        recipe = sampleData[0];
+    }
 
     const printToPdf = () => {
-        try {
+        if (recipe) {
             const doc = new jsPDF();
             doc.text(recipe.name, 10, 10);
             doc.text(recipe.ingredients.join(', '), 10, 20);
             doc.text(recipe.instructions, 10, 30);
             doc.save("recipe.pdf");
-        } catch (error) {
-            console.error("Error generating PDF: ", error);
         }
     };
 
@@ -34,6 +35,15 @@ const RecipeDetailPage = () => {
                 console.error("Error sending email: ", error.text);
             });
     };
+
+    if (!recipe) {
+        return (
+            <div className="recipe-detail-page">
+                <h2>Recipe not found</h2>
+                <p>The recipe you're looking for doesn't exist or has been removed.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="recipe-detail-page">

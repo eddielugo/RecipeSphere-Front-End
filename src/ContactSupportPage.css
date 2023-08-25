@@ -2,16 +2,16 @@
     font-family: Arial, sans-serif;
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px;/* Was Adjust padding for better spacing */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9; /* Light gray background for the entire page */
+   
 }
-
-
 
 h1 {
     text-align: center;
-    color: #333;
-   
+    color: #007BFF; /* Blue color for the heading */
+    margin-bottom: 20px; /* Added spacing below the heading */
 }
 
 p {
@@ -24,12 +24,24 @@ p {
     flex-direction: column;
 }
 
+.contact-form-row {
+    display: flex;
+    justify-content: space-between; /* Space out the Name and Email fields */
+    margin-bottom: 20px; /* Added spacing below the row */
+}
+
 input, textarea {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    width: 48%; /* Adjust the width so that Name and Email fields fit side by side */
+}
+
+textarea {
+    width: 100%; /* Message textarea takes the full width */
+    height: 100px; /* Set a fixed height for the textarea */
 }
 
 button {
@@ -40,6 +52,8 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    align-self: center; /* Center the button horizontally */
+    margin-top: 10px; /* Added spacing above the button */
 }
 
 button:hover {

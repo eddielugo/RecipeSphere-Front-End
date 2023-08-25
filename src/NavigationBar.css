@@ -1,14 +1,15 @@
 .nav-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background-color: #f8f8f8;
-    padding: 10px 0;
+    padding: 10px 0; /* Adjusted horizontal padding to 0 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .nav-button {
-    padding: 10px 15px;
+    flex-grow: 1; /* Makes each button grow to take up an equal amount of space */
+    padding: 10px; /* Adjusted padding for better spacing */
     font-size: 14px;
     border: none;
     border-radius: 5px;
@@ -16,6 +17,13 @@
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-align: center; /* Centers the text inside the button */
+    margin: 0 5px; /* Added a small margin between buttons */
+}
+
+/* Style for the active navigation button */
+.nav-button.active {
+    background-color: #0056b3; /* We can adjust this color to a lighter shade if you prefer */
 }
 
 .nav-button:hover {
@@ -25,3 +33,6 @@
 .nav-button:focus {
     outline: none;
 }
+
+
+

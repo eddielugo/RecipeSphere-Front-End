@@ -38,14 +38,21 @@ h1 {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;  /* Ensure items align to the top */
 }
 
-.search-bar input {
-    width: 80%;
+.search-bar input, .search-bar button {
+    margin: 0;  /* Reset any default margin */
+    vertical-align: top;  /* Ensure top alignment */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+.search-bar input {
+    width: 80%;
+}
+
 
 .search-bar button {
     width: 15%;

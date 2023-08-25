@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './HomePage.css';
 
 // Home Page Component
@@ -19,7 +21,9 @@ const HomePage = () => {
 // Login Button Component
 const LoginButton = () => {
     return (
-        <button className="login-btn">Login</button>
+        <Link to="/signup-login">
+            <button className="login-btn">Login</button>
+        </Link>
     );
 }
 

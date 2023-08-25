@@ -38,9 +38,15 @@ const RecipeCard = ({ recipe }) => {
             <h3>{recipe.name}</h3>
             <p>{recipe.description}</p>
             <button className="view-btn">View Recipe</button>
+            <button className="edit-btn" onClick={() => handleEdit(recipe.id)}>Edit Recipe</button>
             <button className="remove-btn">Remove from Favorites</button>
         </div>
     );
+}
+
+const handleEdit = (id) => {
+    // Navigate to the edit page for the selected recipe
+    window.location.href = `/edit-recipe/${id}`;
 }
 
 // Sample data for demonstration
