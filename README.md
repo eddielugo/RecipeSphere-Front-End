@@ -188,6 +188,6 @@ This project is licensed under the `ℹ️  INSERT-LICENSE-TYPE` License. See th
 
 ## 👏 Acknowledgments
 
-> - `ℹ️  List any resources, contributors, inspiration, etc.`
+> - `ℹ️  This project was bootstrapped with [Create React App]`
 
 ---
