@@ -1,49 +1,71 @@
-.recipe-detail-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* 
+ * Styles for the recipe detail page.
+ */
+ .recipe-detail-page {
+    font-family: Arial, sans-serif; /* Set the font for the page */
+    padding: 20px; /* Add padding around the content */
+    background-color: #f4f4f4; /* Set a light gray background color */
+    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
 }
 
+/* 
+ * Style for images on the recipe detail page.
+ */
 .recipe-detail-page img {
-    max-width: 500px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    max-width: 500px; /* Limit image width */
+    border-radius: 10px; /* Rounded corners for images */
+    margin-bottom: 20px; /* Space below the image */
 }
 
+/* 
+ * Style for h2 headers on the recipe detail page.
+ */
 .recipe-detail-page h2 {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Space below the header */
 }
 
+/* 
+ * Styles for ingredients, instructions, and comments sections on the recipe detail page.
+ */
 .recipe-detail-page .ingredients, 
 .recipe-detail-page .instructions, 
 .recipe-detail-page .comments {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    width: 100%; /* Take up full available width */
+    max-width: 500px; /* But limit to 500px */
+    padding: 20px; /* Add padding inside the sections */
+    background-color: #fff; /* Set a white background color */
+    border-radius: 10px; /* Rounded corners for sections */
+    margin-bottom: 20px; /* Space below each section */
 }
 
+/* 
+ * Styles for buttons on the recipe detail page.
+ */
 .recipe-detail-page button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
+    padding: 10px 20px; /* Padding inside the button */
+    background-color: #007BFF; /* Primary blue background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove default borders */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition for background color change */
+    margin-right: 10px; /* Space to the right of the button */
 }
 
+/* 
+ * Remove margin for the last button.
+ */
 .recipe-detail-page button:last-child {
     margin-right: 0;
 }
 
+/* 
+ * Hover effect for buttons.
+ */
 .recipe-detail-page button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker blue background color on hover */
 }
+

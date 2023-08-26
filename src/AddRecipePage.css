@@ -1,62 +1,72 @@
+/* Styling for the header section */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
+    display: flex;                 /* Use flexbox for layout */
+    justify-content: space-between; /* Distribute items evenly with maximum space in between */
+    align-items: center;           /* Vertically align items in the center */
+    background-color: #333;        /* Dark gray background color */
+    color: #fff;                   /* White text color */
+    padding: 10px 20px;            /* Padding of 10px vertically and 20px horizontally */
+    border-radius: 5px;            /* Rounded corners */
 }
+
+/* Styling for the add/edit recipe page container */
 .add-edit-recipe-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-family: Arial, sans-serif; /* Use Arial font, with sans-serif as fallback */
+    padding: 20px;                  /* Padding all around */
+    background-color: #f4f4f4;     /* Light gray background color */
+    min-height: 100vh;              /* Minimum height to cover the entire viewport height */
+    display: flex;                  /* Use flexbox for layout */
+    flex-direction: column;         /* Stack items vertically */
+    align-items: center;            /* Horizontally align items in the center */
 }
 
+/* Styling for the main heading on the add/edit recipe page */
 .add-edit-recipe-page h2 {
-    margin-bottom: 20px;
+    margin-bottom: 20px;           /* Add space below the heading */
 }
 
+/* Styling for the form on the add/edit recipe page */
 .add-edit-recipe-page form {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
+    width: 100%;                   /* Form takes up the full width of its container */
+    max-width: 500px;              /* But won't exceed 500px */
+    padding: 20px;                 /* Padding all around */
+    background-color: #fff;        /* White background color */
+    border-radius: 10px;           /* Rounded corners */
 }
 
+/* Styling for text input fields and textareas on the add/edit recipe page */
 .add-edit-recipe-page input[type="text"],
 .add-edit-recipe-page textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100%;                   /* Take up the full width of the form */
+    padding: 10px;                 /* Padding inside the input/textarea */
+    margin-bottom: 20px;           /* Space below each input/textarea */
+    border: 1px solid #ccc;        /* Gray border */
+    border-radius: 5px;            /* Rounded corners */
 }
 
+/* Styling for the file input on the add/edit recipe page */
 .add-edit-recipe-page input[type="file"] {
-    margin-bottom: 20px;
+    margin-bottom: 20px;           /* Space below the file input */
 }
 
+/* Styling for buttons on the add/edit recipe page */
 .add-edit-recipe-page button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
+    padding: 10px 20px;            /* Padding inside the button */
+    background-color: #007BFF;     /* Blue background color */
+    color: #fff;                   /* White text color */
+    border: none;                  /* No border */
+    border-radius: 5px;            /* Rounded corners */
+    cursor: pointer;               /* Hand cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for background color changes */
+    margin-right: 10px;            /* Space to the right of each button */
 }
 
+/* Remove the margin for the last button in the add/edit recipe page */
 .add-edit-recipe-page button:last-child {
     margin-right: 0;
 }
 
+/* Change the button color on hover to a darker blue */
 .add-edit-recipe-page button:hover {
     background-color: #0056b3;
 }

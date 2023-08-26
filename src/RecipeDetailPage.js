@@ -1,14 +1,16 @@
 import React from 'react';
 import './RecipeDetailPage.css';
-import { sampleData } from './sampleData'; // Adjust the path if necessary
-import { useParams } from 'react-router-dom';
-import { jsPDF } from "jspdf";
-import emailjs from 'emailjs-com';
+import { sampleData } from './sampleData'; // Importing sample data for demonstration purposes
+import { useParams } from 'react-router-dom'; // Hook to access route parameters
+import { jsPDF } from "jspdf"; // Library to generate PDFs
+import emailjs from 'emailjs-com'; // Library to send emails
 
+// Component to display detailed information about a specific recipe
 const RecipeDetailPage = () => {
+    // Extracting the recipeId from the route parameters
     const { recipeId } = useParams();
 
-
+    // Find the recipe that matches the provided recipeId
     let recipe = sampleData.find(r => r.id === parseInt(recipeId));
 
     // If no recipe matches the provided recipeId, use the first recipe from sampleData as a fallback
@@ -16,6 +18,7 @@ const RecipeDetailPage = () => {
         recipe = sampleData[0];
     }
 
+    // Function to generate a PDF of the recipe details
     const printToPdf = () => {
         if (recipe) {
             const doc = new jsPDF();
@@ -26,6 +29,7 @@ const RecipeDetailPage = () => {
         }
     };
 
+    // Function to send the recipe details via email
     const sendEmail = (e) => {
         e.preventDefault();
         emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
@@ -36,6 +40,7 @@ const RecipeDetailPage = () => {
             });
     };
 
+    // If the recipe is not found, display an error message
     if (!recipe) {
         return (
             <div className="recipe-detail-page">
@@ -45,33 +50,41 @@ const RecipeDetailPage = () => {
         );
     }
 
+    // Render the recipe details
     return (
         <div className="recipe-detail-page">
+            {/* Display recipe image */}
             <img src={recipe.image} alt={recipe.name} />
+            {/* Display recipe name */}
             <h2>{recipe.name}</h2>
+            {/* List of ingredients */}
             <div className="ingredients">
                 <h3>Ingredients</h3>
                 <ul>
                     {recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}
                 </ul>
             </div>
+            {/* Cooking instructions */}
             <div className="instructions">
                 <h3>Instructions</h3>
                 <p>{recipe.instructions}</p>
             </div>
+            {/* List of comments */}
             <div className="comments">
                 <h3>Comments</h3>
                 <ul>
                     {recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
                 </ul>
             </div>
+            {/* Button to share the recipe via email */}
             <button onClick={sendEmail}>Share via Email</button>
+            {/* Button to generate a printable PDF of the recipe */}
             <button onClick={printToPdf}>Generate Printable PDF</button>
         </div>
     );
 }
 
-export default RecipeDetailPage;
+export default RecipeDetailPage; // Exporting the component for use in other parts of the application
 
 
 

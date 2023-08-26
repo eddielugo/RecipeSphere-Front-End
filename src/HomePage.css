@@ -1,46 +1,53 @@
+/* Main styling for the home page */
 .home-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;  /* Set the font for the home page */
+    padding: 20px;  /* Add padding around the content */
+    background-color: #f4f4f4;  /* Set a light gray background color */
+    min-height: 100vh;  /* Ensure the home page takes up the full viewport height */
 }
 
+/* Styling for the header section */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
+    display: flex;  /* Use flexbox for layout */
+    justify-content: space-between;  /* Space out the header items evenly */
+    align-items: center;  /* Vertically align items in the center */
+    background-color: #333;  /* Set a dark gray background color */
+    color: #fff;  /* Set text color to white */
+    padding: 10px 20px;  /* Add padding around the header content */
+    border-radius: 5px;  /* Round the corners of the header */
 }
 
+/* Styling for the site title */
 h1 {
-    margin: 0;
-    font-size: 24px;
+    margin: 0;  /* Remove default margin */
+    font-size: 24px;  /* Set font size for the title */
 }
 
+/* Styling for the login button */
 .login-btn {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 10px 20px;  /* Add padding around the button */
+    background-color: #007BFF;  /* Set a blue background color */
+    color: #fff;  /* Set text color to white */
+    border: none;  /* Remove default borders */
+    border-radius: 5px;  /* Round the corners of the button */
+    cursor: pointer;  /* Change the cursor to a hand when hovering */
+    transition: background-color 0.3s;  /* Smooth transition for background color changes */
 }
 
+/* Change the button color when hovered */
 .login-btn:hover {
     background-color: #0056b3;
 }
 
+/* Styling for the search bar section */
 .search-bar {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
+    margin-top: 20px;  /* Add space above the search bar */
+    display: flex;  /* Use flexbox for layout */
+    justify-content: space-between;  /* Space out the search bar items evenly */
     align-items: flex-start;  /* Ensure items align to the top */
 }
 
+/* Reset styles and set shared styles for input and button inside the search bar */
 .search-bar input, .search-bar button {
     margin: 0;  /* Reset any default margin */
     vertical-align: top;  /* Ensure top alignment */
@@ -49,13 +56,14 @@ h1 {
     border-radius: 5px;
 }
 
+/* Set width for the search input field */
 .search-bar input {
     width: 80%;
 }
 
-
+/* Styling for the search button */
 .search-bar button {
-    width: 15%;
+    width: 15%;  /* Set width for the button */
     padding: 10px;
     background-color: #007BFF;
     color: #fff;
@@ -65,34 +73,41 @@ h1 {
     transition: background-color 0.3s;
 }
 
+/* Change the search button color when hovered */
 .search-bar button:hover {
     background-color: #0056b3;
 }
 
+/* Shared styles for popular and new recipes sections */
 .popular-recipes, .new-recipes {
     margin-top: 20px;
     padding: 20px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Add a subtle shadow around the sections */
 }
 
+/* Center align the titles for popular and new recipes sections */
 .popular-recipes h2, .new-recipes h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
+/* Remove list styles for the recipes lists */
 .popular-recipes ul, .new-recipes ul {
     list-style-type: none;
     padding: 0;
 }
 
+/* Add padding and a bottom border for each recipe item */
 .popular-recipes li, .new-recipes li {
     padding: 10px;
     border-bottom: 1px solid #eee;
 }
 
+/* Remove the bottom border for the last recipe item */
 .popular-recipes li:last-child, .new-recipes li:last-child {
     border-bottom: none;
 }
+

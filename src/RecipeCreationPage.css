@@ -1,44 +1,71 @@
-.recipe-creation-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* 
+ * Styles for the recipe creation page.
+ * The page is designed to be centered with a flex layout, 
+ * and it uses a consistent font and background color.
+ */
+ .recipe-creation-page {
+    font-family: Arial, sans-serif; /* Set the font for the page */
+    padding: 20px; /* Add padding around the content */
+    background-color: #f4f4f4; /* Set a light gray background color */
+    min-height: 100vh; /* Ensure the page takes up the full viewport height */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
 }
 
+/* 
+ * Style for the main heading (h2) within the recipe creation page.
+ * Adds a margin to space it from other elements.
+ */
 .recipe-creation-page h2 {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Add space below the heading */
 }
 
+/* 
+ * Common styles for text inputs and textareas on the recipe creation page.
+ * These styles ensure consistent width, padding, margin, border, and font size.
+ */
 .recipe-creation-page input[type="text"], 
 .recipe-creation-page textarea {
-    width: 100%;
-    max-width: 500px;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 100%; /* Take up the full width of the parent */
+    max-width: 500px; /* Limit the maximum width */
+    padding: 10px; /* Add padding inside the input/textarea */
+    margin-bottom: 20px; /* Add space below the input/textarea */
+    border: 1px solid #ccc; /* Add a light gray border */
+    border-radius: 5px; /* Round the corners */
+    font-size: 16px; /* Set the font size */
 }
 
+/* 
+ * Specific styles for textareas on the recipe creation page.
+ * These styles set a default height and allow vertical resizing.
+ */
 .recipe-creation-page textarea {
-    height: 150px;
-    resize: vertical;
+    height: 150px; /* Set a default height */
+    resize: vertical; /* Allow vertical resizing */
 }
 
+/* 
+ * Styles for buttons on the recipe creation page.
+ * The buttons have a blue background, white text, and rounded corners.
+ * They also have a hover effect to darken the background color.
+ */
 .recipe-creation-page button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 10px 20px; /* Add padding around the text */
+    background-color: #007BFF; /* Set a blue background color */
+    color: #fff; /* Set white text color */
+    border: none; /* Remove the default border */
+    border-radius: 5px; /* Round the corners */
+    cursor: pointer; /* Change the cursor to a hand when hovering */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
+/* 
+ * Hover effect for buttons on the recipe creation page.
+ * Darkens the background color when the button is hovered over.
+ */
 .recipe-creation-page button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Set a darker blue background color on hover */
 }
+
 

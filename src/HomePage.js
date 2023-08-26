@@ -3,41 +3,50 @@ import { Link } from 'react-router-dom';
 
 import './HomePage.css';
 
-// Home Page Component
+/**
+ * HomePage Component: Represents the main landing page of the application.
+ * It includes the site header, login button, search bar, popular recipes, and new recipes sections.
+ */
 const HomePage = () => {
     return (
         <div className="home-page">
             <header>
-                <h1>RecipeSphere</h1>
-                <LoginButton />
+                <h1>RecipeSphere</h1>  {/* Site title */}
+                <LoginButton />  {/* Login button component */}
             </header>
-            <SearchBar />
-            <PopularRecipes />
-            <NewRecipes />
+            <SearchBar />  {/* Search bar component */}
+            <PopularRecipes />  {/* Popular recipes list component */}
+            <NewRecipes />  {/* New recipes list component */}
         </div>
     );
 }
+/**
+ * LoginButton Component: Represents a button that redirects users to the signup/login page.
+ */
 
-// Login Button Component
 const LoginButton = () => {
     return (
-        <Link to="/signup-login">
+        <Link to="/signup-login">  {/* Link to the signup/login page */}
             <button className="login-btn">Login</button>
         </Link>
     );
 }
 
-// Search Bar Component
+/**
+ * SearchBar Component: Represents a search bar where users can input text to search for recipes.
+ */
 const SearchBar = () => {
     return (
         <div className="search-bar">
-            <input type="text" placeholder="Search for recipes..." />
-            <button>Search</button>
+            <input type="text" placeholder="Search for recipes..." />  {/* Input field for search queries */}
+            <button>Search</button>  {/* Button to initiate the search */}
         </div>
     );
 }
 
-// Popular Recipes Component
+/**
+ * PopularRecipes Component: Displays a list of popular recipes.
+ */
 const PopularRecipes = () => {
     // Sample data for demonstration
     const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
@@ -46,13 +55,15 @@ const PopularRecipes = () => {
         <div className="popular-recipes">
             <h2>Popular Recipes</h2>
             <ul>
-                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}
+                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}  {/* Map through the recipes array and display each recipe */}
             </ul>
         </div>
     );
 }
 
-// New Recipes Component
+/**
+ * NewRecipes Component: Displays a list of newly added recipes.
+ */
 const NewRecipes = () => {
     // Sample data for demonstration
     const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
@@ -61,10 +72,10 @@ const NewRecipes = () => {
         <div className="new-recipes">
             <h2>New Recipes</h2>
             <ul>
-                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}
+                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}  {/* Map through the recipes array and display each recipe */}
             </ul>
         </div>
     );
 }
 
-export default HomePage;
+export default HomePage;  // Export the HomePage component for use in other parts of the application

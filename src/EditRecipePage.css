@@ -1,60 +1,69 @@
+/* Main styling for the edit recipe page container */
 .edit-recipe-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-family: Arial, sans-serif;  /* Set the font for the page */
+    padding: 20px;                   /* Add padding around the content */
+    background-color: #f4f4f4;      /* Set a light gray background color */
+    min-height: 100vh;               /* Ensure the container takes up the full viewport height */
+    display: flex;                   /* Use flexbox for layout */
+    flex-direction: column;          /* Stack child elements vertically */
+    align-items: center;             /* Center child elements horizontally */
 }
 
+/* Styling for images within the edit recipe page */
 .edit-recipe-page img {
-    max-width: 500px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    max-width: 500px;                /* Limit the maximum width of the image */
+    border-radius: 10px;             /* Round the corners of the image */
+    margin-bottom: 20px;             /* Add space below the image */
 }
 
+/* Styling for h2 and h3 headings within the edit recipe page */
 .edit-recipe-page h2,
 .edit-recipe-page h3 {
-    margin-bottom: 20px;
+    margin-bottom: 20px;             /* Add space below the headings */
 }
 
+/* Common styling for ingredients, instructions, and comments sections */
 .edit-recipe-page .ingredients, 
 .edit-recipe-page .instructions, 
 .edit-recipe-page .comments {
-    width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    width: 100%;                    /* Take up the full width of the parent container */
+    max-width: 500px;               /* Limit the maximum width */
+    padding: 20px;                  /* Add padding around the content */
+    background-color: #fff;         /* Set a white background color */
+    border-radius: 10px;            /* Round the corners */
+    margin-bottom: 20px;            /* Add space below each section */
 }
 
+/* Styling for textareas within the edit recipe page */
 .edit-recipe-page textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: vertical;
+    width: 100%;                    /* Take up the full width of the parent container */
+    padding: 10px;                  /* Add padding inside the textarea */
+    margin-bottom: 20px;            /* Add space below the textarea */
+    border: 1px solid #ccc;         /* Add a light gray border */
+    border-radius: 5px;             /* Round the corners */
+    font-size: 16px;                /* Set the font size */
+    resize: vertical;               /* Allow vertical resizing of the textarea */
 }
 
+/* Styling for buttons within the edit recipe page */
 .edit-recipe-page button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-right: 10px;
+    padding: 10px 20px;             /* Add padding around the button text */
+    background-color: #007BFF;      /* Set a blue background color */
+    color: #fff;                    /* Set the text color to white */
+    border: none;                   /* Remove the default border */
+    border-radius: 5px;             /* Round the corners */
+    cursor: pointer;                /* Change the cursor to a hand when hovering */
+    transition: background-color 0.3s; /* Smooth transition for background color changes */
+    margin-right: 10px;             /* Add space to the right of the button */
 }
 
+/* Remove the right margin for the last button in the container */
 .edit-recipe-page button:last-child {
     margin-right: 0;
 }
 
+/* Styling for buttons when hovered */
 .edit-recipe-page button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3;      /* Darken the button color when hovered */
 }
+

@@ -113,8 +113,8 @@ The RecipeSphere-Front-End project is a React-based web application for sharing 
 ### ✔️ Prerequisites
 
 Before you begin, ensure that you have the following prerequisites installed:
-> - `ℹ️ Requirement 1`
-> - `ℹ️ Requirement 2`
+> - `ℹ️ Install nvm for Windows https://github.com/coreybutler/nvm-windows or `MacOS https://catalins.tech/node-version-manager-macos/
+> - `ℹ️ intsall Node.js https://nodejs.org/en/download`
 > - `ℹ️ ...`
 
 ### 📦 Installation
@@ -137,7 +137,7 @@ npm install
 ### 🎮 Using RecipeSphere-Front-End
 
 ```sh
-node app.js
+npm start
 ```
 
 ### 🧪 Running Tests
@@ -150,8 +150,8 @@ npm test
 
 ## 🗺 Roadmap
 
-> - [X] `ℹ️  Task 1: Implement X`
-> - [ ] `ℹ️  Task 2: Refactor Y`
+> - [X] `ℹ️ ...`
+> - [ ] `ℹ️ ...`
 > - [ ] `ℹ️ ...`
 
 
