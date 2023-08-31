@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './RecipeDetailPage.css';
-import { sampleData } from './sampleData'; // Importing sample data for demonstration purposes
+//import { sampleData } from './sampleData'; // Importing sample data for demonstration purposes
 import { useParams } from 'react-router-dom'; // Hook to access route parameters
 import { jsPDF } from "jspdf"; // Library to generate PDFs
 import emailjs from 'emailjs-com'; // Library to send emails
@@ -9,14 +9,21 @@ import emailjs from 'emailjs-com'; // Library to send emails
 const RecipeDetailPage = () => {
     // Extracting the recipeId from the route parameters
     const { recipeId } = useParams();
+    const [recipe, setRecipe] = useState(null);
 
-    // Find the recipe that matches the provided recipeId
-    let recipe = sampleData.find(r => r.id === parseInt(recipeId));
+   // Fetch recipe data from Django REST API
+   useEffect(() => {
+    fetch(`http://your-django-api-url/recipes/${recipeId}/`)
+    .then(response => response.json())
+    .then(data => setRecipe(data))
+    .catch(error => console.error('Error fetching recipe:', error));
+}, [recipeId]);
 
-    // If no recipe matches the provided recipeId, use the first recipe from sampleData as a fallback
-    if (!recipe) {
-        recipe = sampleData[0];
-    }
+// Commented out for demonstration purposes
+// let recipe = sampleData.find(r => r.id === parseInt(recipeId));
+// if (!recipe) {
+//     recipe = sampleData[0];
+// }
 
     // Function to generate a PDF of the recipe details
     const printToPdf = () => {

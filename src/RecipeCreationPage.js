@@ -17,8 +17,30 @@ const RecipeCreationPage = () => {
 
     // Handles the form submission, logs the input values for now.
     const handleSubmit = () => {
-        // Handle the form submission logic here (e.g., send data to server)
-        console.log(recipeName, ingredients, instructions, image);
+        // Log the input values (commented out)
+        // console.log(recipeName, ingredients, instructions, image);
+
+        // Create FormData object to hold the form data
+        const formData = new FormData();
+        formData.append('recipeName', recipeName);
+        formData.append('ingredients', ingredients);
+        formData.append('instructions', instructions);
+        formData.append('image', image);
+
+        // Send the form data to the Django REST API
+        fetch('http://your-django-api-url/create-recipe/', {//TODO: Replace with our Django REST API URL
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle successful form submission (e.g., navigate to another page or display a success message)
+            console.log('Recipe successfully created:', data);
+        })
+        .catch(error => {
+            // Handle errors (e.g., display an error message)
+            console.log('Error creating recipe:', error);
+        });
     }
 
     return (

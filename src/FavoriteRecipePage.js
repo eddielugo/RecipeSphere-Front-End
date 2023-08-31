@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './FavoriteRecipePage.css';
 
 // Main component to display the user's favorite recipes
 const FavoriteRecipePage = () => {
-    // Sample data for demonstration purposes. Replace with actual data fetching logic in the future.
-    const favoritedRecipes = sampleData; 
+    //The favoritedRecipes state variable will hold the fetched data
+    const [favoritedRecipes, setFavoritedRecipes] = useState([]);
+
+    // Fetch favorite recipes from Django REST API
+    useEffect(() => {
+        fetch('http://your-django-api-url/favorite-recipes/')//TODO: Replace with our Django REST API URL
+            .then(response => response.json())
+            .then(data => setFavoritedRecipes(data))
+            .catch(error => console.error('Error fetching favorite recipes:', error));
+    }, []);
+
+    // Sample data for demonstration purposes (commented out)
+    // const favoritedRecipes = sampleData;
 
     return (
         <div className="favorite-recipe-page">
@@ -28,7 +39,7 @@ const UserProfile = () => {
     );
 }
 
-// Component to display a list of favorited recipes
+// the FavoritedRecipesList component to display a list of favorited recipes
 const FavoritedRecipesList = ({ recipes }) => {
     return (
         <div className="favorited-recipes-list">
@@ -66,11 +77,11 @@ const handleEdit = (id) => {
 }
 
 // Sample data for demonstration purposes
-const sampleData = [
-    { id: 1, name: 'Recipe A', description: 'Description A', thumbnail: 'imageA.jpg' },
-    { id: 2, name: 'Recipe B', description: 'Description B', thumbnail: 'imageB.jpg' },
-    { id: 3, name: 'Recipe C', description: 'Description C', thumbnail: 'imageC.jpg' }
-];
+//const sampleData = [
+//    { id: 1, name: 'Recipe A', description: 'Description A', thumbnail: 'imageA.jpg' },
+//    { id: 2, name: 'Recipe B', description: 'Description B', thumbnail: 'imageB.jpg' },
+//    { id: 3, name: 'Recipe C', description: 'Description C', thumbnail: 'imageC.jpg' }
+//];
 
 // Export the main component
 export default FavoriteRecipePage;

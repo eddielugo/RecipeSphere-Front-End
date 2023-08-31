@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+//import axios from 'axios';  // Import axios for API calls if we use instead of fetch
 
 import './HomePage.css';
 
@@ -12,10 +13,10 @@ const HomePage = () => {
         <div className="home-page">
             <header>
                 <h1>RecipeSphere</h1>  {/* Site title */}
-                <LoginButton />  {/* Login button component */}
+                <LoginButton />  {/*Login button component*/}
             </header>
             <SearchBar />  {/* Search bar component */}
-            <PopularRecipes />  {/* Popular recipes list component */}
+            <PopularRecipes />  {/* Popular recipes list component. TODO: Link to DB Search*/}
             <NewRecipes />  {/* New recipes list component */}
         </div>
     );
@@ -49,13 +50,33 @@ const SearchBar = () => {
  */
 const PopularRecipes = () => {
     // Sample data for demonstration
-    const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
+    //const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
+    const [recipes, setRecipes] = useState([]);  // State to hold popular recipes
+
+    useEffect(() => {
+        // Using fetch to get popular recipes
+        fetch('http://your-django-api-url/popular-recipes/')
+            .then(response => response.json())
+            .then(data => setRecipes(data))
+            .catch(error => console.error('Error fetching popular recipes:', error));
+
+        // Using axios to get popular recipes
+        //Replace http://your-django-api-url/ with the actual URL of our Django REST API
+        //axios.get('http://your-django-api-url/popular-recipes/')
+        //    .then(response => {
+        //        setRecipes(response.data);
+        //    })
+        //    .catch(error => {
+        //        console.error('Error fetching popular recipes:', error);
+        //    });
+    }, []);
 
     return (
         <div className="popular-recipes">
             <h2>Popular Recipes</h2>
             <ul>
-                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}  {/* Map through the recipes array and display each recipe */}
+                {/* Map through the recipes array and display each recipe */}
+                {recipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}  
             </ul>
         </div>
     );
@@ -66,13 +87,31 @@ const PopularRecipes = () => {
  */
 const NewRecipes = () => {
     // Sample data for demonstration
-    const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
+    //const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
+    const [recipes, setRecipes] = useState([]);  // State to hold new recipes
+
+    useEffect(() => {
+        // Using fetch to get new recipes from Django REST API
+        fetch('http://your-django-api-url/new-recipes/')
+            .then(response => response.json())
+            .then(data => setRecipes(data))
+            .catch(error => console.error('Error fetching new recipes:', error));
+        //  Using axios to get new recipes
+        //Replace http://your-django-api-url/ with the actual URL to new recipes of our Django REST API
+        //axios.get('http://your-django-api-url/new-recipes/')
+        //    .then(response => {
+        //        setRecipes(response.data);
+        //    })
+        //    .catch(error => {
+        //       console.error('Error fetching new recipes:', error);
+        //    });
+    }, []);
 
     return (
         <div className="new-recipes">
             <h2>New Recipes</h2>
             <ul>
-                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}  {/* Map through the recipes array and display each recipe */}
+                {recipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}  {/* Map through the recipes array and display each recipe */}
             </ul>
         </div>
     );

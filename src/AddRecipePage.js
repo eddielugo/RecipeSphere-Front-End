@@ -1,5 +1,6 @@
 // Import necessary dependencies
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios for API calls
 import './AddRecipePage.css';
 
 // Component for adding a new recipe
@@ -24,10 +25,38 @@ const AddRecipePage = () => {
     }
 
     // Handler to submit the form
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO: Handle the form submission logic here
+        // TODO: Update form submission logic
+        // Create FormData object to handle image file
+        const formData = new FormData();
+        formData.append('name', recipe.name);
+        formData.append('image', recipe.image);
+        formData.append('ingredients', recipe.ingredients);
+        formData.append('instructions', recipe.instructions);
+
         console.log(recipe);
+        // API call to your Django REST backend
+        // Replace http://your-django-api-url/ with the actual URL of oour Django REST API
+        const apiUrl = 'http://your-django-api-url/recipes/';
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+        console.log(data);
+        
+
+        // If we prefer using axios, uncomment the following lines
+        /*
+        const response = await axios.post(apiUrl, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        console.log(response.data);
+        */
     }
 
     // Render the add recipe form

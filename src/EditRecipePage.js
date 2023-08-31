@@ -1,9 +1,10 @@
 // Importing necessary React hooks and router utilities
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+// import axios from 'axios';  // Importing axios for API calls if we use instead of fetch
 
 // Sample data for demonstration purposes
-import { sampleData } from './sampleData'; 
+//import { sampleData } from './sampleData'; 
 
 // Styling for the EditRecipePage component
 import './EditRecipePage.css';
@@ -19,19 +20,59 @@ const EditRecipePage = () => {
     // State to hold the current recipe being edited
     const [recipe, setRecipe] = useState(null);
 
-    // Effect hook to fetch the recipe data when the component mounts or when recipeId changes
-    useEffect(() => {
+    // Effect hook to fetch the recipe data (recipeData) when the component mounts or when recipeId changes
+    /*useEffect(() => {
         // Finding the recipe from the sample data based on the recipeId
         const fetchedRecipe = sampleData.find(r => r.id === parseInt(recipeId));
         // Setting the found recipe to the state
         setRecipe(fetchedRecipe);
-    }, [recipeId]);
+    }, [recipeId]);*/
+// Effect hook to fetch the recipe data when the component mounts or when recipeId changes
+useEffect(() => {
+    // Fetching recipe data from Django REST API using fetch
+    fetch(`http://your-django-api-url/recipes/${recipeId}/`)
+        .then(response => response.json())
+        .then(data => setRecipe(data))
+        .catch(error => console.error('Error fetching data:', error));
 
-    // Handler function to save the edited recipe details
-    const handleSave = () => {
-        // TODO: Implement logic to save the edited recipe details
-        // This could involve updating the recipe in your database or local state
-    };
+    // Fetching recipe data from Django REST API using axios if we decide to use instead of fetch (commented out)
+    // axios.get(`http://your-django-api-url/recipes/${recipeId}/`)
+    //     .then(response => {
+    //         setRecipe(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching data:', error);
+    //     });
+}, [recipeId]);
+
+// Handler function to save the edited recipe details
+const handleSave = (e) => {
+    e.preventDefault();
+    // Updating recipe data through Django REST API using fetch
+    fetch(`http://your-django-api-url/recipes/${recipeId}/`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(recipe),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Recipe updated:', data);
+    })
+    .catch(error => {
+        console.error('Error updating recipe:', error);
+    });
+
+    // Updating recipe data through Django REST API using axios (commented out) if we decide to use instead of fetch
+    // axios.put(`http://your-django-api-url/recipes/${recipeId}/`, recipe)
+    //     .then(response => {
+    //         console.log('Recipe updated:', response.data);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error updating recipe:', error);
+    //     });
+};
 
     // If the recipe data hasn't been loaded yet, display a loading message
     if (!recipe) {

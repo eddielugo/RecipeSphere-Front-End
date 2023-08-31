@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 
 // Main Profile Page Component
@@ -17,11 +17,20 @@ const ProfilePage = () => {
 
 // Component to display user's personal information
 const UserInformation = () => {
-    // Function to handle profile image upload
+    const [userInfo, setUserInfo] = useState({});
+
+    // Fetch user information from Django REST API
+    useEffect(() => {
+        fetch('http://your-django-api-url/user-info/')//change this to our django api url
+            .then(response => response.json())
+            .then(data => setUserInfo(data))
+            .catch(error => console.error('Error fetching user information:', error));
+    }, []);
+   // Function to handle profile image upload
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        // Handle the image upload logic here (e.g., send to server or store locally)
         console.log(file);
+        // Handle the image upload logic here (e.g., send to server or store locally)
     }
 
     return (
@@ -29,28 +38,37 @@ const UserInformation = () => {
             <h2>User Information</h2>
             <div className="profile-picture">
                 {/* Display user's profile picture */}
-                <img src="/path/to/default/profile/picture.jpg" alt="User Profile" />
+                <img src={userInfo.profilePicture || "/path/to/default/profile/picture.jpg"} alt="User Profile" />
                 {/* Input for uploading a new profile picture */}
                 <input type="file" onChange={handleImageUpload} />
             </div>
             {/* Sample data for demonstration */}
-            <p><strong>Username:</strong> JohnDoe</p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
+            <p><strong>Username:</strong>{userInfo.username || 'JohnDoe'}</p>
+            <p><strong>Email:</strong> {userInfo.email || 'johndoe@example.com'}</p>
         </div>
     );
 }
 
 // Component to display recipes shared by the user
 const SharedRecipes = () => {
-    // Sample data for demonstration
-    const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
+    const [sharedRecipes, setSharedRecipes] = useState([]);
+// Fetch shared recipes from Django REST API
+useEffect(() => {
+    fetch('http://your-django-api-url/shared-recipes/')//TODO: Replace with our Django REST API URL
+        .then(response => response.json())
+        .then(data => setSharedRecipes(data))
+        .catch(error => console.error('Error fetching shared recipes:', error));
+}, []);
+
+// Sample data for demonstration (commented out)
+// const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
 
     return (
         <div className="shared-recipes">
             <h2>Shared Recipes</h2>
             {/* List of shared recipes */}
             <ul>
-                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}
+            {sharedRecipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}
             </ul>
         </div>
     );
@@ -58,15 +76,25 @@ const SharedRecipes = () => {
 
 // Component to display recipes saved or favorited by the user
 const SavedRecipes = () => {
-    // Sample data for demonstration
-    const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
+    const [savedRecipes, setSavedRecipes] = useState([]);
+
+   // Fetch saved recipes from Django REST API
+    useEffect(() => {
+        fetch('http://your-django-api-url/saved-recipes/')//TODO: Replace with our Django REST API URL
+            .then(response => response.json())
+            .then(data => setSavedRecipes(data))
+            .catch(error => console.error('Error fetching saved recipes:', error));
+    }, []);
+
+    // Sample data for demonstration (commented out)
+    // const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
 
     return (
         <div className="saved-recipes">
             <h2>Saved/Favorite Recipes</h2>
             {/* List of saved or favorited recipes */}
             <ul>
-                {recipes.map(recipe => <li key={recipe}>{recipe}</li>)}
+            {savedRecipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}
             </ul>
         </div>
     );

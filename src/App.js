@@ -1,5 +1,5 @@
 // Importing necessary modules and components
-import React from 'react';
+import React, { useEffect, useState } from 'react'; // Added useEffect and useState for API calls
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import NavigationBar from './NavigationBar'; 
 import HomePage from './HomePage';
@@ -15,6 +15,19 @@ import FavoriteRecipePage from './FavoriteRecipePage';
 
 // Main App component
 function App() {
+  // State to hold recipes data
+  const [recipes, setRecipes] = useState([]);// TODO: We also need to pass this recipes state to the components that need to display 
+  //or manipulate this data, such as HomePage, SearchResultsPage, etc.
+
+  // Fetch recipes from Django REST API
+  useEffect(() => {
+    // Uncomment the following lines to fetch data from our Django REST API
+    // fetch('http://your-django-api-url/recipes/')
+    //   .then(response => response.json())
+    //   .then(data => setRecipes(data))
+    //   .catch(error => console.error('Error fetching data:', error));
+  }, []); // Empty dependency array means this useEffect runs once when the component mounts
+  
   return (
     // Wrapping the application with the Router component to enable routing
     <Router>

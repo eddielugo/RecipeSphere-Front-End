@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './SearchResultsPage.css';
 
 // Main component to display the search results page.
 const SearchResultsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [results, setResults] = useState(sampleData); // Initialize results with sample data. Replace with actual data fetching logic in a real-world scenario.
+    // const [results, setResults] = useState(sampleData); // Commented out for demonstration purposes
+    const [results, setResults] = useState([]); // Initialize with empty arrayults with sample data. Replace with actual data fetching logic in a real-world scenario.
+    
+    useEffect(() => {
+        // Fetch search results from Django REST API when searchQuery changes
+        if (searchQuery) {
+            fetch(`http://your-django-api-url/search/?query=${searchQuery}`)
+            .then(response => response.json())
+            .then(data => setResults(data))
+            .catch(error => console.error('Error fetching search results:', error));
+        }
+    }, [searchQuery]);
 
-    // Function to handle the search logic.
+            // Function to handle the search logic.
     const handleSearch = () => {
-        // Implement search logic here
+       // Implement search logic here (if needed)
+        // The useEffect will handle fetching based on searchQuery
     }
 
     return (
@@ -74,12 +86,12 @@ const RecipeCard = ({ recipe }) => {
 }
 
 // Sample data for demonstration purposes.
-const sampleData = [
-    { id: 1, name: 'Recipe A', description: 'Description A', thumbnail: 'imageA.jpg' },
-    { id: 2, name: 'Recipe B', description: 'Description B', thumbnail: 'imageB.jpg' },
-    { id: 3, name: 'Recipe C', description: 'Description C', thumbnail: 'imageC.jpg' },
-    { id: 4, name: 'Recipe D', description: 'Description D', thumbnail: 'imageD.jpg' } // Added fourth recipe
-];
+//const sampleData = [
+//    { id: 1, name: 'Recipe A', description: 'Description A', thumbnail: 'imageA.jpg' },
+//    { id: 2, name: 'Recipe B', description: 'Description B', thumbnail: 'imageB.jpg' },
+//    { id: 3, name: 'Recipe C', description: 'Description C', thumbnail: 'imageC.jpg' },
+//    { id: 4, name: 'Recipe D', description: 'Description D', thumbnail: 'imageD.jpg' } // Added fourth recipe
+//];
 
 export default SearchResultsPage; // Export the SearchResultsPage component for use in other parts of the application.
 

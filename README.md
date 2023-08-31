@@ -115,7 +115,7 @@ The RecipeSphere-Front-End project is a React-based web application for sharing 
 Before you begin, ensure that you have the following prerequisites installed:
 > - `ℹ️ Install nvm for Windows or MacOS`
 > - `ℹ️ intsall Node.js`
-> - `ℹ️ ...`
+> - `ℹ️ ... `
 
 ### 📦 Installation
 
@@ -132,6 +132,10 @@ cd RecipeSphere-Front-End
 3. Install the dependencies:
 ```sh
 npm install
+
+npm install axios 
+
+npm install --save-dev jest-fetch-mock
 ```
 
 ### 🎮 Using RecipeSphere-Front-End
