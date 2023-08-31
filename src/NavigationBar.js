@@ -40,7 +40,7 @@ useEffect(() => {
           {/* Navigation buttons for authenticated users */}
           <button className={`nav-button ${isActive("/profile")}`} onClick={() => navigate("/profile")}>Profile</button>
           <button className={`nav-button ${isActive("/favorites")}`} onClick={() => navigate("/favorites")}>Favorite Recipes</button>
-          {/* Missing buttons added */}
+          {/* buttons added */}
           <button className={`nav-button ${isActive("/create-recipe")}`} onClick={() => navigate("/create-recipe")}>Create Recipe</button>
           <button className={`nav-button ${isActive("/recipe-detail")}`} onClick={() => navigate("/recipe-detail")}>Recipe Detail</button>
           <button className={`nav-button ${isActive("/add-recipe")}`} onClick={() => navigate("/add-recipe")}>Add Recipe</button>
