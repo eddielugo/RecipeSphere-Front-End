@@ -3,9 +3,10 @@ you can mock those API calls using libraries like jest-fetch-mock or msw (Mock S
 
 // Import necessary functions and components for testing
 // Import necessary functions and components for testing
-import { render, screen, waitFor } from '@testing-library/react'; // Importing rendering and screen utilities from React Testing Library
+import { findByText, render, screen, waitFor } from '@testing-library/react'; // Importing rendering and screen utilities from React Testing Library
 import fetchMock from 'jest-fetch-mock'; // Importing fetch mock utility
 import App from './App'; // Importing the main App component to be tested
+import { FindByText } from '@testing-library/react';
 
 // Enable fetch mocks
 fetchMock.enableMocks();
@@ -24,7 +25,7 @@ describe('App component', () => {
     render(<App />); // Render the App component
 
     // Wait for the fetch call to complete and component to re-render
-    await waitFor(() => screen.getByText(/learn react/i));
+    await screen.findByText(() => screen.getByText(/learn react/i));
 
     // Search for an element with the text "learn react" (case-insensitive) within the rendered App component
     const linkElement = screen.getByText(/learn react/i);
