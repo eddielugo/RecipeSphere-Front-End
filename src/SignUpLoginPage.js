@@ -3,6 +3,7 @@ import './SignUpLoginPage.css';
 
 // Main component for the sign-up and login page.
 const SignUpLoginPage = () => {
+    
     return (
         <div className="signup-login-page">
             {/* Sign-up form component */}
@@ -18,25 +19,39 @@ const SignUpForm = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [f_name, setFirstName] = useState('');
+    const [l_name, setLastName] = useState('');
 
     const handleSignUp = () => {
         // POST request to Django REST API for user sign-up
-        fetch('http://your-django-api-url/signup/', {// Replace with your Django API URL
+        fetch('https://be.recipesphere.net/api/createuser/', {// Replace with your Django API URL
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, email, password }),
+            body: JSON.stringify({ 
+                username:username,
+                email:email,
+                password:password, 
+                first_name:f_name,
+                last_name:l_name,
+
+            }),
         })
         .then(response => response.json())
+        .then(response => {
+            // TODO: add message of error or redirect to verifyemail webpage after signup success. on success an 
+            // email will be sent out to the user email 
+        })
         .then(data => {
             // Handle successful sign-up (e.g., navigate to login page or show a success message)
         })
-        .catch(error => console.error('Error during sign-up:', error));
+        // .catch(error => console.error('Error during sign-up:', error));
     };
 
 
     return (
+        
         <div className="signup-form">
             <h2>Sign Up</h2>
             {/* Input field for entering username */}
@@ -55,10 +70,22 @@ const SignUpForm = () => {
             />
             {/* Input field for entering password */}
             <input 
-                type="email" 
-                placeholder="Email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                type="text" 
+                placeholder="Password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+            />
+            <input 
+                type="text" 
+                placeholder="First Name" 
+                value={f_name} 
+                onChange={(e) => setFirstName(e.target.value)} 
+            />
+            <input 
+                type="text" 
+                placeholder="Last Name" 
+                value={l_name} 
+                onChange={(e) => setLastName(e.target.value)} 
             />
             {/* Button to submit the sign-up form */}
             <button onClick={handleSignUp}>Sign Up</button>
