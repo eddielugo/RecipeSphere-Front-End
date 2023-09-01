@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com'; // Import emailjs for sending emails
+
 import './SignUpLoginPage.css';
 
 // Main component for the sign-up and login page.
@@ -22,32 +25,59 @@ const SignUpForm = () => {
     const [f_name, setFirstName] = useState('');
     const [l_name, setLastName] = useState('');
 
-    const handleSignUp = () => {
-        // POST request to Django REST API for user sign-up
-        fetch('https://be.recipesphere.net/api/createuser/', {// Replace with your Django API URL
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                username:username,
-                email:email,
-                password:password, 
-                first_name:f_name,
-                last_name:l_name,
+    const navigate = useNavigate();
 
-            }),
+
+    const handleSignUp = () => {
+      
+        // POST request to Django REST API for user sign-up
+        fetch('https://be.recipesphere.net/api/createuser/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+            first_name: f_name,
+            last_name: l_name,
+          }),
         })
         .then(response => response.json())
         .then(response => {
-            // TODO: add message of error or redirect to verifyemail webpage after signup success. on success an 
-            // email will be sent out to the user email 
+          if (response.status === 'success') {
+            // TODO: Redirect to verifyemail webpage after signup success
+            //navigate('/verifyemail');
+      
+            // TODO: Send out an email to the user email using emailjs
+            const templateParams = {
+              to_email: email,
+              username: username,
+            };
+            emailjs.send('your_service_id', 'your_template_id', templateParams, 'your_user_id')
+            .then((result) => {
+              console.log('Email sent:', result.text);
+            }, (error) => {
+              console.log('Email error:', error.text);
+            });
+          } else {
+            //Show error message
+            alert('Error during sign-up: ' + response.message);
+          }
         })
         .then(data => {
-            // Handle successful sign-up (e.g., navigate to login page or show a success message)
+          //Handle successful sign-up (e.g., show a successful signup message and navigate to Homepage.js)
+          if (data && data.status === 'success') {
+            alert('Sign-up successful! Please verify your email.');
+            navigate('/'); // Navigate to Homepage
+          }
         })
-        // .catch(error => console.error('Error during sign-up:', error));
-    };
+        .catch(error => {
+          console.error('Error during sign-up:', error);
+          alert('An error occurred during sign-up. Please try again.');
+        });
+      };
 
 
     return (
