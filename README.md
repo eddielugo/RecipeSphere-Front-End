@@ -136,6 +136,10 @@ npm install
 npm install axios 
 
 npm install --save-dev jest-fetch-mock
+
+npm install jest babel-jest @babel/core @babel/preset-env --save-devn
+
+npm install --save-dev @testing-library/react @testing-library/jest-dom
 ```
 
 ### 🎮 Using RecipeSphere-Front-End
