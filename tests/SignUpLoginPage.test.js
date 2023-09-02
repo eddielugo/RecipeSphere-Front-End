@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect'; // for the "toBeInTheDocument" matcher
 import SignUpLoginPage, { SignUpForm, LoginForm } from '../src/SignUpLoginPage'; // Adjust the import to your file structure
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 /*This test file includes three test cases:
 
@@ -31,12 +31,18 @@ global.fetch = jest.fn(() =>
 
 // Test suite for SignUpLoginPage component
 describe('SignUpLoginPage', () => {
+  // Mock the fetch function
+  global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve({}) }));
   // Test case for rendering SignUpLoginPage component
   it('renders SignUpLoginPage component', () => {
-    render(<SignUpLoginPage />);
-    // Check if the component renders without crashing
-    expect(screen.getByText('Sign Up')).toBeInTheDocument();
-    expect(screen.getByText('Login')).toBeInTheDocument();
+    render(
+    <MemoryRouter>
+      <SignUpLoginPage />
+    </MemoryRouter>);
+    // Check if the first occurrence of 'Sign Up' is in the document
+    // Use getAllByText to handle multiple elements with the same text
+    expect(screen.getAllByText('Sign Up')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Login')[0]).toBeInTheDocument();
   });
 
   // Test case for handleSignUp function in SignUpForm component
@@ -44,9 +50,9 @@ describe('SignUpLoginPage', () => {
     // Render SignUpForm component with routing
     render(
       <MemoryRouter initialEntries={['/signup']}>
-        <Route path="/signup">
-          <SignUpForm />
-        </Route>
+        <Routes>
+          <Route path="/signup" element={<SignUpForm />} />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -67,10 +73,13 @@ describe('SignUpLoginPage', () => {
       target: { value: 'User' },
     });
 
-    // Simulate clicking the Sign Up button
-    fireEvent.click(screen.getByText('Sign Up'));
+  
+    // Simulate clicking the first occurrence of the 'Sign Up' button
+    fireEvent.click(screen.getAllByText('Sign Up')[0]);
+
 
     // Wait for the fetch function to be called once
+    // Use getAllByText to handle multiple elements with the same text
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
   });
 
@@ -79,9 +88,9 @@ describe('SignUpLoginPage', () => {
     // Render LoginForm component with routing
     render(
       <MemoryRouter initialEntries={['/login']}>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
+        <Routes>
+          <Route path="/login" element={<LoginForm />} />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -93,8 +102,10 @@ describe('SignUpLoginPage', () => {
       target: { value: 'testpassword' },
     });
 
-    // Simulate clicking the Login button
-    fireEvent.click(screen.getByText('Login'));
+  
+    // Use getAllByText to handle multiple elements with the same text
+     // Simulate clicking the first occurrence of the 'Login' button
+     fireEvent.click(screen.getAllByText('Login')[0]);
 
     // Wait for the fetch function to be called once
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));

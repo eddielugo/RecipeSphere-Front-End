@@ -18,7 +18,7 @@ const SignUpLoginPage = () => {
 }
 
 // Component for the sign-up form.
-const SignUpForm = () => {
+export const SignUpForm = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -124,7 +124,7 @@ const SignUpForm = () => {
 }
 
 // Component for the login form.
-const LoginForm = () => {
+export const LoginForm = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
 
