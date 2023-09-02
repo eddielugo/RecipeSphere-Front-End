@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect'; // for the "toBeInTheDocument" matcher
-import SignUpLoginPage, { SignUpForm, LoginForm } from './SignUpLoginPage'; // Adjust the import to your file structure
+import SignUpLoginPage, { SignUpForm, LoginForm } from '../src/SignUpLoginPage'; // Adjust the import to your file structure
 import { MemoryRouter, Route } from 'react-router-dom';
 
 /*This test file includes three test cases:

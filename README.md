@@ -140,6 +140,14 @@ npm install --save-dev jest-fetch-mock
 npm install jest babel-jest @babel/core @babel/preset-env --save-devn
 
 npm install --save-dev @testing-library/react @testing-library/jest-dom
+
+npm install --save-dev @babel/preset-react
+
+npm install --save-dev babel-jest
+
+
+
+
 ```
 
 ### 🎮 Using RecipeSphere-Front-End
