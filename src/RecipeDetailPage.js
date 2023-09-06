@@ -6,7 +6,9 @@ import { jsPDF } from "jspdf"; // Library to generate PDFs
 import emailjs from 'emailjs-com'; // Library to send emails
 
 
-// Error Boundary Component
+// Error Boundary Component. Note: While this is good for production, 
+//this may affect our tests. If the component throws an error, 
+//the ErrorBoundary will catch it, potentially making the test pass when it should fail.
 class ErrorBoundary extends React.Component {
     constructor(props) {
       super(props);

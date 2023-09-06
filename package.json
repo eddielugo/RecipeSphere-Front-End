@@ -22,7 +22,6 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
-  
   "jest": {
     "testMatch": [
       "<rootDir>/tests/**/*.test.js"
@@ -32,11 +31,12 @@
     },
     "testEnvironment": "jsdom"
   },
-
   "babel": {
-    "presets": ["@babel/preset-env", "@babel/preset-react"]
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
   },
-  
   "eslintConfig": {
     "extends": [
       "react-app",

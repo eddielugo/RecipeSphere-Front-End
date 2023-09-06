@@ -135,6 +135,8 @@ npm install
 
 npm install axios 
 
+npm install jspdf --save
+
 npm install --save-dev jest-fetch-mock
 
 npm install jest babel-jest @babel/core @babel/preset-env --save-devn
