@@ -1,4 +1,5 @@
 /* Styling for the header section */
+
 header {
     display: flex;                 /* Use flexbox for layout */
     justify-content: space-between; /* Distribute items evenly with maximum space in between */
@@ -10,15 +11,30 @@ header {
 }
 
 /* Styling for the add/edit recipe page container */
+
 .add-edit-recipe-page {
-    font-family: Arial, sans-serif; /* Use Arial font, with sans-serif as fallback */
-    padding: 20px;                  /* Padding all around */
-    background-color: #f4f4f4;     /* Light gray background color */
-    min-height: 100vh;              /* Minimum height to cover the entire viewport height */
+    font-family: Arial, sans-serif;
+    padding: 20px; /* Padding all around */
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('C:\Users\eddie\recipesphere-fe-2\Images\pexels-sarah-chai-7262911.jpg'); /* Set your image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
     display: flex;                  /* Use flexbox for layout */
     flex-direction: column;         /* Stack items vertically */
     align-items: center;            /* Horizontally align items in the center */
+    min-height: 100vh;
 }
+/*.add-edit-recipe-page {
+    font-family: Arial, sans-serif; /* Use Arial font, with sans-serif as fallback 
+    padding: 20px;                  /* Padding all around 
+    background-color: #f4f4f4;     /* Light gray background color 
+    min-height: 100vh;              /* Minimum height to cover the entire viewport height 
+    display: flex;                  /* Use flexbox for layout 
+    flex-direction: column;         /* Stack items vertically 
+    align-items: center;            /* Horizontally align items in the center 
+}
+*/
 
 /* Styling for the main heading on the add/edit recipe page */
 .add-edit-recipe-page h2 {

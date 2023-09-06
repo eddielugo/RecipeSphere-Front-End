@@ -1,15 +1,30 @@
 /* 
  * Styles for the recipe detail page.
  */
+ 
  .recipe-detail-page {
-    font-family: Arial, sans-serif; /* Set the font for the page */
-    padding: 20px; /* Add padding around the content */
-    background-color: #f4f4f4; /* Set a light gray background color */
-    min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
-    display: flex; /* Use flexbox for layout */
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('C:\Users\eddie\recipesphere-fe-2\Images\RecipeDetailPage.jpg'); /* Set your image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
+    min-height: 100vh;
+    display: flex; /* Use flexbox for layout */ 
     flex-direction: column; /* Stack children vertically */
     align-items: center; /* Center children horizontally */
 }
+ /*.recipe-detail-page {
+    font-family: Arial, sans-serif; /* Set the font for the page 
+    padding: 20px; /* Add padding around the content 
+    background-color: #f4f4f4; /* Set a light gray background color 
+    min-height: 100vh; /* Ensure the page takes up at least the full viewport height 
+    display: flex; /* Use flexbox for layout 
+    flex-direction: column; /* Stack children vertically 
+    align-items: center; /* Center children horizontally 
+}
+*/
 
 /* 
  * Style for images on the recipe detail page.
