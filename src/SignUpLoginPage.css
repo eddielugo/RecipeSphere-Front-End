@@ -1,12 +1,28 @@
 /* Main styling for the signup and login page */
+
 .signup-login-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('C:\Users\eddie\recipesphere-fe-2\Images\SignUpLoginPage2.jpg'); /* Set your image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
+    justify-content: center; /* Center children vertically*/
+    align-items: center; /* Center children horizontally */
     display: flex;
     flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center children horizontally */
-    justify-content: center; /* Center children vertically */
-    padding: 20px;
-    height: 100vh; /* Take the full viewport height */
+    min-height: 100vh;
 }
+/*.signup-login-page {
+    display: flex;
+    flex-direction: column; /* Stack children vertically 
+    align-items: center; /* Center children horizontally 
+    justify-content: center; /* Center children vertically 
+    padding: 20px;
+    height: 100vh; /* Take the full viewport height 
+}
+*/
 
 /* Styling for both signup and login forms */
 .signup-form, .login-form {

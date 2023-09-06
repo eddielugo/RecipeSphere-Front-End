@@ -1,13 +1,25 @@
 /* Styling for the Contact Support Page */
+
 .contact-support-page {
-    font-family: Arial, sans-serif; /* Set the font for the page */
-    max-width: 600px; /* Set a maximum width for the content */
-    margin: 0 auto; /* Center the content horizontally */
-    padding: 20px; /* Add padding around the content */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow around the content */
-    background-color: #f9f9f9; /* Set a light gray background for the entire page */
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('C:\Users\eddie\recipesphere-fe-2\Images\ContactUs.jpg'); /* Set image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
+    min-height: 100vh;
 }
 
+/*.contact-support-page {
+    font-family: Arial, sans-serif; /* Set the font for the page 
+    max-width: 600px; /* Set a maximum width for the content 
+    margin: 0 auto; /* Center the content horizontally 
+    padding: 20px; /* Add padding around the content 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow around the content 
+    background-color: #f9f9f9; /* Set a light gray background for the entire page 
+}
+*/
 /* Styling for the main heading on the page */
 h1 {
     text-align: center; /* Center the heading text */
@@ -42,13 +54,19 @@ input, textarea {
     border-radius: 5px; /* Round the corners */
     font-size: 16px; /* Set font size */
     width: 48%; /* Set width so that Name and Email fields fit side by side */
+    margin: auto; /* Center the textarea */
 }
 
 /* Styling specific to the message textarea */
 textarea {
     width: 100%; /* Message textarea takes the full width */
     height: 100px; /* Set a fixed height for the textarea */
+    resize: none; /* Disable resizing */
+    font-size: 16px; /* Set font size */
+    margin: auto; /* Center the textarea */
+    
 }
+
 
 /* Styling for the submit button */
 button {
