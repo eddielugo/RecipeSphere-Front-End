@@ -1,10 +1,26 @@
 /* Main styling for the home page */
+
 .home-page {
-    font-family: Arial, sans-serif;  /* Set the font for the home page */
-    padding: 20px;  /* Add padding around the content */
-    background-color: #f4f4f4;  /* Set a light gray background color */
-    min-height: 100vh;  /* Ensure the home page takes up the full viewport height */
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('C:\Users\eddie\recipesphere-fe-2\Images\spaghetti-1932466.jpg'); /* Set image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
+    min-height: 100vh;
 }
+
+/*
+.home-page {
+    font-family: Arial, sans-serif;  /* Set the font for the home page 
+    padding: 20px;  /* Add padding around the content 
+    background-color: #f4f4f4;  /* Set a light gray background color 
+    min-height: 100vh;  /* Ensure the home page takes up the full viewport height 
+}
+*/
+
+
 
 /* Styling for the header section */
 header {
@@ -19,6 +35,7 @@ header {
 
 /* Styling for the site title */
 h1 {
+    color: #fff;  /* Set text color to white */
     margin: 0;  /* Remove default margin */
     font-size: 24px;  /* Set font size for the title */
 }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 //import axios from 'axios'; // Import axios for API calls
 import './AddRecipePage.css';
 
-// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+// TODO: ADD Error Boundary Component - see
 
 // Component for adding a new recipe
 const AddRecipePage = () => {
