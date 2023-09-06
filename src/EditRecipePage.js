@@ -29,26 +29,19 @@ const EditRecipePage = () => {
     }, [recipeId]);*/
 // Effect hook to fetch the recipe data when the component mounts or when recipeId changes
 useEffect(() => {
-    // Fetching recipe data from Django REST API using fetch
+    // TODO: Fetching recipe data from Django REST API using fetch
     fetch(`http://your-django-api-url/recipes/${recipeId}/`)
         .then(response => response.json())
         .then(data => setRecipe(data))
         .catch(error => console.error('Error fetching data:', error));
 
-    // Fetching recipe data from Django REST API using axios if we decide to use instead of fetch (commented out)
-    // axios.get(`http://your-django-api-url/recipes/${recipeId}/`)
-    //     .then(response => {
-    //         setRecipe(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error fetching data:', error);
-    //     });
+    
 }, [recipeId]);
 
 // Handler function to save the edited recipe details
 const handleSave = (e) => {
     e.preventDefault();
-    // Updating recipe data through Django REST API using fetch
+    // TODO: Updating recipe data through Django REST API using fetch
     fetch(`http://your-django-api-url/recipes/${recipeId}/`, {
         method: 'PUT',
         headers: {

@@ -37,7 +37,7 @@ const AddRecipePage = () => {
 
         console.log(recipe);
         // API call to your Django REST backend
-        // Replace http://your-django-api-url/ with the actual URL of oour Django REST API
+        // TODO: Replace http://your-django-api-url/ with the actual URL of oour Django REST API
         const apiUrl = 'http://your-django-api-url/recipes/';
         const response = await fetch(apiUrl, {
             method: 'POST',

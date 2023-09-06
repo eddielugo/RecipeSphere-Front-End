@@ -11,7 +11,7 @@ const RecipeDetailPage = () => {
     const { recipeId } = useParams();
     const [recipe, setRecipe] = useState(null);
 
-   // Fetch recipe data from Django REST API
+   // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
     fetch(`http://your-django-api-url/recipes/${recipeId}/`)
     .then(response => response.json())
@@ -36,7 +36,7 @@ const RecipeDetailPage = () => {
         }
     };
 
-    // Function to send the recipe details via email
+    // TODO: Different service? Function to send the recipe details via email
     const sendEmail = (e) => {
         e.preventDefault();
         emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')

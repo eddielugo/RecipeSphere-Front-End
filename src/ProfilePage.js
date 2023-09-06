@@ -19,7 +19,7 @@ const ProfilePage = () => {
 const UserInformation = () => {
     const [userInfo, setUserInfo] = useState({});
 
-    // Fetch user information from Django REST API
+    // TODO: Fetch user information from Django REST API
     useEffect(() => {
         fetch('http://your-django-api-url/user-info/')//change this to our django api url
             .then(response => response.json())
@@ -37,7 +37,7 @@ const UserInformation = () => {
         <div className="user-info">
             <h2>User Information</h2>
             <div className="profile-picture">
-                {/* Display user's profile picture */}
+                {/* TODO: Display user's profile picture */}
                 <img src={userInfo.profilePicture || "/path/to/default/profile/picture.jpg"} alt="User Profile" />
                 {/* Input for uploading a new profile picture */}
                 <input type="file" onChange={handleImageUpload} />

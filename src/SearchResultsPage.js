@@ -5,11 +5,11 @@ import './SearchResultsPage.css';
 // Main component to display the search results page.
 const SearchResultsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    // const [results, setResults] = useState(sampleData); // Commented out for demonstration purposes
+    // const [results, setResults] = useState(sampleData); // Commented out for demonstration purposes only
     const [results, setResults] = useState([]); // Initialize with empty arrayults with sample data. Replace with actual data fetching logic in a real-world scenario.
     
     useEffect(() => {
-        // Fetch search results from Django REST API when searchQuery changes
+        // TODO: Fetch search results from Django REST API when searchQuery changes
         if (searchQuery) {
             fetch(`http://your-django-api-url/search/?query=${searchQuery}`)
             .then(response => response.json())

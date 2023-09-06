@@ -10,7 +10,7 @@ function NavigationBar() {
 // State variable to hold user authentication status
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-// Fetch user authentication status from Django REST API
+// TODO: Fetch user authentication status from Django REST API
 useEffect(() => {
   fetch('http://your-django-api-url/is-authenticated/', {// Replace with your Django API URL endpoint for checking user authentication status.
     method: 'GET',

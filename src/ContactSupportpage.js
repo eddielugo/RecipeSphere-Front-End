@@ -13,7 +13,7 @@ function ContactSupportPage() {
  const handleSubmit = (e) => {
      e.preventDefault(); // Prevent default form submission behavior
 
-     // POST request to Django REST API to submit user query
+     // Optional TODO: POST request to Django REST API to submit user query
      fetch('http://your-django-api-url/contact-support/', {// Replace with your Django API URL for handling contact support queries.
          method: 'POST',
          headers: {

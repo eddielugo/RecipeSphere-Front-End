@@ -54,7 +54,7 @@ const PopularRecipes = () => {
     const [recipes, setRecipes] = useState([]);  // State to hold popular recipes
 
     useEffect(() => {
-        // Using fetch to get popular recipes
+        // TODO: Using fetch to get popular recipes
         fetch('http://your-django-api-url/popular-recipes/')
             .then(response => response.json())
             .then(data => setRecipes(data))
@@ -91,20 +91,12 @@ const NewRecipes = () => {
     const [recipes, setRecipes] = useState([]);  // State to hold new recipes
 
     useEffect(() => {
-        // Using fetch to get new recipes from Django REST API
+        // TODO: Using fetch to get new recipes from Django REST API
         fetch('http://your-django-api-url/new-recipes/')
             .then(response => response.json())
             .then(data => setRecipes(data))
             .catch(error => console.error('Error fetching new recipes:', error));
-        //  Using axios to get new recipes
-        //Replace http://your-django-api-url/ with the actual URL to new recipes of our Django REST API
-        //axios.get('http://your-django-api-url/new-recipes/')
-        //    .then(response => {
-        //        setRecipes(response.data);
-        //    })
-        //    .catch(error => {
-        //       console.error('Error fetching new recipes:', error);
-        //    });
+        
     }, []);
 
     return (

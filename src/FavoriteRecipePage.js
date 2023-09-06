@@ -6,7 +6,7 @@ const FavoriteRecipePage = () => {
     //The favoritedRecipes state variable will hold the fetched data
     const [favoritedRecipes, setFavoritedRecipes] = useState([]);
 
-    // Fetch favorite recipes from Django REST API
+    // TODO: Fetch favorite recipes from Django REST API
     useEffect(() => {
         fetch('http://your-django-api-url/favorite-recipes/')//TODO: Replace with our Django REST API URL
             .then(response => response.json())

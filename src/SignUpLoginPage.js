@@ -54,7 +54,7 @@ export const SignUpForm = () => {
             const templateParams = {
               to_email: email,
               username: username,
-            };
+            };//TODO: Different email service?
             emailjs.send('your_service_id', 'your_template_id', templateParams, 'your_user_id')
             .then((result) => {
               console.log('Email sent:', result.text);
@@ -129,7 +129,7 @@ export const LoginForm = () => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        // POST request to Django REST API for user login
+        // TODO: POST request to Django REST API for user login
         fetch('http://your-django-api-url/login/', {
             method: 'POST',
             headers: {
