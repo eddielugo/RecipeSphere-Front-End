@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './NavigationBar.css';
 
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
 function NavigationBar() {
   // Hooks to navigate between routes and get the current location
   const navigate = useNavigate();

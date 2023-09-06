@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './RecipeCreationPage.css';
 
+
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
+
 // Represents the recipe creation page where users can input details for a new recipe.
 const RecipeCreationPage = () => {
     // State variables for storing user input.

@@ -8,6 +8,9 @@ import './HomePage.css';
  * HomePage Component: Represents the main landing page of the application.
  * It includes the site header, login button, search bar, popular recipes, and new recipes sections.
  */
+
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
 const HomePage = () => {
     return (
         <div className="home-page">

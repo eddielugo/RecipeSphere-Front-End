@@ -1,7 +1,8 @@
 // Importing necessary React hooks and router utilities
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-// import axios from 'axios';  // Importing axios for API calls if we use instead of fetch
+
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
 
 // Sample data for demonstration purposes
 //import { sampleData } from './sampleData'; 
@@ -20,7 +21,7 @@ const EditRecipePage = () => {
     // State to hold the current recipe being edited
     const [recipe, setRecipe] = useState(null);
 
-    // Effect hook to fetch the recipe data (recipeData) when the component mounts or when recipeId changes
+    // SampleData: Effect hook to fetch the recipe data (recipeData) when the component mounts or when recipeId changes
     /*useEffect(() => {
         // Finding the recipe from the sample data based on the recipeId
         const fetchedRecipe = sampleData.find(r => r.id === parseInt(recipeId));
@@ -57,14 +58,6 @@ const handleSave = (e) => {
         console.error('Error updating recipe:', error);
     });
 
-    // Updating recipe data through Django REST API using axios (commented out) if we decide to use instead of fetch
-    // axios.put(`http://your-django-api-url/recipes/${recipeId}/`, recipe)
-    //     .then(response => {
-    //         console.log('Recipe updated:', response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error updating recipe:', error);
-    //     });
 };
 
     // If the recipe data hasn't been loaded yet, display a loading message

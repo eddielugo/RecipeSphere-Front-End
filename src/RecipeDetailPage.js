@@ -5,21 +5,53 @@ import { useParams } from 'react-router-dom'; // Hook to access route parameters
 import { jsPDF } from "jspdf"; // Library to generate PDFs
 import emailjs from 'emailjs-com'; // Library to send emails
 
+
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { hasError: false };
+    }
+  
+    static getDerivedStateFromError(error) {
+      return { hasError: true };
+    }
+  
+    componentDidCatch(error, errorInfo) {
+      console.error("Caught error:", error, errorInfo);
+    }
+  
+    render() {
+      if (this.state.hasError) {
+        return <h1>Something went wrong.</h1>;
+      }
+  
+      return this.props.children;
+    }
+  }
+
 // Component to display detailed information about a specific recipe
 const RecipeDetailPage = () => {
     // Extracting the recipeId from the route parameters
     const { recipeId } = useParams();
-    const [recipe, setRecipe] = useState(null);
+    //initialize the recipe state with an object that has default values 
+    //for ingredients and comments as empty arrays
+    const [recipe, setRecipe] = useState({ ingredients: [], comments: [] });
+
 
    // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
+    console.log("Fetching recipe data...");
     fetch(`http://your-django-api-url/recipes/${recipeId}/`)
-    .then(response => response.json())
-    .then(data => setRecipe(data))
-    .catch(error => console.error('Error fetching recipe:', error));
-}, [recipeId]);
+      .then(response => response.json())
+      .then(data => {
+        console.log("Fetched recipe data:", data);
+        setRecipe(data);
+      })
+      .catch(error => console.error('Error fetching recipe:', error));
+  }, [recipeId]);
 
-// Commented out for demonstration purposes
+// Commented out: demonstration purposes
 // let recipe = sampleData.find(r => r.id === parseInt(recipeId));
 // if (!recipe) {
 //     recipe = sampleData[0];
@@ -48,7 +80,7 @@ const RecipeDetailPage = () => {
     };
 
     // If the recipe is not found, display an error message
-    if (!recipe) {
+    if (!recipe || !recipe.ingredients || !recipe.comments) {
         return (
             <div className="recipe-detail-page">
                 <h2>Recipe not found</h2>
@@ -59,36 +91,38 @@ const RecipeDetailPage = () => {
 
     // Render the recipe details
     return (
-        <div className="recipe-detail-page">
-            {/* Display recipe image */}
+        <ErrorBoundary>
+          <div className="recipe-detail-page">
+           {/* Display recipe image */}
             <img src={recipe.image} alt={recipe.name} />
             {/* Display recipe name */}
             <h2>{recipe.name}</h2>
             {/* List of ingredients */}
             <div className="ingredients">
-                <h3>Ingredients</h3>
-                <ul>
-                    {recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}
-                </ul>
+              <h3>Ingredients</h3>
+              <ul>
+                {recipe.ingredients && recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}
+              </ul>
             </div>
             {/* Cooking instructions */}
             <div className="instructions">
-                <h3>Instructions</h3>
-                <p>{recipe.instructions}</p>
+              <h3>Instructions</h3>
+              <p>{recipe.instructions}</p>
             </div>
-            {/* List of comments */}
+              {/* List of comments */}
             <div className="comments">
-                <h3>Comments</h3>
-                <ul>
-                    {recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
-                </ul>
+              <h3>Comments</h3>
+              <ul>
+                {recipe.comments && recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
+              </ul>
             </div>
             {/* Button to share the recipe via email */}
             <button onClick={sendEmail}>Share via Email</button>
             {/* Button to generate a printable PDF of the recipe */}
             <button onClick={printToPdf}>Generate Printable PDF</button>
-        </div>
-    );
+          </div>
+        </ErrorBoundary>
+      );
 }
 
 export default RecipeDetailPage; // Exporting the component for use in other parts of the application

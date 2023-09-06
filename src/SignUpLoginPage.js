@@ -4,6 +4,9 @@ import emailjs from 'emailjs-com'; // Import emailjs for sending emails
 
 import './SignUpLoginPage.css';
 
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
+
 // Main component for the sign-up and login page.
 const SignUpLoginPage = () => {
     

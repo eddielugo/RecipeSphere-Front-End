@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './FavoriteRecipePage.css';
 
+
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
+
 // Main component to display the user's favorite recipes
 const FavoriteRecipePage = () => {
     //The favoritedRecipes state variable will hold the fetched data

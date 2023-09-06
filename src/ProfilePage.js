@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './ProfilePage.css';
 
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
+
+
 // Main Profile Page Component
 const ProfilePage = () => {
     return (

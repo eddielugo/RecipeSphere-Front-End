@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import './ContactSupportPage.css';
 
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
 // Functional component for the Contact Support Page
 function ContactSupportPage() {
  // State variables to hold form input values

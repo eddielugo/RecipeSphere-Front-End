@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './SearchResultsPage.css';
 
+// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+
+
 // Main component to display the search results page.
 const SearchResultsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
