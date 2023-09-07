@@ -256,6 +256,7 @@ This project is licensed under the `ℹ️  INSERT-LICENSE-TYPE` License. See th
 
 ## 👏 Acknowledgments
 
-> - `ℹ️  This project was bootstrapped with [Create React App]`
-
+> - 
+This project was bootstrapped with [Create React App](https://create-react-app.dev/)
+Addtional reference: [React Dev Blog](https://react.dev/blog/2023/03/16/introducing-react-dev)
 ---
