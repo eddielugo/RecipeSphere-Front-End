@@ -21,27 +21,36 @@ const EditRecipePage = () => {
     // State to hold the current recipe being edited
     const [recipe, setRecipe] = useState(null);
 
-    // SampleData: Effect hook to fetch the recipe data (recipeData) when the component mounts or when recipeId changes
+    // SampleData: Effect hook to fetch the sample recipe data (recipeData) when the component mounts or when recipeId changes
     /*useEffect(() => {
         // Finding the recipe from the sample data based on the recipeId
         const fetchedRecipe = sampleData.find(r => r.id === parseInt(recipeId));
         // Setting the found recipe to the state
         setRecipe(fetchedRecipe);
     }, [recipeId]);*/
+
 // Effect hook to fetch the recipe data when the component mounts or when recipeId changes
 useEffect(() => {
-    // TODO: Fetching recipe data from Django REST API using fetch
+    console.log("Fetching recipe data...");
+// TODO: Fetching recipe data from Django REST API using fetch
     fetch(`http://your-django-api-url/recipes/${recipeId}/`)
-        .then(response => response.json())
-        .then(data => setRecipe(data))
-        .catch(error => console.error('Error fetching data:', error));
-
-    
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Fetched recipe data:", data);
+            setRecipe(data);
+        })
+        .catch(error => console.error('Error fetching recipe:', error));
 }, [recipeId]);
 
 // Handler function to save the edited recipe details
 const handleSave = (e) => {
     e.preventDefault();
+    console.log("Updating recipe data...");
     // TODO: Updating recipe data through Django REST API using fetch
     fetch(`http://your-django-api-url/recipes/${recipeId}/`, {
         method: 'PUT',
@@ -50,14 +59,18 @@ const handleSave = (e) => {
         },
         body: JSON.stringify(recipe),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Recipe updated:', data);
     })
     .catch(error => {
         console.error('Error updating recipe:', error);
     });
-
 };
 
     // If the recipe data hasn't been loaded yet, display a loading message

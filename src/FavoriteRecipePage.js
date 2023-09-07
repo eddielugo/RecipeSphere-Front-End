@@ -12,9 +12,19 @@ const FavoriteRecipePage = () => {
 
     // TODO: Fetch favorite recipes from Django REST API
     useEffect(() => {
-        fetch('http://your-django-api-url/favorite-recipes/')//TODO: Replace with our Django REST API URL
-            .then(response => response.json())
-            .then(data => setFavoritedRecipes(data))
+        console.log("Fetching favorite recipes...");
+    
+        fetch('http://your-django-api-url/favorite-recipes/') // TODO: Replace with your Django REST API URL
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Fetched favorite recipes:", data);
+                setFavoritedRecipes(data);
+            })
             .catch(error => console.error('Error fetching favorite recipes:', error));
     }, []);
 

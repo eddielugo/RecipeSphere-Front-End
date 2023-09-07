@@ -15,9 +15,14 @@ const SearchResultsPage = () => {
         // TODO: Fetch search results from Django REST API when searchQuery changes
         if (searchQuery) {
             fetch(`http://your-django-api-url/search/?query=${searchQuery}`)
-            .then(response => response.json())
-            .then(data => setResults(data))
-            .catch(error => console.error('Error fetching search results:', error));
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => setResults(data))
+                .catch(error => console.error('Error fetching search results:', error));
         }
     }, [searchQuery]);
 

@@ -21,11 +21,20 @@ function App() {
 
   // Fetch recipes from Django REST API
   useEffect(() => {
-    // TODO: fetch data from our Django REST API
+    console.log("Fetching recipes...");
+  // TODO: fetch data from our Django REST API
     fetch('http://your-django-api-url/recipes/')
-       .then(response => response.json())
-       .then(data => setRecipes(data))
-       .catch(error => console.error('Error fetching data:', error));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Fetched recipes:", data);
+        setRecipes(data);
+      })
+      .catch(error => console.error('Error fetching data:', error));
   }, []); // Empty dependency array means this useEffect runs once when the component mounts
   
   return (

@@ -56,23 +56,23 @@ const PopularRecipes = () => {
     //const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
     const [recipes, setRecipes] = useState([]);  // State to hold popular recipes
 
-    useEffect(() => {
-        // TODO: Using fetch to get popular recipes
-        fetch('http://your-django-api-url/popular-recipes/')
-            .then(response => response.json())
-            .then(data => setRecipes(data))
-            .catch(error => console.error('Error fetching popular recipes:', error));
-
-        // Using axios to get popular recipes
-        //Replace http://your-django-api-url/ with the actual URL of our Django REST API
-        //axios.get('http://your-django-api-url/popular-recipes/')
-        //    .then(response => {
-        //        setRecipes(response.data);
-        //    })
-        //    .catch(error => {
-        //        console.error('Error fetching popular recipes:', error);
-        //    });
-    }, []);
+    // Fetching popular recipes
+useEffect(() => {
+    console.log("Fetching popular recipes...");
+// TODO: Update with our URL
+    fetch('http://your-django-api-url/popular-recipes/')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Fetched popular recipes:", data);
+            setRecipes(data);
+        })
+        .catch(error => console.error('Error fetching popular recipes:', error));
+}, []);
 
     return (
         <div className="popular-recipes">
@@ -93,14 +93,23 @@ const NewRecipes = () => {
     //const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
     const [recipes, setRecipes] = useState([]);  // State to hold new recipes
 
-    useEffect(() => {
-        // TODO: Using fetch to get new recipes from Django REST API
-        fetch('http://your-django-api-url/new-recipes/')
-            .then(response => response.json())
-            .then(data => setRecipes(data))
-            .catch(error => console.error('Error fetching new recipes:', error));
-        
-    }, []);
+    // Fetching new recipes
+useEffect(() => {
+    console.log("Fetching new recipes...");
+    // TODO: Update with our  URL
+    fetch('http://your-django-api-url/new-recipes/')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Fetched new recipes:", data);
+            setRecipes(data);
+        })
+        .catch(error => console.error('Error fetching new recipes:', error));
+}, []);
 
     return (
         <div className="new-recipes">

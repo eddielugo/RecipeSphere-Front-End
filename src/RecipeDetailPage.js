@@ -45,13 +45,19 @@ const RecipeDetailPage = () => {
    useEffect(() => {
     console.log("Fetching recipe data...");
     fetch(`http://your-django-api-url/recipes/${recipeId}/`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(data => {
         console.log("Fetched recipe data:", data);
         setRecipe(data);
       })
       .catch(error => console.error('Error fetching recipe:', error));
   }, [recipeId]);
+  
 
 // Commented out: demonstration purposes
 // let recipe = sampleData.find(r => r.id === parseInt(recipeId));

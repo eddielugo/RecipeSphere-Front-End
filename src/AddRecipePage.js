@@ -27,39 +27,37 @@ const AddRecipePage = () => {
     }
 
     // Handler to submit the form
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // TODO: Update form submission logic
-        // Create FormData object to handle image file
-        const formData = new FormData();
-        formData.append('name', recipe.name);
-        formData.append('image', recipe.image);
-        formData.append('ingredients', recipe.ingredients);
-        formData.append('instructions', recipe.instructions);
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    // TODO: Update form submission logic
+    // Create FormData object to handle image file
+    const formData = new FormData();
+    formData.append('name', recipe.name);
+    formData.append('image', recipe.image);
+    formData.append('ingredients', recipe.ingredients);
+    formData.append('instructions', recipe.instructions);
 
-        console.log(recipe);
-        // API call to your Django REST backend
-        // TODO: Replace http://your-django-api-url/ with the actual URL of oour Django REST API
-        const apiUrl = 'http://your-django-api-url/recipes/';
+    console.log(recipe);
+    // API call to your Django REST backend
+    // TODO: Replace http://your-django-api-url/ with the actual URL of your Django REST API
+    const apiUrl = 'http://your-django-api-url/recipes/';
+    
+    try {
         const response = await fetch(apiUrl, {
             method: 'POST',
             body: formData
         });
 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
         const data = await response.json();
         console.log(data);
-        
-
-        // If we prefer using axios, uncomment the following lines
-        /*
-        const response = await axios.post(apiUrl, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        console.log(response.data);
-        */
+    } catch (error) {
+        console.error('Error submitting recipe:', error);
     }
+}
 
     // Render the add recipe form
     return (

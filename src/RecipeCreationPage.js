@@ -31,19 +31,23 @@ const RecipeCreationPage = () => {
         formData.append('instructions', instructions);
         formData.append('image', image);
 
-        // Send the form data to the Django REST API
-        fetch('http://your-django-api-url/create-recipe/', {//TODO: Replace with our Django REST API URL
+        fetch('http://your-django-api-url/create-recipe/', { //TODO: Replace with your Django REST API URL
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+        }
+            return response.json();
+        })
         .then(data => {
-            // Handle successful form submission (e.g., navigate to another page or display a success message)
-            console.log('Recipe successfully created:', data);
+    // Handle successful form submission (e.g., navigate to another page or display a success message)
+    console.log('Recipe successfully created:', data);
         })
         .catch(error => {
-            // Handle errors (e.g., display an error message)
-            console.log('Error creating recipe:', error);
+    // Handle errors (e.g., display an error message)
+    console.log('Error creating recipe:', error);
         });
     }
 

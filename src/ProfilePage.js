@@ -23,10 +23,15 @@ const ProfilePage = () => {
 const UserInformation = () => {
     const [userInfo, setUserInfo] = useState({});
 
-    // TODO: Fetch user information from Django REST API
+    // TODO: Change to our URL
     useEffect(() => {
-        fetch('http://your-django-api-url/user-info/')//change this to our django api url
-            .then(response => response.json())
+        fetch('http://your-django-api-url/user-info/') // Change this to your Django API URL
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => setUserInfo(data))
             .catch(error => console.error('Error fetching user information:', error));
     }, []);
@@ -58,8 +63,13 @@ const SharedRecipes = () => {
     const [sharedRecipes, setSharedRecipes] = useState([]);
 // Fetch shared recipes from Django REST API
 useEffect(() => {
-    fetch('http://your-django-api-url/shared-recipes/')//TODO: Replace with our Django REST API URL
-        .then(response => response.json())
+    fetch('http://your-django-api-url/shared-recipes/') // Replace with your Django REST API URL
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => setSharedRecipes(data))
         .catch(error => console.error('Error fetching shared recipes:', error));
 }, []);
@@ -83,12 +93,18 @@ const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
 
    // Fetch saved recipes from Django REST API
-    useEffect(() => {
-        fetch('http://your-django-api-url/saved-recipes/')//TODO: Replace with our Django REST API URL
-            .then(response => response.json())
-            .then(data => setSavedRecipes(data))
-            .catch(error => console.error('Error fetching saved recipes:', error));
-    }, []);
+   useEffect(() => {
+    fetch('http://your-django-api-url/saved-recipes/') // Replace with your Django REST API URL
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => setSavedRecipes(data))
+        .catch(error => console.error('Error fetching saved recipes:', error));
+}, []);
+
 
     // Sample data for demonstration (commented out)
     // const recipes = ['Recipe A', 'Recipe B', 'Recipe C'];
