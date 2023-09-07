@@ -133,8 +133,6 @@ cd RecipeSphere-Front-End
 ```sh
 npm install
 
-npm install axios 
-
 npm install jspdf --save
 
 npm install --save-dev jest-fetch-mock
@@ -150,9 +148,6 @@ npm install --save-dev babel-jest
 npm install --save-dev jest-css-modules
 
 
-
-
-
 ```
 
 ### 🎮 Using RecipeSphere-Front-End
@@ -164,11 +159,61 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ### 🧪 Running Tests
-```sh
-npm test
-```
 
----
+Jest & Babel Install and Test
+The process for setting up Jest with Babel is similar to the process for setting up Jest with TypeScript. However, there are some differences in the configuration options and the way they work together.
+
+Here are the general steps for setting up Jest with Babel:
+1. Install Jest and Babel: 
+```sh
+    npm install --save-dev jest @babel/core @babel/preset-env
+```
+1.a. For testing React components specifically, you'll also need some additional packages:
+
+	i. @testing-library/react: This package provides a set of utilities to test React components.
+	ii. @testing-library/jest-dom: Provides a set of custom jest matchers that you can use to extend Jest's built-in matchers for better assertions.
+
+	To get these, use the following command to install:
+```sh
+	npm install --save-dev @testing-library/react @testing-library/jest-dom
+```
+2. Configure Babel:
+Create a .babelrc.js file in the root of your project and configure Babel to transpile your JavaScript code. For example:
+```sh
+		module.exports = {
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+  };
+```
+3. Add Jest configuration:
+   Add a jest.config.js file to the root of your project and configure Jest to use Babel for transpiling your code. For example:
+ ```sh  
+	module.exports = module.exports = {
+		  roots: ['src'],
+		  transform: {
+		   '^.+\\.jsx?$': 'babel-jest',
+		  },
+		};
+```
+   The preset option tells Jest to use the @babel/preset-env plugin to transpile your code. The setupFilesAfterEnv option specifies a file that contains additional setup instructions for Jest.
+ 4. Set up testing environment:
+   In the setupTests.js file, you can define global variables and functions that you want to expose to your tests. For example:
+ ```sh  
+      import '@testing-library/jest-dom';
+
+	  global.expect = require('chai').expect;
+```
+   This sets up Chai as the assertion library for your tests.
+5. Start writing tests:
+Once you have configured Jest and Babel, you can start writing tests for your application. Test files should end with .spec.js or .test.js, depending on your preference. For example: 
+```sh 
+		import { sum } from '../src/sum';
+
+		it('should calculate the sum of two numbers', () => {
+		  expect(sum(2, 3)).toEqual(5);
+		});
+```
+Note: that the exact configuration options and syntax may vary depending on your specific requirements and the version of Jest and Babel you are using. Consult the documentation for detailed guidance.
+
 
 
 ## 🗺 Roadmap
