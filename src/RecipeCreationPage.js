@@ -39,8 +39,8 @@ const RecipeCreationPage = () => {
             instructions: instructions,
             image: image // Assuming the backend can handle base64 encoded images or a file path
         };
-        //TODO: Update with our URL
-        fetch('http://your-django-api-url/create-recipe/', {
+        console.log('Recipe data:', recipeData);
+        fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
