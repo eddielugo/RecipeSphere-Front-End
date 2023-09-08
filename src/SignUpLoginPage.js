@@ -133,16 +133,17 @@ export const LoginForm = () => {
 
     const handleLogin = () => {
         // TODO: POST request to Django REST API for user login
-        fetch('http://your-django-api-url/login/', {
+        fetch('https://be.recipesphere.net/api/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username: usernameOrEmail, password }),
+            body: JSON.stringify({ username: usernameOrEmail, password: password }),
         })
         .then(response => response.json())
         .then(data => {
-            // Handle successful login (e.g., navigate to the home page or store a session token)
+            // TODO: Navigate to homepage on successful login.
+            localStorage.setItem('token', data.token);
         })
         .catch(error => console.error('Error during login:', error));
     };
@@ -153,7 +154,7 @@ export const LoginForm = () => {
             {/* Input field for entering username or email */}
             <input 
                 type="text" 
-                placeholder="Username or Email" 
+                placeholder="Username" 
                 value={usernameOrEmail} 
                 onChange={(e) => setUsernameOrEmail(e.target.value)} 
             />

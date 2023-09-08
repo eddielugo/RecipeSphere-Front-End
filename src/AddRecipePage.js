@@ -76,12 +76,14 @@ const handleSubmit = async (e) => {
                     name="image" 
                     onChange={handleImageChange} 
                 />
+                {/*TODO: Ingredients has to be in Json */}
                 <textarea 
                     name="ingredients" 
                     placeholder="Ingredients" 
                     value={recipe.ingredients} 
                     onChange={handleChange} 
                 />
+                
                 <textarea 
                     name="instructions" 
                     placeholder="Instructions" 
