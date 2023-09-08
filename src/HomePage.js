@@ -19,7 +19,6 @@ const HomePage = () => {
                 <LoginButton />  {/*Login button component*/}
             </header>
             <SearchBar />  {/* Search bar component */}
-            <PopularRecipes />  {/* Popular recipes list component. TODO: Link to DB Search*/}
             <NewRecipes />  {/* New recipes list component */}
         </div>
     );
@@ -48,42 +47,6 @@ const SearchBar = () => {
     );
 }
 
-/**
- * PopularRecipes Component: Displays a list of popular recipes.
- */
-const PopularRecipes = () => {
-    // Sample data for demonstration
-    //const recipes = ['Recipe 1', 'Recipe 2', 'Recipe 3'];
-    const [recipes, setRecipes] = useState([]);  // State to hold popular recipes
-
-    // Fetching popular recipes
-useEffect(() => {
-    console.log("Fetching popular recipes...");
-// TODO: Update with our URL
-    fetch('http://your-django-api-url/popular-recipes/')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Fetched popular recipes:", data);
-            setRecipes(data);
-        })
-        .catch(error => console.error('Error fetching popular recipes:', error));
-}, []);
-
-    return (
-        <div className="popular-recipes">
-            <h2>Popular Recipes</h2>
-            <ul>
-                {/* Map through the recipes array and display each recipe */}
-                {recipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}  
-            </ul>
-        </div>
-    );
-}
 
 /**
  * NewRecipes Component: Displays a list of newly added recipes.
