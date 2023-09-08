@@ -14,7 +14,11 @@ const FavoriteRecipePage = () => {
     useEffect(() => {
         console.log("Fetching favorite recipes...");
     
-        fetch('http://your-django-api-url/favorite-recipes/') // TODO: Replace with your Django REST API URL
+        fetch('http://your-django-api-url/favorite-recipes/', {
+            headers: {
+                'Authorization': `Token ${localStorage.getItem('token')}`
+              }
+            }) 
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -45,7 +49,7 @@ const FavoriteRecipePage = () => {
 const UserProfile = () => {
     return (
         <div className="user-profile">
-            {/* User profile image */}
+            {/* TODO: User profile image */}
             <img src="path_to_user_image.jpg" alt="User Profile" />
             {/* Display username (replace with dynamic data in the future) */}
             <h2>Username</h2>
