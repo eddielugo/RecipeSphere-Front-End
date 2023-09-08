@@ -35,12 +35,11 @@ const RecipeCreationPage = () => {
             title: title,
             description: description,
             time_minutes: timeMinutes,
-            ingredients: ingredientsList.join(', '), // Join the array into a single string
-            //ingredients: ingredientsList, // If the backend expects ingredients as an array, we can send ingredientsList directly
+            ingredients: JSON.stringify(ingredientsList), // Convert the array to a JSON string
             instructions: instructions,
             image: image // Assuming the backend can handle base64 encoded images or a file path
         };
-
+        //TODO: Update with our URL
         fetch('http://your-django-api-url/create-recipe/', {
             method: 'POST',
             headers: {

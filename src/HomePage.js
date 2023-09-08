@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-//import axios from 'axios';  // Import axios for API calls if we use instead of fetch
-
 import './HomePage.css';
 
 /**
