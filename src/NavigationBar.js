@@ -17,7 +17,7 @@ useEffect(() => {
   fetch('http://your-django-api-url/is-authenticated/', {// Replace with your Django API URL endpoint for checking user authentication status.
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage
+      'Authorization': `Token ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage
     },
   })
   .then(response => response.json())

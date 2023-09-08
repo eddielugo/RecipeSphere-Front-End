@@ -16,7 +16,7 @@ const RootComponent = () => {
     fetch('http://your-django-api-url/initial-data/', {// Replace with your Django API URL endpoint for fetching initial data.
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage
+        'Authorization': `Token ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage
       },
     })
     .then(response => response.json())
