@@ -1,96 +1,111 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Using a more modern font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #007BFF;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 /* Main styling for the home page */
-
 .home-page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
-    background-image: url('../Images/SearchRecipe.jpg'); /* Set image path */
-    background-size: cover; /* Cover the entire container */
-    background-position: center; /* Center the image */
-    background-blend-mode: overlay; /* Blend the image with the background color */
+    background-color: rgba(244, 244, 244, 0.7);
+    background-image: url('../Images/SearchRecipe.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-
-/*
-.home-page {
-    font-family: Arial, sans-serif;  /* Set the font for the home page 
-    padding: 20px;  /* Add padding around the content 
-    background-color: #f4f4f4;  /* Set a light gray background color 
-    min-height: 100vh;  /* Ensure the home page takes up the full viewport height 
-}
-*/
-
-
 
 /* Styling for the header section */
 header {
-    display: flex;  /* Use flexbox for layout */
-    justify-content: space-between;  /* Space out the header items evenly */
-    align-items: center;  /* Vertically align items in the center */
-    background-color: #333;  /* Set a dark gray background color */
-    color: #fff;  /* Set text color to white */
-    padding: 10px 20px;  /* Add padding around the header content */
-    border-radius: 5px;  /* Round the corners of the header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(75, 75, 75, 0.9); /* Lighter shade of gray */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 /* Styling for the site title */
 h1 {
-    color: #fff;  /* Set text color to white */
-    margin: 0;  /* Remove default margin */
-    font-size: 24px;  /* Set font size for the title */
+    margin: 0;
+    font-size: 32px; /* Increased font size */
+    font-weight: 1000; /* Bold weight */
+    letter-spacing: 1.5px; /* Added letter spacing for a more designer look */
+    font-family: 'Playfair Display', serif; /* A more designer-like font */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Slight text shadow for depth */
 }
+
 
 /* Styling for the login button */
 .login-btn {
-    padding: 10px 20px;  /* Add padding around the button */
-    background-color: #007BFF;  /* Set a blue background color */
-    color: #fff;  /* Set text color to white */
-    border: none;  /* Remove default borders */
-    border-radius: 5px;  /* Round the corners of the button */
-    cursor: pointer;  /* Change the cursor to a hand when hovering */
-    transition: background-color 0.3s;  /* Smooth transition for background color changes */
-}
-
-/* Change the button color when hovered */
-.login-btn:hover {
-    background-color: #0056b3;
-}
-
-/* Styling for the search bar section */
-.search-bar {
-    margin-top: 20px;  /* Add space above the search bar */
-    display: flex;  /* Use flexbox for layout */
-    justify-content: space-between;  /* Space out the search bar items evenly */
-    align-items: flex-start;  /* Ensure items align to the top */
-}
-
-/* Reset styles and set shared styles for input and button inside the search bar */
-.search-bar input, .search-bar button {
-    margin: 0;  /* Reset any default margin */
-    vertical-align: top;  /* Ensure top alignment */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Set width for the search input field */
-.search-bar input {
-    width: 80%;
-}
-
-/* Styling for the search button */
-.search-bar button {
-    width: 15%;  /* Set width for the button */
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #007BFF;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Styling for the search bar section */
+.search-bar {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar input, .search-bar button {
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar input {
+    flex: 3; /* Takes up 3 parts of the space */
+    margin-right: 10px;
+}
+
+.search-bar button {
+    flex: 1; /* Takes up 1 part of the space */
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
     transition: background-color 0.3s;
 }
 
-/* Change the search button color when hovered */
 .search-bar button:hover {
     background-color: #0056b3;
 }
@@ -102,28 +117,40 @@ h1 {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Add a subtle shadow around the sections */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%; /* Decreased width to 80% */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* Center align the titles for popular and new recipes sections */
+/* Hover effect for new recipes */
+.new-recipes li:hover {
+    background-color: #FFEBD6; /* Light orange color */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
 .popular-recipes h2, .new-recipes h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 500;
 }
 
-/* Remove list styles for the recipes lists */
 .popular-recipes ul, .new-recipes ul {
     list-style-type: none;
     padding: 0;
 }
 
-/* Add padding and a bottom border for each recipe item */
 .popular-recipes li, .new-recipes li {
-    padding: 10px;
+    padding: 15px;
     border-bottom: 1px solid #eee;
+    transition: background-color 0.3s;
 }
 
-/* Remove the bottom border for the last recipe item */
+.popular-recipes li:hover, .new-recipes li:hover {
+    background-color: #f9f9f9;
+}
+
 .popular-recipes li:last-child, .new-recipes li:last-child {
     border-bottom: none;
 }
