@@ -7,7 +7,7 @@
     font-family: Arial, sans-serif; /* Set the font for the page */
     padding: 20px; /* Add padding around the content */
     background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
-    background-image: url('../Images/CreateRecipe.jpg'); /* Set your image path */
+    background-image: url('/Images/CreateRecipe.jpg'); /* Set your image path */
     background-size: cover; /* Cover the entire container */
     background-position: center; /* Center the image */
     background-blend-mode: overlay; /* Blend the image with the background color */
