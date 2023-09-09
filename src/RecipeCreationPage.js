@@ -31,40 +31,45 @@ const RecipeCreationPage = () => {
 
     // Handles the form submission by creating a recipe data object and sending a POST request.
     const handleSubmit = () => {
+        const formData = new FormData();
+    
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('time_minutes', timeMinutes);
         
+        // Convert the ingredientsList array to a JSON string and append it
         var jsonIngredients = {};
-
-        ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
-        const recipeData = {
-            title: title,
-            description: description,
-            time_minutes: timeMinutes,
-            ingredients: jsonIngredients, // Convert the array to a JSON string
-            instructions: instructions,
-            image: image // Assuming the backend can handle base64 encoded images or a file path
-        };
-        console.log('Recipe data:', recipeData);
+        ingredientsList.forEach((v, i) => jsonIngredients[i + 1] = v);
+        formData.append('ingredients', JSON.stringify(jsonIngredients));
+        formData.append('instructions', instructions);
+    
+        // Append the image if it exists
+        if (image) {
+            formData.append('image', image);
+        }
+    
         fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Token ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify(recipeData)
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
-                console.log(response)
+                console.log(response);
+                throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(data => {
             console.log('Recipe successfully created:', data);
         })
-        // .catch(error => {
-        //     console.log('Error creating recipe:', error);
-        // });
+        .catch(error => {
+            console.log('Error creating recipe:', error);
+        });
     }
+    
 
         /*This code allows users to dynamically add ingredient input fields by clicking the "Add Ingredient" button. 
         Each ingredient's value is stored in the ingredientsList array, which is then used in the handleSubmit function 
