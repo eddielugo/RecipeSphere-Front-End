@@ -47,7 +47,7 @@ const UserInformation = () => {
             <h2>User Information</h2>
             <div className="profile-picture">
                 {/* TODO: Display user's profile picture */}
-                <img src={userInfo.profilePicture || "/path/to/default/profile/picture.jpg"} alt="User Profile" />
+                <img src={userInfo.profilePicture || "../Images/ProfileAvatar.jpg"} alt="User Profile" />
                 {/* Input for uploading a new profile picture */}
                 <input type="file" onChange={handleImageUpload} />
             </div>

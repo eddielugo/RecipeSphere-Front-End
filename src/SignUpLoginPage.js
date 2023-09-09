@@ -128,6 +128,7 @@ export const SignUpForm = () => {
 
 // Component for the login form.
 export const LoginForm = () => {
+    const navigate = useNavigate();
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -142,8 +143,12 @@ export const LoginForm = () => {
         })
         .then(response => response.json())
         .then(data => {
-            // TODO: Navigate to homepage on successful login.
+            //navigate('/verifyemail'); // Navigate VerifyEmail.js 
             localStorage.setItem('token', data.token);
+            if (data && data.status === 'success') {
+              alert('Log-in successful! Please verify your email and OTP.');
+              navigate('/verifyemail'); // Navigate VerifyEmail.js 
+            }
         })
         .catch(error => console.error('Error during login:', error));
     };
