@@ -44,7 +44,6 @@ const RecipeCreationPage = () => {
             image: image // Assuming the backend can handle base64 encoded images or a file path
         };
         // TODO: Remove console log after we get image uplaod to work.
-        console.log(JSON.stringify(recipeData))
         //TODO: Update with our URL
         fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
@@ -55,17 +54,17 @@ const RecipeCreationPage = () => {
             body: JSON.stringify(recipeData)
         })
         .then(response => {
-            if (!response.ok) z
-                
+            if (!response.ok) {
+                console.log(response)
             }
             return response.json();
         })
         .then(data => {
             console.log('Recipe successfully created:', data);
         })
-        .catch(error => {
-            console.log('Error creating recipe:', error);
-        });
+        // .catch(error => {
+        //     console.log('Error creating recipe:', error);
+        // });
     }
 
         /*This code allows users to dynamically add ingredient input fields by clicking the "Add Ingredient" button. 
