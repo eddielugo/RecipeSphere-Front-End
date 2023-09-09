@@ -31,16 +31,22 @@ const RecipeCreationPage = () => {
 
     // Handles the form submission by creating a recipe data object and sending a POST request.
     const handleSubmit = () => {
+        
+        var jsonIngredients = {};
+
+        ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
         const recipeData = {
             title: title,
             description: description,
             time_minutes: timeMinutes,
-            ingredients: JSON.stringify(ingredientsList), // Convert the array to a JSON string
+            ingredients: jsonIngredients, // Convert the array to a JSON string
             instructions: instructions,
             image: image // Assuming the backend can handle base64 encoded images or a file path
         };
+        // TODO: Remove console log after we get image uplaod to work.
+        console.log(JSON.stringify(recipeData))
         //TODO: Update with our URL
-        fetch('http://your-django-api-url/create-recipe/', {
+        fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,8 +55,8 @@ const RecipeCreationPage = () => {
             body: JSON.stringify(recipeData)
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            if (!response.ok) z
+                
             }
             return response.json();
         })

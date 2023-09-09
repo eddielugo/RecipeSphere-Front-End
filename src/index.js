@@ -13,7 +13,7 @@ const RootComponent = () => {
 
   // Fetch initial data from Django REST API
   useEffect(() => {
-    fetch('http://your-django-api-url/initial-data/', {// Replace with your Django API URL endpoint for fetching initial data.
+    fetch('https://be.recipesphere.net/api/recipe/', {// Replace with your Django API URL endpoint for fetching initial data.
       method: 'GET',
       headers: {
         'Authorization': `Token ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage

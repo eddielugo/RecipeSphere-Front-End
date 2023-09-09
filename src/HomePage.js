@@ -58,7 +58,12 @@ const NewRecipes = () => {
 useEffect(() => {
     console.log("Fetching new recipes...");
     // TODO: Update with our  URL
-    fetch('http://your-django-api-url/new-recipes/')
+    fetch('https://be.recipesphere.net/api/recipe/', {
+    method: 'GET',
+    headers: {
+        'Authorization': `Token ${localStorage.getItem('token')}`
+    },
+})
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -76,7 +81,7 @@ useEffect(() => {
         <div className="new-recipes">
             <h2>New Recipes</h2>
             <ul>
-                {recipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}  {/* Map through the recipes array and display each recipe */}
+                {recipes.map(recipe => <li key={recipe.id}>{recipe.title} </li>)}  {/* Map through the recipes array and display each recipe */}
             </ul>
         </div>
     );
