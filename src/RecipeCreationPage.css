@@ -6,7 +6,12 @@
  .recipe-creation-page {
     font-family: Arial, sans-serif; /* Set the font for the page */
     padding: 20px; /* Add padding around the content */
-    background-color: #f4f4f4; /* Set a light gray background color */
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('../Images/CreateRecipe.jpg'); /* Set your image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
+    min-height: 100vh;
     min-height: 100vh; /* Ensure the page takes up the full viewport height */
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Stack children vertically */

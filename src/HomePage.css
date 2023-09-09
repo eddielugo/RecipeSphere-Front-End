@@ -41,7 +41,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(75, 75, 75, 0.9); /* Lighter shade of gray */
+    background-color: rgba(142, 140, 140, 0.9); /* Lighter shade of gray */
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -57,7 +57,8 @@ h1 {
     font-weight: 1000; /* Bold weight */
     letter-spacing: 1.5px; /* Added letter spacing for a more designer look */
     font-family: 'Playfair Display', serif; /* A more designer-like font */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Slight text shadow for depth */
+    text-shadow: 2px 2px 4px rgba(126, 123, 123, 0.1); /* Slight text shadow for depth */
+    color: #fff;
 }
 
 
@@ -65,7 +66,7 @@ h1 {
 .login-btn {
     padding: 10px 20px;
     background-color: #007BFF;
-    color: #fff;
+    text-emphasis-color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -117,7 +118,7 @@ h1 {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(108, 107, 107, 0.1);
     width: 60%; /* Decreased width to 80% */
     margin-left: auto;
     margin-right: auto;
