@@ -80,7 +80,14 @@ useEffect(() => {
         <div className="new-recipes">
             <h2>New Recipes</h2>
             <ul>
-                {recipes.map(recipe => <li key={recipe.id}>{recipe.title} </li>)}  {/* Map through the recipes array and display each recipe */}
+                {recipes.map(recipe => (
+                    <li key={recipe.id}>
+                        {/* Wrap the recipe title in a Link component */}
+                        <Link to={`/recipe-detail/${recipe.id}`}>
+                            {recipe.title}
+                        </Link>
+                    </li>
+                ))}
             </ul>
         </div>
     );

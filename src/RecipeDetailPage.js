@@ -40,6 +40,11 @@ const RecipeDetailPage = () => {
     //for ingredients and comments as empty arrays
     const [recipe, setRecipe] = useState({ ingredients: [], comments: [] });
 
+ // New loading state to track when data is being fetched
+ const [loading, setLoading] = useState(true); // <-- Added loading state
+
+ // New error state to capture any errors during fetch
+ const [error, setError] = useState(null); // <-- Added error state
 
    // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
@@ -58,8 +63,13 @@ const RecipeDetailPage = () => {
       .then(data => {
         console.log("Fetched recipe data:", data);
         setRecipe(data);
-      })
-      .catch(error => console.error('Error fetching recipe:', error));
+        setLoading(false); // <-- Set loading to false after data is fetched
+    })
+    .catch(err => {
+        console.error('Error fetching recipe:', err);
+        setError(err.message); // <-- Set error message if there's an error
+        setLoading(false); // <-- Also set loading to false in case of error
+    });
   }, [recipeId]);
   
 
@@ -99,9 +109,22 @@ const printToPdf = () => {
                 console.error("Error sending email: ", error.text);
             });
     };
+    // New: Check if data is still being loaded
+    if (loading) {
+      return <div className="recipe-detail-page">Loading...</div>;
+    }
 
+    // New: Check if there was an error during fetch
+    if (error) {
+      return (
+          <div className="recipe-detail-page">
+              <h2>Error</h2>
+              <p>{error}</p>
+          </div>
+      );
+    }
     // If the recipe is not found, display an error message
-    if (!recipe || !recipe.ingredients || !recipe.comments ) {
+    if (!recipe || !recipe.ingredients ) {
         return (
             <div className="recipe-detail-page">
                 <h2>Recipe not found</h2>
