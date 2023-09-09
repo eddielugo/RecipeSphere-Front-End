@@ -14,7 +14,11 @@ const SearchResultsPage = () => {
     useEffect(() => {
         // TODO: Fetch search results from Django REST API when searchQuery changes
         if (searchQuery) {
-            fetch(`https://be.recipesphere.net/api/tags/?name=${searchQuery}`)
+            fetch(`https://be.recipesphere.net/api/tags/?name=${searchQuery}`, {
+                headers: {
+                    'Authorization': `Token ${localStorage.getItem('token')}`
+                  }
+                })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
