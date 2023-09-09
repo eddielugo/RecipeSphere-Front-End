@@ -31,11 +31,15 @@ const RecipeCreationPage = () => {
 
     // Handles the form submission by creating a recipe data object and sending a POST request.
     const handleSubmit = () => {
+        
+        var jsonIngredients = {};
+
+        ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
         const recipeData = {
             title: title,
             description: description,
             time_minutes: timeMinutes,
-            ingredients: JSON.stringify(ingredientsList), // Convert the array to a JSON string
+            ingredients: jsonIngredients, // Convert the array to a JSON string
             instructions: instructions,
             image: image // Assuming the backend can handle base64 encoded images or a file path
         };
@@ -50,16 +54,16 @@ const RecipeCreationPage = () => {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                console.log(response)
             }
             return response.json();
         })
         .then(data => {
             console.log('Recipe successfully created:', data);
         })
-        .catch(error => {
-            console.log('Error creating recipe:', error);
-        });
+        // .catch(error => {
+        //     console.log('Error creating recipe:', error);
+        // });
     }
 
         /*This code allows users to dynamically add ingredient input fields by clicking the "Add Ingredient" button. 
