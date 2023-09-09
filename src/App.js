@@ -12,6 +12,7 @@ import AddRecipePage from './AddRecipePage';
 import EditRecipePage from './EditRecipePage'; 
 import ContactSupportPage from './ContactSupportpage';
 import FavoriteRecipePage from './FavoriteRecipePage';
+import VerifyEmail from './VerifyEmail';
 
 // Main App component
 function App() {
@@ -52,6 +53,8 @@ function App() {
         <Route path="/" exact element={<HomePage />} />
         {/* Route for the sign-up and login page */}
         <Route path="/signup-login" element={<SignUpLoginPage />} />
+        {/* Route for the email verification page */}
+        <Route path="/verifyemail" element={<VerifyEmail />} />
         {/* Route for the user profile page */}
         <Route path="/profile" element={<ProfilePage />} />
         {/* Route for displaying search results */}
