@@ -69,16 +69,25 @@ const RecipeDetailPage = () => {
 //     recipe = sampleData[0];
 // }
 
-    // Function to generate a PDF of the recipe details
-    const printToPdf = () => {
-        if (recipe) {
-            const doc = new jsPDF();
-            doc.text(recipe.name, 10, 10);
-            doc.text(recipe.ingredients.join(', '), 10, 20);
-            doc.text(recipe.instructions, 10, 30);
-            doc.save("recipe.pdf");
-        }
-    };
+   // Function to generate a PDF of the recipe details
+const printToPdf = () => {
+  if (recipe) {
+      const doc = new jsPDF();
+      doc.text(`Title: ${recipe.title}`, 10, 10);
+      doc.text(`Description: ${recipe.description}`, 10, 20);
+      doc.text(`Cooking Time: ${recipe.time_minutes} minutes`, 10, 30);
+      doc.text('Ingredients:', 10, 40);
+      const ingredients = Object.values(recipe.ingredients);
+      ingredients.forEach((ingredient, index) => {
+          doc.text(ingredient, 20, 50 + (index * 10));
+      });
+      const instructionsStartY = 50 + (ingredients.length * 10);
+      doc.text('Instructions:', 10, instructionsStartY);
+      doc.text(recipe.instructions, 20, instructionsStartY + 10);
+      doc.save("recipe.pdf");
+  }
+};
+
 
     // TODO: Different service? Function to send the recipe details via email
     const sendEmail = (e) => {
