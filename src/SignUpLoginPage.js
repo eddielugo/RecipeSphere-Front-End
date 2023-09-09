@@ -73,7 +73,7 @@ export const SignUpForm = () => {
           //Handle successful sign-up (e.g., show a successful signup message and navigate to Homepage.js)
           if (data && data.status === 'success') {
             alert('Sign-up successful! Please verify your email.');
-            navigate('/'); // Navigate to Homepage
+            navigate('/verifyemail'); // Navigate VerifyEmail.js 
           }
         })
         .catch(error => {
