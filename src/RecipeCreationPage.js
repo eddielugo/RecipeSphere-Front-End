@@ -35,22 +35,19 @@ const RecipeCreationPage = () => {
         var jsonIngredients = {};
 
         ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
-        const recipeData = {
-            title: title,
-            description: description,
-            time_minutes: timeMinutes,
-            ingredients: jsonIngredients, // Convert the array to a JSON string
-            instructions: instructions,
-            image: image // Assuming the backend can handle base64 encoded images or a file path
-        };
-        console.log('Recipe data:', recipeData);
+        var form = new FormData();
+        form.append('title', title);
+        form.append('description', description);
+        form.append('time_minutes', timeMinutes);
+        form.append('ingredients', JSON.stringify(jsonIngredients));
+        form.append('instructions', instructions);
+        form.append('image', image);
         fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Token ${localStorage.getItem('token')}`
             },
-            body: JSON.stringify(recipeData)
+            body: form
         })
         .then(response => {
             if (!response.ok) {
