@@ -45,7 +45,6 @@ const RecipeCreationPage = () => {
         fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'multipart/form-data',
                 'Authorization': `Token ${localStorage.getItem('token')}`
             },
             body: form
