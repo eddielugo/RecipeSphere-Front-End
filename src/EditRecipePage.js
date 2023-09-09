@@ -56,6 +56,7 @@ const handleSave = (e) => {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(recipe),
     })

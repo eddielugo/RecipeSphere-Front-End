@@ -43,8 +43,7 @@ const RecipeCreationPage = () => {
             instructions: instructions,
             image: image // Assuming the backend can handle base64 encoded images or a file path
         };
-        // TODO: Remove console log after we get image uplaod to work.
-        //TODO: Update with our URL
+        console.log('Recipe data:', recipeData);
         fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {

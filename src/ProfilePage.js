@@ -63,7 +63,11 @@ const SharedRecipes = () => {
     const [sharedRecipes, setSharedRecipes] = useState([]);
 // Fetch shared recipes from Django REST API
 useEffect(() => {
-    fetch('http://your-django-api-url/shared-recipes/') // Replace with your Django REST API URL
+    fetch('http://your-django-api-url/shared-recipes/', {// TODO:Replace with your Django REST API URL
+        headers: {
+            'Authorization': `Token ${localStorage.getItem('token')}`
+          }
+        }) 
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

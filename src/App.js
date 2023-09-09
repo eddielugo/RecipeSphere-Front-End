@@ -22,13 +22,12 @@ function App() {
   // Fetch recipes from Django REST API
   useEffect(() => {
     console.log("Fetching recipes...");
-  // TODO: fetch data from our Django REST API
-  fetch('https://be.recipesphere.net/api/recipe/', {
-    method: 'GET',
-    headers: {
-        'Authorization': `Token ${localStorage.getItem('token')}`
-    },
-})
+  // Fetch data from our Django REST API
+    fetch('https://be.recipesphere.net/api/recipe/', {
+      headers: {
+          'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+      })
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

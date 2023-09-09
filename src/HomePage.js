@@ -57,13 +57,12 @@ const NewRecipes = () => {
     // Fetching new recipes
 useEffect(() => {
     console.log("Fetching new recipes...");
-    // TODO: Update with our  URL
+    // Fetch data from our Django REST API
     fetch('https://be.recipesphere.net/api/recipe/', {
-    method: 'GET',
-    headers: {
-        'Authorization': `Token ${localStorage.getItem('token')}`
-    },
-})
+        headers: {
+            'Authorization': `Token ${localStorage.getItem('token')}`
+          }
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

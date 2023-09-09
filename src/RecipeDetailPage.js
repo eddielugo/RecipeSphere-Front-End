@@ -44,7 +44,11 @@ const RecipeDetailPage = () => {
    // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
     console.log("Fetching recipe data...");
-    fetch(`http://your-django-api-url/recipes/${recipeId}/`)
+    fetch(`http://your-django-api-url/recipes/${recipeId}/`, {
+      headers: {
+          'Authorization': `Token ${localStorage.getItem('token')}`
+        }
+      })
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
