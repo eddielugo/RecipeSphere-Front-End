@@ -44,7 +44,7 @@ const RecipeDetailPage = () => {
    // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
     console.log("Fetching recipe data...");
-    fetch(`http://your-django-api-url/recipes/${recipeId}/`, {
+    fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
       headers: {
           'Authorization': `Token ${localStorage.getItem('token')}`
         }
@@ -92,7 +92,7 @@ const RecipeDetailPage = () => {
     };
 
     // If the recipe is not found, display an error message
-    if (!recipe || !recipe.ingredients || !recipe.comments) {
+    if (!recipe || !recipe.ingredients || !recipe.comments ) {
         return (
             <div className="recipe-detail-page">
                 <h2>Recipe not found</h2>
@@ -103,37 +103,41 @@ const RecipeDetailPage = () => {
 
     // Render the recipe details
     return (
-        <ErrorBoundary>
-          <div className="recipe-detail-page">
-           {/* Display recipe image */}
-            <img src={recipe.image} alt={recipe.name} />
-            {/* Display recipe name */}
-            <h2>{recipe.name}</h2>
-            {/* List of ingredients */}
-            <div className="ingredients">
-              <h3>Ingredients</h3>
-              <ul>
-                {recipe.ingredients && recipe.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}
-              </ul>
-            </div>
-            {/* Cooking instructions */}
-            <div className="instructions">
-              <h3>Instructions</h3>
-              <p>{recipe.instructions}</p>
-            </div>
-              {/* List of comments */}
-            <div className="comments">
-              <h3>Comments</h3>
-              <ul>
-                {recipe.comments && recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
-              </ul>
-            </div>
-            {/* Button to share the recipe via email */}
-            <button onClick={sendEmail}>Share via Email</button>
-            {/* Button to generate a printable PDF of the recipe */}
-            <button onClick={printToPdf}>Generate Printable PDF</button>
-          </div>
-        </ErrorBoundary>
+      <ErrorBoundary>
+      <div className="recipe-detail-page">
+       {/* Display recipe image */}
+        <img src={recipe.image} alt={recipe.title} /> {/* Changed recipe.name to recipe.title */}
+        {/* Display recipe title */}
+        <h2>{recipe.title}</h2>
+        {/* Display recipe description */}
+        <p>{recipe.description}</p>
+        {/* Display cooking time */}
+        <p>Cooking time: {recipe.time_minutes} minutes</p>
+        {/* List of ingredients */}
+        <div className="ingredients">
+          <h3>Ingredients</h3>
+          <ul>
+            {recipe.ingredients && Object.values(recipe.ingredients).map((ingredient, index) => <li key={index}>{ingredient}</li>)}
+          </ul>
+        </div>
+        {/* Cooking instructions */}
+        <div className="instructions">
+          <h3>Instructions</h3>
+          <p>{recipe.instructions}</p>
+        </div>
+        {/* List of comments */}
+        <div className="comments">
+          <h3>Comments</h3>
+          <ul>
+            {recipe.comments && recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
+          </ul>
+        </div>
+        {/* Button to share the recipe via email */}
+        <button onClick={sendEmail}>Share via Email</button>
+        {/* Button to generate a printable PDF of the recipe */}
+        <button onClick={printToPdf}>Generate Printable PDF</button>
+      </div>
+    </ErrorBoundary>
       );
 }
 
