@@ -8,9 +8,7 @@ const VerifyEmail = () => {
     const navigate = useNavigate();
 
     const handleVerification = () => {
-        // TODO: Update URL
-        //POST request to Django REST API for email and OTP verification
-        fetch('https://be.recipesphere.net/api/verifyemail/', {
+        fetch('https://be.recipesphere.net/api/verify/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,13 +20,13 @@ const VerifyEmail = () => {
             }),
         })
         .then(response => response.json())
-        .then(data => {
-            if (data && data.status === 'success') {
-                alert('Email verified successfully!');
-                navigate('/'); // Navigate to HomePage
+        .then(response => {
+            if (response.status === 200) {
+                alert('Email verified successfully! You can now login.');
+                navigate('/signup-login'); // Navigate to HomePage
             } else {
                 // Show error message from the backend
-                alert('Error during email verification: ' + data.message);
+                alert('Error during email verification: ' + response.detail);
             }
         })
         .catch(error => {

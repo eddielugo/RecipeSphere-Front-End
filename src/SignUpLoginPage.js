@@ -49,31 +49,22 @@ export const SignUpForm = () => {
         })
         .then(response => response.json())
         .then(response => {
-          if (response.status === 'success') {
-            // TODO: Redirect to verifyemail webpage after signup success
-            //navigate('/verifyemail');
-      
-            // TODO: Send out an email to the user email using emailjs
-            const templateParams = {
-              to_email: email,
-              username: username,
-            };//TODO: Different email service?
-            emailjs.send('your_service_id', 'your_template_id', templateParams, 'your_user_id')
-            .then((result) => {
-              console.log('Email sent:', result.text);
-            }, (error) => {
-              console.log('Email error:', error.text);
-            });
-          } else {
-            //Show error message
-            alert('Error during sign-up: ' + response.message);
-          }
-        })
-        .then(data => {
-          //Handle successful sign-up (e.g., show a successful signup message and navigate to Homepage.js)
-          if (data && data.status === 'success') {
+          if (response.status === 201) {
             alert('Sign-up successful! Please verify your email.');
-            navigate('/verifyemail'); // Navigate VerifyEmail.js 
+            navigate('/verifyemail'); // Navigate VerifyEmail.js   
+          } else if (response.status === 400){
+            //Show error message
+            
+            if (response.password){
+              alert('Error Signing up. Password: ' + response.password)
+            }
+            if (response.username){
+              alert('Error Signing up. Username: ' + response.username)
+            }
+            if (response.email){
+              alert('Error Signing up. Email Field: ' + response.email)
+            }
+
           }
         })
         .catch(error => {
@@ -142,12 +133,25 @@ export const LoginForm = () => {
             body: JSON.stringify({ username: usernameOrEmail, password: password }),
         })
         .then(response => response.json())
-        .then(data => {
+        .then(response => {
             //navigate('/verifyemail'); // Navigate VerifyEmail.js 
-            localStorage.setItem('token', data.token);
-            if (data && data.status === 'success') {
-              alert('Log-in successful! Please verify your email and OTP.');
-              navigate('/verifyemail'); // Navigate VerifyEmail.js 
+            localStorage.setItem('token', response.token);
+            if (response.status === 200) {
+              alert('Log-in successful!');
+              navigate('/'); // Navigate VerifyEmail.js 
+            } else if (response.status === 403){
+              alert('Email must be verified for this account.')
+              navigate('/verifyemail')
+            } else if (response.status === 400){
+              if (response.username){
+                alert('Username: ' + response.username)
+              }
+              if (response.password){
+                alert('Password: ' + response.password)
+              }
+              if (response.non_field_errors){
+                alert('Incorrect username and password combination.')
+              }
             }
         })
         .catch(error => console.error('Error during login:', error));
