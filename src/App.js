@@ -17,8 +17,7 @@ import VerifyEmail from './VerifyEmail';
 // Main App component
 function App() {
   // State to hold recipes data
-  const [recipes, setRecipes] = useState([]);// TODO: We also need to pass this recipes state to the components that need to display 
-  //or manipulate this data, such as HomePage, SearchResultsPage, etc.
+  const [recipes, setRecipes] = useState([]);
 
   // Fetch recipes from Django REST API
   useEffect(() => {
