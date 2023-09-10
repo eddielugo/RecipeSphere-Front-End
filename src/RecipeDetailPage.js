@@ -45,7 +45,7 @@ const RecipeDetailPage = () => {
     const [error, setError] = useState(null); // <-- Added error state
     // State to handle the comment input
     const [comment, setComment] = useState('');
-    // Additional state
+    // Additional states to handle loading and error messages
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
 
@@ -83,6 +83,7 @@ const RecipeDetailPage = () => {
     fetch(`https://be.recipesphere.net/api/api/comments/`, {
         method: 'POST',
         headers: {
+          
             'Authorization': `Token ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json'
         },
@@ -204,13 +205,15 @@ const printToPdf = () => {
                 placeholder="Add a comment..."
             />
             <button onClick={postComment}>Post Comment</button>
-        </div>
-
         {/* Loading spinner */}
         {isLoading && <div className="loading">Submitting comment...</div>}
-
         {/* Message */}
         {message && <div className="message">{message}</div>}
+        </div>
+        {/* Button to share the recipe via email */}
+        <button onClick={sendEmail}>Share via Email</button>
+        {/* Button to generate a printable PDF of the recipe */}
+        <button onClick={printToPdf}>Generate Printable PDF</button>
       </div>
     </ErrorBoundary>
       );
