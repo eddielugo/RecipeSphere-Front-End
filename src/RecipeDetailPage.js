@@ -39,12 +39,12 @@ const RecipeDetailPage = () => {
     //initialize the recipe state with an object that has default values 
     //for ingredients and comments as empty arrays
     const [recipe, setRecipe] = useState({ ingredients: [], comments: [] });
-
- // New loading state to track when data is being fetched
- const [loading, setLoading] = useState(true); // <-- Added loading state
-
- // New error state to capture any errors during fetch
- const [error, setError] = useState(null); // <-- Added error state
+    // New loading state to track when data is being fetched
+    const [loading, setLoading] = useState(true); // <-- Added loading state
+    // New error state to capture any errors during fetch
+    const [error, setError] = useState(null); // <-- Added error state
+      // State to handle the comment input
+      const [comment, setComment] = useState('');
 
    // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
@@ -72,12 +72,28 @@ const RecipeDetailPage = () => {
     });
   }, [recipeId]);
   
-
-// Commented out: demonstration purposes
-// let recipe = sampleData.find(r => r.id === parseInt(recipeId));
-// if (!recipe) {
-//     recipe = sampleData[0];
-// }
+  // Function to handle posting the comment
+  const postComment = () => {
+    fetch(`https://be.recipesphere.net/api/api/comments/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ comment: comment })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Comment posted:", data);
+        // Update the recipe's comments with the new comment
+        setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
+        // Clear the comment input
+        setComment('');
+    })
+    .catch(error => {
+        console.error("Error posting comment:", error);
+    });
+};   
 
    // Function to generate a PDF of the recipe details
 const printToPdf = () => {
@@ -163,6 +179,15 @@ const printToPdf = () => {
           <ul>
             {recipe.comments && recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
           </ul>
+        </div>
+        {/* Comment input and button */}
+        <div className="comment-section">
+            <textarea 
+                value={comment} 
+                onChange={e => setComment(e.target.value)} 
+                placeholder="Add a comment..."
+            />
+            <button onClick={postComment}>Post Comment</button>
         </div>
         {/* Button to share the recipe via email */}
         <button onClick={sendEmail}>Share via Email</button>
