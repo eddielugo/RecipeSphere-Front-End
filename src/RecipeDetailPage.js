@@ -85,7 +85,9 @@ const RecipeDetailPage = () => {
     .then(response => response.json())
     .then(data => {
         console.log("Comment posted:", data);
-        // Update the recipe's comments with the new comment
+        /* Updates the recipe's comments with the new comment.Takes the previous state of the recipe, 
+        spreads its properties, and then updates the comments property by spreading the previous comments
+         and appending the new comment. */
         setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
         // Clear the comment input
         setComment('');
