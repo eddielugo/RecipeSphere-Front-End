@@ -43,8 +43,11 @@ const RecipeDetailPage = () => {
     const [loading, setLoading] = useState(true); // <-- Added loading state
     // New error state to capture any errors during fetch
     const [error, setError] = useState(null); // <-- Added error state
-      // State to handle the comment input
-      const [comment, setComment] = useState('');
+    // State to handle the comment input
+    const [comment, setComment] = useState('');
+    // Additional state
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
    // TODO: Fetch recipe data from Django REST API
    useEffect(() => {
@@ -74,6 +77,9 @@ const RecipeDetailPage = () => {
   
   // Function to handle posting the comment
   const postComment = () => {
+    // Set loading state to true
+    setIsLoading(true);
+
     fetch(`https://be.recipesphere.net/api/api/comments/`, {
         method: 'POST',
         headers: {
@@ -82,20 +88,28 @@ const RecipeDetailPage = () => {
         },
         body: JSON.stringify({ comment: comment })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to post comment');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log("Comment posted:", data);
-        /* Updates the recipe's comments with the new comment.Takes the previous state of the recipe, 
-        spreads its properties, and then updates the comments property by spreading the previous comments
-         and appending the new comment. */
         setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
-        // Clear the comment input
         setComment('');
+        setMessage('Comment posted successfully!');
     })
     .catch(error => {
         console.error("Error posting comment:", error);
+        setMessage('Error posting comment. Please try again.');
+    })
+    .finally(() => {
+        // Set loading state to false
+        setIsLoading(false);
     });
-};   
+};
+
 
    // Function to generate a PDF of the recipe details
 const printToPdf = () => {
@@ -191,10 +205,12 @@ const printToPdf = () => {
             />
             <button onClick={postComment}>Post Comment</button>
         </div>
-        {/* Button to share the recipe via email */}
-        <button onClick={sendEmail}>Share via Email</button>
-        {/* Button to generate a printable PDF of the recipe */}
-        <button onClick={printToPdf}>Generate Printable PDF</button>
+
+        {/* Loading spinner */}
+        {isLoading && <div className="loading">Submitting comment...</div>}
+
+        {/* Message */}
+        {message && <div className="message">{message}</div>}
       </div>
     </ErrorBoundary>
       );
