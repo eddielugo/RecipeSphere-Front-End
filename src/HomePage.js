@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
 
+import logo from './Images/logo-icon.png'
+
 /**
  * HomePage Component: Represents the main landing page of the application.
  * It includes the site header, login button, search bar, popular recipes, and new recipes sections.
@@ -13,6 +15,7 @@ const HomePage = () => {
     return (
         <div className="home-page">
             <header>
+                <img src={logo} alt="site logo"/> {/* Site logo */}
                 <h1>RecipeSphere</h1>  {/* Site title */}
                 <LoginButton />  {/*Login button component*/}
             </header>
