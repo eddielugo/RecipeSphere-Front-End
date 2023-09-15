@@ -38,7 +38,7 @@ const RecipeCreationPage = () => {
         formData.append('time_minutes', timeMinutes);
         
         // Convert the ingredientsList array to a JSON string and append it
-        var jsonIngredients = {};
+        let jsonIngredients = {};
 
         ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
         const recipeData = {
