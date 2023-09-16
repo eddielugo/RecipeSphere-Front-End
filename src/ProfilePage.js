@@ -25,7 +25,11 @@ const UserInformation = () => {
 
     // TODO: Change to our URL
     useEffect(() => {
-        fetch('http://your-django-api-url/user-info/') // Change this to your Django API URL
+        fetch('https://be.recipesphere.net/api/profile/', {
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+              }
+            }) // Change this to your Django API URL
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -36,6 +40,7 @@ const UserInformation = () => {
             .catch(error => console.error('Error fetching user information:', error));
     }, []);
    // Function to handle profile image upload
+   //TODO: remove image uplaod and display backend does not support profile pics yet. I could do it in the future
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         console.log(file);
@@ -46,14 +51,20 @@ const UserInformation = () => {
         <div className="user-info">
             <h2>User Information</h2>
             <div className="profile-picture">
+                {console.log(userInfo)}
                 {/* TODO: Display user's profile picture */}
                 <img src={userInfo.profilePicture || "../Images/ProfileAvatar.jpg"} alt="User Profile" />
                 {/* Input for uploading a new profile picture */}
                 <input type="file" onChange={handleImageUpload} />
             </div>
             {/* Sample data for demonstration */}
-            <p><strong>Username:</strong>{userInfo.username || 'JohnDoe'}</p>
-            <p><strong>Email:</strong> {userInfo.email || 'johndoe@example.com'}</p>
+            {/* TODO: userInfo.user.username and userInfo.user.email work if you first load page with the original code and then change it to this 
+            So i think something is wrong with the loading of the info. this work if you run this page with the commented
+            code below and one it load uncomment and the correct username and email show*/}
+
+            {/* <p><strong>Username:</strong>{userInfo.user.username || 'JohnDoe'}</p>
+            <p><strong>Email:</strong> {userInfo.user.email || 'johndoe@example.com'}</p> */}
+            
         </div>
     );
 }
@@ -63,11 +74,11 @@ const SharedRecipes = () => {
     const [sharedRecipes, setSharedRecipes] = useState([]);
 // Fetch shared recipes from Django REST API
 useEffect(() => {
-    fetch('http://your-django-api-url/shared-recipes/', {// TODO:Replace with your Django REST API URL
-        headers: {
-            'Authorization': `Token ${localStorage.getItem('token')}`
-          }
-        }) 
+    fetch('https://be.recipesphere.net/api/recipe/my_recipes/', {
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+              }
+            }) // Change this to your Django API URL
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -86,7 +97,8 @@ useEffect(() => {
             <h2>Shared Recipes</h2>
             {/* List of shared recipes */}
             <ul>
-            {sharedRecipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}
+            {/*TODO: add edit recipe button here*/}
+            {sharedRecipes.map(recipe => <li key={recipe.id}>{recipe.title}</li>)}
             </ul>
         </div>
     );
@@ -98,13 +110,11 @@ const SavedRecipes = () => {
 
    // Fetch saved recipes from Django REST API
    useEffect(() => {
-    fetch('http://your-django-api-url/saved-recipes/') // Replace with your Django REST API URL
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+    fetch('https://be.recipesphere.net/api/profile/', {
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+              }
+            }) // Change this to your Django API URL
         .then(data => setSavedRecipes(data))
         .catch(error => console.error('Error fetching saved recipes:', error));
 }, []);
@@ -118,7 +128,9 @@ const SavedRecipes = () => {
             <h2>Saved/Favorite Recipes</h2>
             {/* List of saved or favorited recipes */}
             <ul>
-            {savedRecipes.map(recipe => <li key={recipe.id}>{recipe.name}</li>)}
+            {/* TODO: Fix map function from json object field favorites from response of profile*/}
+            {console.log(savedRecipes)}
+            {/* {savedRecipes.favorites.map(recipe => <li key={recipe.id}>{recipe.title}</li>)} */}
             </ul>
         </div>
     );

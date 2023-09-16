@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-
+import { useNavigate } from 'react-router-dom';
 import logo from './Images/logo-icon.png'
 
 /**
@@ -12,17 +12,22 @@ import logo from './Images/logo-icon.png'
 // TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
 
 const HomePage = () => {
-    return (
-        <div className="home-page">
-            <header>
-                <img src={logo} alt="site logo"/> {/* Site logo */}
-                <h1>RecipeSphere</h1>  {/* Site title */}
-                <LoginButton />  {/*Login button component*/}
-            </header>
-            <SearchBar />  {/* Search bar component */}
-            <NewRecipes />  {/* New recipes list component */}
-        </div>
-    );
+    const navigate = useNavigate();
+    if (window.sessionStorage.getItem('token')){
+        return (    
+            <div className="home-page">
+                <header>
+                    <img src={logo} alt="site logo"/> {/* Site logo */}
+                    <h1>RecipeSphere</h1>  {/* Site title */}
+                    <LoginButton />  {/*Login button component*/}
+                </header>
+                <SearchBar />  {/* Search bar component */}
+                <NewRecipes />  {/* New recipes list component */}
+            </div>
+        );
+    }else{
+        navigate('/signup-login');
+    }
 }
 /**
  * LoginButton Component: Represents a button that redirects users to the signup/login page.
@@ -63,7 +68,7 @@ useEffect(() => {
     // Fetch data from our Django REST API
     fetch('https://be.recipesphere.net/api/recipe/', {
         headers: {
-            'Authorization': `Token ${localStorage.getItem('token')}`
+            'Authorization': `Token ${window.sessionStorage.getItem('token')}`
           }
         })
         .then(response => {

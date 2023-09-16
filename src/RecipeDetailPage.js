@@ -54,7 +54,7 @@ const RecipeDetailPage = () => {
     console.log("Fetching recipe data...");
     fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
       headers: {
-          'Authorization': `Token ${localStorage.getItem('token')}`
+          'Authorization': `Token ${window.sessionStorage.getItem('token')}`
         }
       })
       .then(response => {
@@ -79,12 +79,12 @@ const RecipeDetailPage = () => {
   const postComment = () => {
     // Set loading state to true
     setIsLoading(true);
-
-    fetch(`https://be.recipesphere.net/api/api/comments/`, {
+    //TODO: the comments api needs two POST fields. 'text' = the text for the comment. And 'recipe': which is the id for the recipe for the comment
+    fetch(`https://be.recipesphere.net/api/comments/`, {
         method: 'POST',
         headers: {
           
-            'Authorization': `Token ${localStorage.getItem('token')}`,
+            'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ comment: comment })
@@ -113,6 +113,7 @@ const RecipeDetailPage = () => {
 
 
    // Function to generate a PDF of the recipe details
+   //TODO: we have to load an iframe window with the pdf from the endpoint {{base_url}}/api/recipe/{recipeId}/download/
 const printToPdf = () => {
   if (recipe) {
       const doc = new jsPDF();
@@ -132,7 +133,7 @@ const printToPdf = () => {
 };
 
 
-    // TODO: Different service? Function to send the recipe details via email
+    // TODO: Add form with field 'email' to send to endpoint {{base_url}}/api/recipe/{recipeID}/share/
     const sendEmail = (e) => {
         e.preventDefault();
         emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
@@ -191,6 +192,10 @@ const printToPdf = () => {
           <p>{recipe.instructions}</p>
         </div>
         {/* List of comments */}
+        {/*TODO: The recipe object has no comments. The comments are to be retrieved from the endpoint
+         {{base_url}}/api/comments/?recipe={recipeID} example {{base_url}}/api/comments/?recipe=1
+         would get all the comments for recipeID 1
+         */}
         <div className="comments">
           <h3>Comments</h3>
           <ul>
