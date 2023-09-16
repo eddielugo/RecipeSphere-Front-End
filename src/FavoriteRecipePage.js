@@ -14,9 +14,9 @@ const FavoriteRecipePage = () => {
     useEffect(() => {
         console.log("Fetching favorite recipes...");
     
-        fetch('http://your-django-api-url/favorite-recipes/', {
+        fetch('https://be.recipesphere.net/api/profile/', {
             headers: {
-                'Authorization': `Token ${localStorage.getItem('token')}`
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`
               }
             }) 
             .then(response => {
@@ -27,7 +27,7 @@ const FavoriteRecipePage = () => {
             })
             .then(data => {
                 console.log("Fetched favorite recipes:", data);
-                setFavoritedRecipes(data);
+                setFavoritedRecipes(data.favorites);
             })
             .catch(error => console.error('Error fetching favorite recipes:', error));
     }, []);
@@ -49,7 +49,7 @@ const FavoriteRecipePage = () => {
 const UserProfile = () => {
     return (
         <div className="user-profile">
-            {/* TODO: User profile image */}
+            {/* TODO: Remove User profile image this is not supported yet by the BE */}
             <img src="path_to_user_image.jpg" alt="User Profile" />
             {/* Display username (replace with dynamic data in the future) */}
             <h2>Username</h2>
@@ -74,9 +74,9 @@ const RecipeCard = ({ recipe }) => {
     return (
         <div className="recipe-card">
             {/* Display recipe thumbnail */}
-            <img src={recipe.thumbnail} alt={recipe.name} />
+            <img src={recipe.thumbnail} alt={recipe.title} />
             {/* Display recipe name */}
-            <h3>{recipe.name}</h3>
+            <h3>{recipe.title}</h3>
             {/* Display recipe description */}
             <p>{recipe.description}</p>
             {/* Button to view full recipe */}

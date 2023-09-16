@@ -16,7 +16,7 @@ const RootComponent = () => {
     fetch('https://be.recipesphere.net/api/recipe/', {// Replace with your Django API URL endpoint for fetching initial data.
       method: 'GET',
       headers: {
-        'Authorization': `Token ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage
+        'Authorization': `Token ${window.sessionStorage.getItem('token')}`, // Assuming JWT token is stored in window.sessionStorage
       },
     })
     .then(response => response.json())
