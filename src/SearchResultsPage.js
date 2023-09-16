@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 import './SearchResultsPage.css';
 
 // Main component to display the search results page.
 const SearchResultsPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
+        if (!window.sessionStorage.getItem('token')){
+            navigate('/signup-login');
+        }
         if (searchQuery) {
             // First, fetch the tag ID based on the search query
             fetch(`https://be.recipesphere.net/api/tags/?name=${searchQuery}`, {
                 headers: {
-                    'Authorization': `Token ${localStorage.getItem('token')}`
+                    'Authorization': `Token ${window.sessionStorage.getItem('token')}`
                 }
             })
             .then(response => {
@@ -28,7 +32,7 @@ const SearchResultsPage = () => {
                     // Fetch recipes based on the tag ID
                     return fetch(`https://be.recipesphere.net/api/recipe/?tags=${tagId}`, {
                         headers: {
-                            'Authorization': `Token ${localStorage.getItem('token')}`
+                            'Authorization': `Token ${window.sessionStorage.getItem('token')}`
                         }
                     });
                 }

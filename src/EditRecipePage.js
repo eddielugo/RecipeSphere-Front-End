@@ -32,8 +32,11 @@ const EditRecipePage = () => {
 // Effect hook to fetch the recipe data when the component mounts or when recipeId changes
 useEffect(() => {
     console.log("Fetching recipe data...");
-// TODO: Fetching recipe data from Django REST API using fetch
-    fetch(`http://your-django-api-url/recipes/${recipeId}/`)
+    fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
+        headers: {
+            'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+          }
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -52,12 +55,14 @@ const handleSave = (e) => {
     e.preventDefault();
     console.log("Updating recipe data...");
     // TODO: Updating recipe data through Django REST API using fetch
-    fetch(`http://your-django-api-url/recipes/${recipeId}/`, {
-        method: 'PUT',
+    fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${localStorage.getItem('token')}`
+            'Authorization': `Token ${window.sessionStorage.getItem('token')}`
         },
+        //:TODO: this should be a form. and add the field to the form if it not null. IF you send a field with null. it will overide the given field with null
+        // in the backend. So only fields with data should be added to the form.
         body: JSON.stringify(recipe),
     })
     .then(response => {
@@ -83,12 +88,14 @@ const handleSave = (e) => {
     return (
         <div className="edit-recipe-page">
             <form onSubmit={handleSave}>
-                <img src={recipe.image} alt={recipe.name} />
+                <img src={recipe.image} alt={recipe.title} />
                 {/* Input field for the recipe name */}
-                <input type="text" value={recipe.name} onChange={(e) => setRecipe({ ...recipe, name: e.target.value })} />
+                <input type="text" value={recipe.title} onChange={(e) => setRecipe({ ...recipe, title: e.target.value })} />
                 <div className="ingredients">
+                    {/* TODO: we have to add the same logic as for create where it adds ingredients at the click of a button and than converts that array to json */}
                     <h3>Ingredients</h3>
                     {/* Textarea for editing the ingredients list */}
+                    {/* The code below is breaking dont know why */}
                     <textarea value={recipe.ingredients.join('\n')} onChange={(e) => setRecipe({ ...recipe, ingredients: e.target.value.split('\n') })}></textarea>
                 </div>
                 <div className="instructions">
@@ -98,6 +105,7 @@ const handleSave = (e) => {
                 </div>
                 <div className="comments">
                     <h3>Comments</h3>
+                    {/*TODO: Remove comments from edit page. editing comments is not supported. */}
                     {/* Textarea for editing the comments about the recipe */}
                     <textarea value={recipe.comments.join('\n')} onChange={(e) => setRecipe({ ...recipe, comments: e.target.value.split('\n') })}></textarea>
                 </div>

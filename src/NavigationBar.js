@@ -17,7 +17,7 @@ useEffect(() => {
   fetch('https://be.recipesphere.net/api/me/', {// Replace with your Django API URL endpoint for checking user authentication status.
     method: 'GET',
     headers: {
-      'Authorization': `Token ${localStorage.getItem('token')}`, // Assuming JWT token is stored in localStorage
+      'Authorization': `Token ${window.sessionStorage.getItem('token')}`, // Assuming JWT token is stored in window.sessionStorage
     },
   })
   .then(response => response.json())
@@ -47,8 +47,7 @@ useEffect(() => {
           {/*<button className={`nav-button ${isActive("/favorites")}`} onClick={() => navigate("/favorites")}>Favorite Recipes</button>*/}
           <button className={`nav-button ${isActive("/create-recipe")}`} onClick={() => navigate("/create-recipe")}>Create Recipe</button>
           <button className={`nav-button ${isActive("/recipe-detail")}`} onClick={() => navigate("/recipe-detail")}>Recipe Detail</button>
-          <button className={`nav-button ${isActive("/add-recipe")}`} onClick={() => navigate("/add-recipe")}>Add Recipe</button>
-          <button className={`nav-button ${isActive("/edit-recipe")}`} onClick={() => navigate("/edit-recipe")}>Edit Recipe</button>
+          
         </>
       ) : (
         <>

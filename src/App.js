@@ -18,6 +18,7 @@ import VerifyEmail from './VerifyEmail';
 function App() {
   // State to hold recipes data
   const [recipes, setRecipes] = useState([]);
+  
 
   // Fetch recipes from Django REST API
   useEffect(() => {
@@ -25,7 +26,7 @@ function App() {
   // Fetch data from our Django REST API
     fetch('https://be.recipesphere.net/api/recipe/', {
       headers: {
-          'Authorization': `Token ${localStorage.getItem('token')}`
+          'Authorization': `Token ${window.sessionStorage.getItem('token')}`
         }
       })
       .then(response => {

@@ -12,7 +12,7 @@ const VerifyEmail = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${localStorage.getItem('token')}`,
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
             },
             body: JSON.stringify({
                 email: email,

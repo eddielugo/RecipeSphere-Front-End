@@ -135,7 +135,7 @@ export const LoginForm = () => {
         .then(response => response.json())
         .then(response => {
             //navigate('/verifyemail'); // Navigate VerifyEmail.js 
-            localStorage.setItem('token', response.token);
+            window.sessionStorage.setItem('token', response.token);
             if (response.status === 200) {
               alert('Log-in successful!');
               navigate('/'); // Navigate VerifyEmail.js 
