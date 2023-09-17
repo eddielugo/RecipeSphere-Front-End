@@ -30,6 +30,9 @@ class ErrorBoundary extends React.Component {
 
 // Component to display detailed information about a specific recipe
 const RecipeDetailPage = () => {
+
+    // New state to hold comments
+    const [comments, setComments] = useState([]);
     // Extracting the recipeId from the route parameters
     const { recipeId } = useParams();
     //initialize the recipe state with an object that has default values 
@@ -47,33 +50,52 @@ const RecipeDetailPage = () => {
 
    //Fetch recipe data from Django REST API
    useEffect(() => {
-    console.log("Fetching recipe data...");
+    // Fetch recipe details
     fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
-      headers: {
-          'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+        headers: {
+            'Authorization': `Token ${window.sessionStorage.getItem('token')}`
         }
-      })
-      .then(response => {
+    })
+    .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');
         }
         return response.json();
-      })
-      .then(data => {
+    })
+    .then(data => {
         console.log("Fetched recipe data:", data);
         setRecipe(data);
-        setLoading(false); // <-- Set loading to false after data is fetched
     })
-    .catch(err => {
-        console.error('Error fetching recipe:', err);
-        setError(err.message); // <-- Set error message if there's an error
-        setLoading(false); // <-- Also set loading to false in case of error
+    .then(() => {
+        // Fetch comments for the given recipe after fetching recipe details
+        return fetch(`https://be.recipesphere.net/api/comments/?recipe=${recipeId}`, {
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+            }
+        });
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch comments');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Fetched comments:", data);
+        setComments(data);
+        setLoading(false); // <-- Set loading to false here
+    })
+    .catch(error => {
+        console.error("Error fetching data:", error);
+        setError(error.message); // <-- Set the error state here
+        setLoading(false); // <-- Also set loading to false here
     });
-  }, [recipeId]);
-  
+}, [recipeId]);
+
+
   // Function to handle posting the comment
     const postComment = () => {
-    	 // Set loading state to true
+         // Set loading state to true
         setIsLoading(true);
         fetch(`https://be.recipesphere.net/api/comments/`, {
             method: 'POST',
@@ -88,23 +110,24 @@ const RecipeDetailPage = () => {
             throw new Error('Failed to post comment');
         }
         return response.json();
-	    })
-	    .then(data => {
-	        console.log("Comment posted:", data);
-	        setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
-	        setComment('');
-	        setMessage('Comment posted successfully!');
-	    })
-	    .catch(error => {
-	        console.error("Error posting comment:", error);
-	        setMessage('Error posting comment. Please try again.');
-	    })
-	    .finally(() => {
-	        // Set loading state to false
-	        setIsLoading(false);
-	    });
+        })
+        .then(data => {
+            console.log("Comment posted:", data);
+            setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
+            setComment('');
+            setMessage('Comment posted successfully!');
+        })
+        .catch(error => {
+            console.error("Error posting comment:", error);
+            setMessage('Error posting comment. Please try again.');
+        })
+        .finally(() => {
+            // Set loading state to false
+            setIsLoading(false);
+        });
     };
-	// Function to generate a PDF of the recipe details
+
+    // Function to generate a PDF of the recipe details
    //load an iframe window with the pdf from the endpoint {{base_url}}/api/recipe/{recipeId}/download/
     const printToPdf = () => {
         const url = `https://be.recipesphere.net/api/recipe/${recipeId}/download/`
@@ -221,10 +244,12 @@ const RecipeDetailPage = () => {
          would get all the comments for recipeID 1
          */}
         <div className="comments">
-          <h3>Comments</h3>
-          <ul>
-            {recipe.comments && recipe.comments.map(comment => <li key={comment}>{comment}</li>)}
-          </ul>
+            <h3>Comments</h3>
+            <ul>
+                {comments && comments.map(comment => 
+                    <li key={comment.id}>{comment.text}</li> // Assuming each comment has an 'id' and 'text' field
+                )}
+            </ul>
         </div>
         {/* Comment input and button */}
         <div className="comment-section">
