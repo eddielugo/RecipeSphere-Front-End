@@ -214,7 +214,7 @@ Once you have configured Jest and Babel, you can start writing tests for your ap
 ```
 Note: that the exact configuration options and syntax may vary depending on your specific requirements and the version of Jest and Babel you are using. Consult the documentation for detailed guidance.
 
-
+6. Run the tests by executing the command jest in your terminal. You can also specify which test files to run by passing their names as arguments, e.g., jest myTestFile.spec.js.
 
 ## 🗺 Roadmap
 
