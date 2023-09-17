@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './RecipeDetailPage.css';
 //import { sampleData } from './sampleData'; // Importing sample data for demonstration purposes
 import { useParams } from 'react-router-dom'; // Hook to access route parameters
-import { jsPDF } from "jspdf"; // Library to generate PDFs
 import emailjs from 'emailjs-com'; // Library to send emails
+
 
 
 // Error Boundary Component. Note: While this is good for production, 
@@ -115,22 +115,33 @@ const RecipeDetailPage = () => {
    // Function to generate a PDF of the recipe details
    //TODO: we have to load an iframe window with the pdf from the endpoint {{base_url}}/api/recipe/{recipeId}/download/
 const printToPdf = () => {
-  if (recipe) {
-      const doc = new jsPDF();
-      doc.text(`Title: ${recipe.title}`, 10, 10);
-      doc.text(`Description: ${recipe.description}`, 10, 20);
-      doc.text(`Cooking Time: ${recipe.time_minutes} minutes`, 10, 30);
-      doc.text('Ingredients:', 10, 40);
-      const ingredients = Object.values(recipe.ingredients);
-      ingredients.forEach((ingredient, index) => {
-          doc.text(ingredient, 20, 50 + (index * 10));
-      });
-      const instructionsStartY = 50 + (ingredients.length * 10);
-      doc.text('Instructions:', 10, instructionsStartY);
-      doc.text(recipe.instructions, 20, instructionsStartY + 10);
-      doc.save("recipe.pdf");
-  }
-};
+  const url = `https://be.recipesphere.net/api/recipe/${recipeId}/download/`
+  const request = new Request(url,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Token ${window.sessionStorage.getItem('token')}`,
+              },
+              mode: "cors",
+              cache: "default",
+            }
+          );
+    
+          fetch(request)
+          .then(response => {
+            response.blob().then(blob => {
+                // Creating new object of PDF file
+                const fileURL = window.URL.createObjectURL(blob);
+                // Setting various property values
+                let alink = document.createElement('a');
+                alink.href = fileURL;
+                alink.download = recipe.title;
+                alink.click();
+            })
+        })
+};      
+  
+
 
 
     // TODO: Add form with field 'email' to send to endpoint {{base_url}}/api/recipe/{recipeID}/share/
@@ -225,8 +236,3 @@ const printToPdf = () => {
 }
 
 export default RecipeDetailPage; // Exporting the component for use in other parts of the application
-
-
-
-
-
