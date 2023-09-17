@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 //import axios from 'axios'; // Import axios for API calls
 import './AddRecipePage.css';
 
-// TODO: ADD Error Boundary Component - see
+// ADD Error Boundary Component
 
 // Component for adding a new recipe
 const AddRecipePage = () => {
@@ -48,7 +48,6 @@ const handleSubmit = async (e) => {
 
     console.log(recipe);
     // API call to your Django REST backend
-    // TODO: Replace http://your-django-api-url/ with the actual URL of your Django REST API
     const apiUrl = 'http://your-django-api-url/recipes/';
     
     try {

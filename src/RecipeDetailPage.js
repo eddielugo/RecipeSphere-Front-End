@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './RecipeDetailPage.css';
-//import { sampleData } from './sampleData'; // Importing sample data for demonstration purposes
-import { useParams } from 'react-router-dom'; // Hook to access route parameters
-import emailjs from 'emailjs-com'; // Library to send emails
-
-
+import { useParams } from 'react-router-dom';
 
 // Error Boundary Component. Note: While this is good for production, 
 //this may affect our tests. If the component throws an error, 
 //the ErrorBoundary will catch it, potentially making the test pass when it should fail.
 class ErrorBoundary extends React.Component {
-    constructor(props) {
+   constructor(props) {
       super(props);
       this.state = { hasError: false };
     }
@@ -30,7 +26,7 @@ class ErrorBoundary extends React.Component {
   
       return this.props.children;
     }
-  }
+}
 
 // Component to display detailed information about a specific recipe
 const RecipeDetailPage = () => {
@@ -49,7 +45,7 @@ const RecipeDetailPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
 
-   // TODO: Fetch recipe data from Django REST API
+   //Fetch recipe data from Django REST API
    useEffect(() => {
     console.log("Fetching recipe data...");
     fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
@@ -76,46 +72,42 @@ const RecipeDetailPage = () => {
   }, [recipeId]);
   
   // Function to handle posting the comment
-  const postComment = () => {
-    // Set loading state to true
-    setIsLoading(true);
-    //TODO: the comments api needs two POST fields. 'text' = the text for the comment. And 'recipe': which is the id for the recipe for the comment
-    fetch(`https://be.recipesphere.net/api/comments/`, {
-        method: 'POST',
-        headers: {
-          
-            'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ comment: comment })
-    })
-    .then(response => {
+    const postComment = () => {
+    	 // Set loading state to true
+        setIsLoading(true);
+        fetch(`https://be.recipesphere.net/api/comments/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text: comment, recipe: recipeId }) // Updated to include 'text' and 'recipe' fields
+        })
+        .then(response => {
         if (!response.ok) {
             throw new Error('Failed to post comment');
         }
         return response.json();
-    })
-    .then(data => {
-        console.log("Comment posted:", data);
-        setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
-        setComment('');
-        setMessage('Comment posted successfully!');
-    })
-    .catch(error => {
-        console.error("Error posting comment:", error);
-        setMessage('Error posting comment. Please try again.');
-    })
-    .finally(() => {
-        // Set loading state to false
-        setIsLoading(false);
-    });
-};
-
-
-   // Function to generate a PDF of the recipe details
-   //TODO: we have to load an iframe window with the pdf from the endpoint {{base_url}}/api/recipe/{recipeId}/download/
-const printToPdf = () => {
-  const url = `https://be.recipesphere.net/api/recipe/${recipeId}/download/`
+	    })
+	    .then(data => {
+	        console.log("Comment posted:", data);
+	        setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
+	        setComment('');
+	        setMessage('Comment posted successfully!');
+	    })
+	    .catch(error => {
+	        console.error("Error posting comment:", error);
+	        setMessage('Error posting comment. Please try again.');
+	    })
+	    .finally(() => {
+	        // Set loading state to false
+	        setIsLoading(false);
+	    });
+    };
+	// Function to generate a PDF of the recipe details
+   //load an iframe window with the pdf from the endpoint {{base_url}}/api/recipe/{recipeId}/download/
+    const printToPdf = () => {
+        const url = `https://be.recipesphere.net/api/recipe/${recipeId}/download/`
   const request = new Request(url,
             {
               method: "POST",
@@ -139,21 +131,42 @@ const printToPdf = () => {
                 alink.click();
             })
         })
-};      
-  
+    };
 
-
-
-    // TODO: Add form with field 'email' to send to endpoint {{base_url}}/api/recipe/{recipeID}/share/
     const sendEmail = (e) => {
         e.preventDefault();
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', e.target, 'YOUR_USER_ID')
-            .then((result) => {
-                console.log(result.text);
-            }, (error) => {
-                console.error("Error sending email: ", error.text);
-            });
+
+        // Assuming we have a form with an input field named 'email'
+        //TODO (Mike): Review this code
+        const email = e.target.email.value;
+
+        fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/share/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to send email');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Email sent:", data);
+            setMessage('Email sent successfully!');
+        })
+        .catch(error => {
+            console.error("Error sending email:", error);
+            setMessage('Error sending email. Please try again.');
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
     };
+
     // New: Check if data is still being loaded
     if (loading) {
       return <div className="recipe-detail-page">Loading...</div>;
@@ -182,7 +195,7 @@ const printToPdf = () => {
     return (
       <ErrorBoundary>
       <div className="recipe-detail-page">
-       {/* Display recipe image */}
+        {/* Display recipe image */}
         <img src={recipe.image} alt={recipe.title} /> {/* Changed recipe.name to recipe.title */}
         {/* Display recipe title */}
         <h2>{recipe.title}</h2>
@@ -226,13 +239,16 @@ const printToPdf = () => {
         {/* Message */}
         {message && <div className="message">{message}</div>}
         </div>
-        {/* Button to share the recipe via email */}
-        <button onClick={sendEmail}>Share via Email</button>
-        {/* Button to generate a printable PDF of the recipe */}
+        {/* Email form to share the recipe */}
+        <form onSubmit={sendEmail}>
+            <input type="email" name="email" placeholder="Enter email to share" required />
+            <button type="submit">Share via Email</button>
+        </form>
+
         <button onClick={printToPdf}>Generate Printable PDF</button>
       </div>
     </ErrorBoundary>
-      );
+     );
 }
 
-export default RecipeDetailPage; // Exporting the component for use in other parts of the application
+export default RecipeDetailPage;

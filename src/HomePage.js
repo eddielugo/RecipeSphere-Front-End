@@ -9,7 +9,7 @@ import logo from './Images/logo-icon.png'
  * It includes the site header, login button, search bar, popular recipes, and new recipes sections.
  */
 
-// TODO: ADD Error Boundary Component - see RecipeDetailPage.js for example
+// ADD Error Boundary Component - see RecipeDetailPage.js for example
 
 const HomePage = () => {
     const navigate = useNavigate();
