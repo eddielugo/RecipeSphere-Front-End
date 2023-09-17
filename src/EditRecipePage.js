@@ -101,25 +101,29 @@ const EditRecipePage = () => {
                 <input type="text" value={recipe.title} onChange={(e) => setRecipe({ ...recipe, title: e.target.value })} />
                 <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} /> {/* Added input for description */}
                 <textarea placeholder="Instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)} /> {/* Added input for instructions */}
+               
                 <div className="ingredients">
-                    <h3>Ingredients</h3>
-                    {ingredientsList.map(ingredient => (
-                        <input 
-                            key={ingredient.key}
-                            type="text"
-                            placeholder={`Ingredient`}
-                            value={ingredient.value}
-                            onChange={(e) => handleIngredientChange(ingredient.key, e.target.value)}
-                        />
-                    ))}
+                <h3>Ingredients</h3>
+                {ingredientsList.map(ingredient => (
+                    <input 
+                        key={ingredient.key}
+                        type="text"
+                        placeholder={`Ingredient`}
+                        value={ingredient.value}
+                        onChange={(e) => handleIngredientChange(ingredient.key, e.target.value)}
+                    />
+                ))}
+                <div className="button-container">
                     <button onClick={addIngredientInput}>Add Ingredient</button>
                 </div>
-                <div className="comments">
-                    <h3>Comments</h3>
-                    <textarea value={Array.isArray(recipe.comments) ? recipe.comments.join('\n') : recipe.comments} onChange={(e) => setRecipe({ ...recipe, comments: e.target.value.split('\n') })}></textarea>
-                </div>
-                {/* Button to save the changes made to the recipe */}
+            </div>
+            <div className="comments">
+                <h3>Comments</h3>
+                <textarea value={Array.isArray(recipe.comments) ? recipe.comments.join('\n') : recipe.comments} onChange={(e) => setRecipe({ ...recipe, comments: e.target.value.split('\n') })}></textarea>
+                <div className="button-container">
                 <button type="submit">Save Changes</button>
+                </div>
+            </div>
             </form>
         </div>
     );

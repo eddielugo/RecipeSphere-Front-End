@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import React, { useState } from 'react';
-import emailjs from 'emailjs-com'; // Import emailjs for sending emails
+//import emailjs from 'emailjs-com'; // Import emailjs for sending emails
 
 import './SignUpLoginPage.css';
 
