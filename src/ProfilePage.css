@@ -1,67 +1,70 @@
 /* Main styling for the profile page */
 .profile-page {
-    font-family: Arial, sans-serif;  /* Set the font for the profile page */
-    padding: 20px;  /* Add padding around the content */
-    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
-    background-image: url('../Images/Profile.jpg'); /* Set your image path */
-    background-size: cover; /* Cover the entire container */
-    background-position: center; /* Center the image */
-    background-blend-mode: overlay; /* Blend the image with the background color */
-    min-height: 100vh;  /* Ensure the profile page takes up the full viewport height */
-    
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: rgba(244, 244, 244, 0.7);
+    background-image: url('../Images/Profile.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    min-height: 100vh;
 }
 
 /* Styling for the container that holds the profile picture */
 .profile-picture {
-    display: flex;  /* Use flexbox for layout */
-    flex-direction: column;  /* Stack children vertically */
-    align-items: center;  /* Center children horizontally */
-    margin-bottom: 20px;  /* Add space below the container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 /* Styling for the profile image */
 .profile-picture img {
-    width: 100px;  /* Set a fixed width */
-    height: 100px;  /* Set a fixed height */
-    border-radius: 50%;  /* Make the image circular */
-    object-fit: cover;  /* Ensure the image covers the entire container without distortion */
-    margin-bottom: 10px;  /* Add space below the image */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
-/* Styling for the file input used to change the profile picture */
-.profile-picture input[type="file"] {
-    cursor: pointer;  /* Change the cursor to a hand when hovering over the input */
+/* Common styling for user info, my recipes, and favorite recipes containers */
+.user-info, .my-recipes, .favorite-recipes {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Common styling for user info, shared recipes, and saved recipes containers */
-.user-info, .shared-recipes, .saved-recipes {
-    margin-top: 20px;  /* Add space above the container */
-    padding: 20px;  /* Add padding around the content */
-    background-color: #fff;  /* Set a white background color */
-    border: 1px solid #ccc;  /* Add a light gray border */
-    border-radius: 5px;  /* Round the corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Add a subtle shadow */
+/* Center the headings for user info, my recipes, and favorite recipes */
+.user-info h2, .my-recipes h2, .favorite-recipes h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Center the headings for user info, shared recipes, and saved recipes */
-.user-info h2, .shared-recipes h2, .saved-recipes h2 {
-    text-align: center;  /* Center the text */
-    margin-bottom: 20px;  /* Add space below the heading */
+/* Remove default list styling for my recipes and favorite recipes lists */
+.my-recipes ul, .favorite-recipes ul {
+    list-style-type: none;
+    padding: 0;
+}
+/* Styling for the recipe hyperlinks */
+.my-recipes a, .favorite-recipes a {
+    color: #007BFF;  /* Change the link color */
+    text-decoration: none;  /* Remove the underline */
 }
 
-/* Remove default list styling for shared and saved recipes lists */
-.shared-recipes ul, .saved-recipes ul {
-    list-style-type: none;  /* Remove bullet points */
-    padding: 0;  /* Remove default padding */
+.my-recipes a:hover, .favorite-recipes a:hover {
+    text-decoration: underline;  /* Add underline on hover */
 }
 
-/* Add padding and a bottom border to each recipe item in shared and saved recipes lists */
-.shared-recipes li, .saved-recipes li {
-    padding: 10px;  /* Add padding around the content */
-    border-bottom: 1px solid #eee;  /* Add a light gray bottom border */
+/* Add padding and a bottom border to each recipe item in my recipes and favorite recipes lists */
+.my-recipes li, .favorite-recipes li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
-/* Remove the bottom border from the last recipe item in shared and saved recipes lists */
-.shared-recipes li:last-child, .saved-recipes li:last-child {
-    border-bottom: none;  /* Remove the bottom border */
+/* Remove the bottom border from the last recipe item in my recipes and favorite recipes lists */
+.my-recipes li:last-child, .favorite-recipes li:last-child {
+    border-bottom: none;
 }

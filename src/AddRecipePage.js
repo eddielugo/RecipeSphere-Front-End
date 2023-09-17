@@ -12,7 +12,10 @@ const AddRecipePage = () => {
         name: '',
         image: null,
         ingredients: '',
-        instructions: ''
+        instructions: '',
+        /*added 9-16-23*/
+        //decription: '',
+        //time_minutes: ''
     });
 
     // Handler to update the state when text inputs change
@@ -36,6 +39,12 @@ const handleSubmit = async (e) => {
     formData.append('image', recipe.image);
     formData.append('ingredients', recipe.ingredients);
     formData.append('instructions', recipe.instructions);
+    //added 9-16-23
+    //formData.append('description', recipe.description); 
+    //formData.append('time_minutes', recipe.time_minutes);
+    
+
+   
 
     console.log(recipe);
     // API call to your Django REST backend
