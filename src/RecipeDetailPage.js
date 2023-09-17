@@ -226,13 +226,15 @@ const RecipeDetailPage = () => {
         <p>{recipe.description}</p>
         {/* Display cooking time */}
         <p>Cooking time: {recipe.time_minutes} minutes</p>
-        {/* List of ingredients */}
-        <div className="ingredients">
-          <h3>Ingredients</h3>
-          <ul>
-            {recipe.ingredients && Object.values(recipe.ingredients).map((ingredient, index) => <li key={index}>{ingredient}</li>)}
-          </ul>
-        </div>
+       {/* List of ingredients */}
+       <div className="ingredients">
+        <h3>Ingredients</h3>
+        <ul>
+            {recipe?.ingredients && Object.entries(recipe.ingredients).map(([key, value]) => 
+                <li key={key}>{value}</li>
+            )}
+        </ul>
+    </div>
         {/* Cooking instructions */}
         <div className="instructions">
           <h3>Instructions</h3>
@@ -246,7 +248,7 @@ const RecipeDetailPage = () => {
         <div className="comments">
             <h3>Comments</h3>
             <ul>
-                {comments && comments.map(comment => 
+                {comments?.map(comment => 
                     <li key={comment.id}>{comment.text}</li> // Assuming each comment has an 'id' and 'text' field
                 )}
             </ul>
