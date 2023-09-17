@@ -11,7 +11,7 @@ const RecipeCreationPage = () => {
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState(null);
     // State to manage the next available tag number.
-    const [nextTag, setNextTag] = useState(1);
+    //const [nextTag, setNextTag] = useState(1);
 
     // Handles the image file upload and updates the image state.
     const handleImageUpload = (event) => {
@@ -32,96 +32,120 @@ const RecipeCreationPage = () => {
         setIngredientsList([...ingredientsList, { key: Date.now() + Math.random(), value: '' }]);
     }
 
-    // Function to find the next available tag number.
-    const findNextAvailableTag = async () => {
-        let tag = nextTag;
-        let isTagAvailable = false;
+    /*Code logic for Extracting the ID of the Newly Created Recipe:
 
-        while (!isTagAvailable) {
-            const response = await fetch(`https://be.recipesphere.net/api/recipe/${tag}/`, {
-                headers: {
-                    'Authorization': `Token ${window.sessionStorage.getItem('token')}`
-                }
-            });
-            //check for available tag number
-            if (!response.ok) {
-                isTagAvailable = true;
+      1. After successfully creating a new recipe, the response contains the details of the newly created recipe. 
+         The code extracts the ID of this recipe using const newRecipeId = data.id;.
+      2. Constructing the Base URL for Adding Tags:
+            -The base URL for checking tag availability and adding tags is constructed using the extracted recipe ID. 
+             The format is https://be.recipesphere.net/api/recipe/${newRecipeId}/....
+      3. Logic to Find the Next Available Tag:
+         -The code initializes a tagNumber variable with a value of 1.
+         -The checkTagAvailability function is then called with this tagNumber and the newRecipeId as arguments.
+         -Inside the checkTagAvailability function:
+            *A fetch request is made to the endpoint https://be.recipesphere.net/api/recipe/${newRecipeId}/check_tag/${tagNumber}/ to check if the tag is available.
+            *If the tag is available, it is added to the recipe using the endpoint https://be.recipesphere.net/api/recipe/${newRecipeId}/add_tag/.
+            *If the tag is not available, the tagNumber is incremented, and the checkTagAvailability function is called recursively to check the next tag.
+    */ 
+    const checkTagAvailability = (tagNumber, newRecipeId) => {
+        fetch(`https://be.recipesphere.net/api/recipe/${newRecipeId}/check_tag/${tagNumber}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.isAvailable) {
+                // If the tag is available, add it to the recipe
+                fetch(`https://be.recipesphere.net/api/recipe/${newRecipeId}/add_tag/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({ tag: tagNumber })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Tag ${tagNumber} successfully added to recipe ${newRecipeId}`);
+                        // Provide feedback to the user
+                        alert('Recipe and tag successfully created!');
+                        // Optionally, redirect to the recipe's detail page or another appropriate page
+                        // window.location.href = `/recipe/${newRecipeId}`;
+                    } else {
+                        console.log('Error adding tag:', response);
+                        alert('Error adding tag. Please try again.');
+                    }
+                });
             } else {
-                tag++;
+                // If the tag is not available, increment and check the next one
+                tagNumber++;
+                checkTagAvailability();
             }
-        }
-
-        setNextTag(tag);
-        return tag;
-    }
-    // Handles the form submission by creating a recipe data object and sending a POST request.
-    const handleSubmit = () => {
-        const formData = new FormData();
-    
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('time_minutes', timeMinutes);
-        formData.append('ingredients', ingredientsList);
-        formData.append('instructions', instructions);
-        formData.append('image', image);
-
-        // Convert the ingredientsList array to a JSON string and append it
-        let jsonIngredients = {};
-
-        ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
-        const recipeData = {
-            title: title,
-            description: description,
-            time_minutes: timeMinutes,
-            ingredients: jsonIngredients, // Convert the array to a JSON string
-            instructions: instructions,
-            image: image // Assuming the backend can handle base64 encoded images or a file path
-        };
-        console.log('Recipe data:', recipeData);
-        fetch('https://be.recipesphere.net/api/recipe/', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Token ${window.sessionStorage.getItem('token')}`
-            },
-            body: JSON.stringify(recipeData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                console.log(response);
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(async data => {
-            console.log('Recipe successfully created:', data);
-            
-            // Find the next available tag and assign it to the recipe
-            const tag = await findNextAvailableTag();
-            fetch(`https://be.recipesphere.net/api/recipe/${data.id}/add_tag/`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ tag: tag.toString() }) // Convert tag number to string
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(tagData => {
-                console.log('Tag successfully added:', tagData);
-            })
-            .catch(error => {
-                console.log('Error adding tag:', error);
-            });
         })
         .catch(error => {
-            console.log('Error creating recipe:', error);
+            console.log('Error checking tag availability:', error);
+            alert('Error checking tag availability. Please try again.');
         });
+    };
+
+    // Handles the form submission by creating a recipe data object and sending a POST request.
+   const handleSubmit = () => {
+    // Form validation
+    if (!title || !description || !timeMinutes || ingredientsList.some(ingredient => !ingredient.value) || !instructions || !image) {
+        alert('Please fill out all required fields.');
+        return;
     }
+
+    const formData = new FormData();
+    
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('time_minutes', timeMinutes);
+    formData.append('ingredients', ingredientsList);
+    formData.append('instructions', instructions);
+    formData.append('image', image);
+
+    // Convert the ingredientsList array to a JSON string and append it
+    let jsonIngredients = {};
+
+    ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v);
+    const recipeData = {
+        title: title,
+        description: description,
+        time_minutes: timeMinutes,
+        ingredients: jsonIngredients, // Convert the array to a JSON string
+        instructions: instructions,
+        image: image // Assuming the backend can handle base64 encoded images or a file path
+    };
+    console.log('Recipe data:', recipeData);
+
+    fetch('https://be.recipesphere.net/api/recipe/', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+        },
+        body: JSON.stringify(recipeData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.log(response);
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Recipe successfully created:', data);
+        
+        // Extract the ID of the newly created recipe
+        const newRecipeId = data.id;
+
+        // Start the process to find the next available tag
+        let tagNumber = 1;
+
+        // Call the checkTagAvailability function
+        checkTagAvailability(tagNumber, newRecipeId);
+    })
+    .catch(error => {
+        console.log('Error creating recipe:', error);
+        alert('Error creating recipe. Please try again.');
+    });
+}
     
 /* 
  * This return function renders the recipe creation form. 
@@ -130,7 +154,7 @@ const RecipeCreationPage = () => {
  * Each ingredient in the ingredientsList is an object with a unique key and a value. 
  * The unique key ensures stable rendering and addresses the SonarLint warning about using array indices as keys.
  * 
- * The unique key for each ingredient is generated using a combination of the current timestamp and a random number. 
+ * The unique key for each ingredient is generated by adding the current timestamp to a random number. 
  * This ensures that even if ingredients are added in quick succession, they will have distinct keys.
  * 
  * When an ingredient's value is updated, the handleIngredientChange function is called with the ingredient's unique key 
