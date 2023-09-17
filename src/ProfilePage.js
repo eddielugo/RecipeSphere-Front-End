@@ -70,6 +70,7 @@ const UserInformation = () => {
 }
 
 // Component to display recipes shared by the user
+//TODO: remname to MyRecipes and add end point
 const SharedRecipes = () => {
     const [sharedRecipes, setSharedRecipes] = useState([]);
 // Fetch shared recipes from Django REST API
@@ -104,7 +105,9 @@ useEffect(() => {
     );
 }
 
-// Component to display recipes saved or favorited by the user
+// Component to display recipes favorited by the user
+//TODO: rename as FavoriteRecipes where is lists favorites and are hyperlinked (like on homepage) and open in
+// a recipedetail format; add end point for favorited recipes
 const SavedRecipes = () => {
     const [savedRecipes, setSavedRecipes] = useState([]);
 
