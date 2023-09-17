@@ -67,7 +67,7 @@ const MyRecipes = () => {
     
 // Fetch shared recipes from Django REST API
     useEffect(() => {
-        fetch('https://be.recipesphere.net/api/api/my_recipes/', {
+        fetch('https://be.recipesphere.net/api/recipe/my_recipes/', {
             headers: {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }
@@ -104,7 +104,7 @@ const FavoriteRecipes = () => {
 
 // Fetch favorite recipes from Django REST API
     useEffect(() => {
-        fetch('https://be.recipesphere.net/api/api/profile/', {
+        fetch('https://be.recipesphere.net/api/profile/', {
             headers: {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }

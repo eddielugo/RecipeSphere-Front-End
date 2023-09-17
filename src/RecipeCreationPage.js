@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RecipeCreationPage.css';
 
 // Represents the recipe creation page where users can input details for a new recipe.
@@ -10,7 +11,7 @@ const RecipeCreationPage = () => {
     const [ingredientsList, setIngredientsList] = useState([{ key: Date.now(), value: '' }]);
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState(null);
-
+    const navigate = useNavigate();
     // Handles the image file upload and updates the image state.
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -33,33 +34,23 @@ const RecipeCreationPage = () => {
     // Handles the form submission by creating a recipe data object and sending a POST request.
     const handleSubmit = () => {
         const formData = new FormData();
-    
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('time_minutes', timeMinutes);
-        formData.append('ingredients', ingredientsList);
-        formData.append('instructions', instructions);
-        formData.append('image', image);
 
         // Convert the ingredientsList array to a JSON string and append it
         let jsonIngredients = {};
 
         ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v)
-        const recipeData = {
-            title: title,
-            description: description,
-            time_minutes: timeMinutes,
-            ingredients: jsonIngredients, // Convert the array to a JSON string
-            instructions: instructions,
-            image: image // Assuming the backend can handle base64 encoded images or a file path
-        };
-        console.log('Recipe data:', recipeData);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('time_minutes', timeMinutes);
+        formData.append('ingredients', JSON.stringify(jsonIngredients));
+        formData.append('instructions', instructions);
+        formData.append('image', image);
         fetch('https://be.recipesphere.net/api/recipe/', {
             method: 'POST',
             headers: {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             },
-            body: JSON.stringify(recipeData)
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
@@ -70,6 +61,7 @@ const RecipeCreationPage = () => {
         })
         .then(data => {
             console.log('Recipe successfully created:', data);
+            navigate(`/recipe-detail/${data.id}`)
         })
         .catch(error => {
             console.log('Error creating recipe:', error);
