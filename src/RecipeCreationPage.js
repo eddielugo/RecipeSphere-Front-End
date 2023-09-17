@@ -87,7 +87,7 @@ const RecipeCreationPage = () => {
     // Handles the form submission by creating a recipe data object and sending a POST request.
    const handleSubmit = () => {
     // Form validation
-    if (!title || !description || !timeMinutes || ingredientsList.some(ingredient => !ingredient.value) || !instructions || !image) {
+    if (!title || !description || !timeMinutes || ingredientsList.some(ingredient => !ingredient.value) || !instructions ) {
         alert('Please fill out all required fields.');
         return;
     }
