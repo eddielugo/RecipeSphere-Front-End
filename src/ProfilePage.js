@@ -20,6 +20,7 @@ const ProfilePage = () => {
 // Component to display user's personal information
 const UserInformation = () => {
     const [userInfo, setUserInfo] = useState({});
+    const [loading, setLoading] = useState(true); // Add loading state
 
 // Fetch user information from Django REST API
     useEffect(() => {
@@ -28,15 +29,19 @@ const UserInformation = () => {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
+        .then(data => {
+            setUserInfo(data);
+            setLoading(false); // Set loading to false once data is fetched
         })
-        .then(data => setUserInfo(data))
-        .catch(error => console.error('Error fetching user information:', error));
+        .catch(error => {
+            console.error('Error fetching user information:', error);
+            setLoading(false); // Set loading to false even if there's an error
+        });
     }, []);
+
+     if (loading) {
+        return <div>Loading...</div>; // Display a loading message while fetching data
+    }
 
     // Function to handle profile image upload
    //Commented outimage uplaod and display backend does not support profile pics yet. Do it in the future
@@ -55,8 +60,8 @@ const UserInformation = () => {
             {/* : userInfo.user.username and userInfo.user.email work if you first load page with the original code and then change it to this*/} 
             {/*So i think something is wrong with the loading of the info. this work if you run this page with the commented*/}
             {/*code below and one it load uncomment and the correct username and email show*/}
-            {/*<p><strong>Username:</strong> {userInfo.user?.username || 'JohnDoe'}</p>*/}
-            {/*<p><strong>Email:</strong> {userInfo.user?.email || 'johndoe@example.com'}</p>  */}
+            <p><strong>Username:</strong> {userInfo.user?.username || 'JohnDoe'}</p>
+            <p><strong>Email:</strong> {userInfo.user?.email || 'johndoe@example.com'}</p> 
         </div>
     
     );
@@ -116,6 +121,7 @@ const FavoriteRecipes = () => {
             return response.json();
         })
         .then(data => {
+            // Check if the 'favorites' field exists in the response data
             if (data.favorites) {
                 setFavoriteRecipes(data.favorites);
             }

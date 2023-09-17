@@ -239,7 +239,7 @@ const RecipeDetailPage = () => {
           <p>{recipe.instructions}</p>
         </div>
         {/* List of comments */}
-        {/*TODO: The recipe object has no comments. The comments are to be retrieved from the endpoint
+        {/* The comments are to be retrieved from the endpoint
          {{base_url}}/api/comments/?recipe={recipeID} example {{base_url}}/api/comments/?recipe=1
          would get all the comments for recipeID 1
          */}
