@@ -32,7 +32,7 @@ const AddRecipePage = () => {
     // Handler to submit the form
 const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Update form submission logic
+    
     // Create FormData object to handle image file
     const formData = new FormData();
     formData.append('name', recipe.name);
