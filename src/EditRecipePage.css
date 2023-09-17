@@ -1,20 +1,29 @@
 /* Main styling for the edit recipe page container */
+/* Main styling for the edit recipe page container */
 .edit-recipe-page {
     font-family: Arial, sans-serif;  /* Set the font for the page */
     padding: 20px;                   /* Add padding around the content */
-    background-color: #f4f4f4;      /* Set a light gray background color */
+    background-color: rgba(244, 244, 244, 0.7); /* Set opacity */
+    background-image: url('/Images/CreateRecipe.jpg'); /* Set your image path */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    background-blend-mode: overlay; /* Blend the image with the background color */
     min-height: 100vh;               /* Ensure the container takes up the full viewport height */
     display: flex;                   /* Use flexbox for layout */
     flex-direction: column;          /* Stack child elements vertically */
     align-items: center;             /* Center child elements horizontally */
+    
+    
 }
 
 /* Styling for images within the edit recipe page */
 .edit-recipe-page img {
-    max-width: 500px;                /* Limit the maximum width of the image */
-    border-radius: 10px;             /* Round the corners of the image */
-    margin-bottom: 20px;             /* Add space below the image */
+    display: block;                 /* Makes the image a block element */
+    max-width: 500px;               /* Limit the maximum width of the image */
+    border-radius: 10px;            /* Round the corners of the image */
+    margin: 0 auto 20px;            /* Center the image horizontally and add space below */
 }
+
 
 /* Styling for h2 and h3 headings within the edit recipe page */
 .edit-recipe-page h2,
@@ -22,8 +31,9 @@
     margin-bottom: 20px;             /* Add space below the headings */
 }
 
-/* Common styling for ingredients, instructions, and comments sections */
+/* Common styling for ingredients, description, instructions, and comments sections */
 .edit-recipe-page .ingredients, 
+.edit-recipe-page .description,    /* Added styles for description */
 .edit-recipe-page .instructions, 
 .edit-recipe-page .comments {
     width: 100%;                    /* Take up the full width of the parent container */
@@ -34,11 +44,12 @@
     margin-bottom: 20px;            /* Add space below each section */
 }
 
-/* Styling for textareas within the edit recipe page */
-.edit-recipe-page textarea {
+/* Styling for textareas and input fields within the edit recipe page */
+.edit-recipe-page textarea,
+.edit-recipe-page input {           /* Added styles for input fields */
     width: 100%;                    /* Take up the full width of the parent container */
-    padding: 10px;                  /* Add padding inside the textarea */
-    margin-bottom: 20px;            /* Add space below the textarea */
+    padding: 10px;                  /* Add padding inside the textarea/input */
+    margin-bottom: 20px;            /* Add space below the textarea/input */
     border: 1px solid #ccc;         /* Add a light gray border */
     border-radius: 5px;             /* Round the corners */
     font-size: 16px;                /* Set the font size */

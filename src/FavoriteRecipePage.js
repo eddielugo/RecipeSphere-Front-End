@@ -10,7 +10,7 @@ const FavoriteRecipePage = () => {
     //The favoritedRecipes state variable will hold the fetched data
     const [favoritedRecipes, setFavoritedRecipes] = useState([]);
 
-    // TODO: Fetch favorite recipes from Django REST API
+    // TFetch favorite recipes from Django REST API
     useEffect(() => {
         console.log("Fetching favorite recipes...");
     
@@ -49,8 +49,8 @@ const FavoriteRecipePage = () => {
 const UserProfile = () => {
     return (
         <div className="user-profile">
-            {/* TODO: Remove User profile image this is not supported yet by the BE */}
-            <img src="path_to_user_image.jpg" alt="User Profile" />
+            {/* Commented out User profile image; this is not supported yet by the BE */}
+            {/*<img src="path_to_user_image.jpg" alt="User Profile" />*/}
             {/* Display username (replace with dynamic data in the future) */}
             <h2>Username</h2>
         </div>
