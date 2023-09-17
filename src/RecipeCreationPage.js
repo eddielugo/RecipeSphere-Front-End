@@ -11,6 +11,8 @@ const RecipeCreationPage = () => {
     const [ingredientsList, setIngredientsList] = useState([{ key: Date.now(), value: '' }]);
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState(null);
+    // State to manage the next available tag number.
+    const [nextTag, setNextTag] = useState(1);
     const navigate = useNavigate();
     // Handles the image file upload and updates the image state.
     const handleImageUpload = (event) => {
@@ -31,6 +33,28 @@ const RecipeCreationPage = () => {
         setIngredientsList([...ingredientsList, { key: Date.now() + Math.random(), value: '' }]);
     }
 
+    // Function to find the next available tag number.
+    const findNextAvailableTag = async () => {
+        let tag = nextTag;
+        let isTagAvailable = false;
+
+        while (!isTagAvailable) {
+            const response = await fetch(`https://be.recipesphere.net/api/recipe/${tag}/`, {
+                headers: {
+                    'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+                }
+            });
+            //check for available tag number
+            if (!response.ok) {
+                isTagAvailable = true;
+            } else {
+                tag++;
+            }
+        }
+
+        setNextTag(tag);
+        return tag;
+    }
     // Handles the form submission by creating a recipe data object and sending a POST request.
     const handleSubmit = () => {
         const formData = new FormData();
@@ -59,9 +83,32 @@ const RecipeCreationPage = () => {
             }
             return response.json();
         })
-        .then(data => {
+        .then(async data => {
             console.log('Recipe successfully created:', data);
             navigate(`/recipe-detail/${data.id}`)
+            
+            // Find the next available tag and assign it to the recipe
+            const tag = await findNextAvailableTag();
+            fetch(`https://be.recipesphere.net/api/recipe/${data.id}/add_tag/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tag: tag.toString() }) // Convert tag number to string
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(tagData => {
+                console.log('Tag successfully added:', tagData);
+            })
+            .catch(error => {
+                console.log('Error adding tag:', error);
+            });
         })
         .catch(error => {
             console.log('Error creating recipe:', error);
@@ -116,3 +163,4 @@ const RecipeCreationPage = () => {
 
 
 export default RecipeCreationPage;
+
