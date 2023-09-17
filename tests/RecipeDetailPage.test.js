@@ -2,19 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import RecipeDetailPage from '../src/RecipeDetailPage'; // Adjust the import to your file structure
-import {  MemoryRouter, Route, Routes } from 'react-router-dom';
-import { jsPDF } from "jspdf";
-import emailjs from 'emailjs-com';
-
-
-/* This test file includes three test cases:
-
-1. It checks if the RecipeDetailPage component renders correctly.
-2. It tests the printToPdf function.
-3. It tests the sendEmail function. 
-Note: TODO: Make sure to adjust the import paths according to our project's file structure.
-
-*/
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { jsPDF } from "jspdf"; // Import jsPDF
 
 // Reset fetch mock and other mocks before each test
 beforeEach(() => {
@@ -29,7 +18,6 @@ global.fetch = jest.fn(() =>
 );
 
 // Mock jsPDF function to simulate PDF generation
-// Updated the mock to use the actual jsPDF class as a base
 jest.mock("jspdf", () => {
     const originalJsPDF = jest.requireActual("jspdf");
     return {
@@ -41,7 +29,7 @@ jest.mock("jspdf", () => {
         save: jest.fn(),
       },
     };
-  });
+});
 
 // Mock emailjs function to simulate email sending
 jest.mock('emailjs-com', () => {
@@ -50,8 +38,12 @@ jest.mock('emailjs-com', () => {
   };
 });
 
+// Mock window.open to simulate opening email client
+global.window.open = jest.fn();
+
 // Test suite for RecipeDetailPage component
 describe('RecipeDetailPage', () => {
+
   // Test case for rendering RecipeDetailPage component
   it('renders RecipeDetailPage component', async () => {
       render(
@@ -61,16 +53,20 @@ describe('RecipeDetailPage', () => {
           </Routes>
         </MemoryRouter>
       );
-    ;
 
-    // Wait for the fetch function to be called once
-    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+    // Wait for the fetch function to be called twice (once for recipe and once for comments)
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
 
     // Check if the recipe details are in the document
-    expect(screen.getByText('Ingredients')).toBeInTheDocument();
-    expect(screen.getByText('Instructions')).toBeInTheDocument();
-    expect(screen.getByText('Comments')).toBeInTheDocument();
+    expect(screen.getByText('ingredients')).toBeInTheDocument();
+    expect(screen.getByText('instructions')).toBeInTheDocument();
+    expect(screen.getByText('comments')).toBeInTheDocument();
+    expect(screen.getByText('title')).toBeInTheDocument(); // Assuming 'Title' is the label or placeholder
+    expect(screen.getByText('description')).toBeInTheDocument();
+    expect(screen.getByText('time_minutes')).toBeInTheDocument(); // Assuming 'Time Minutes' is the label or placeholder
+    expect(screen.getByAltText('image')).toBeInTheDocument(); // Assuming the image has alt text 'Recipe Image'
   });
+
 
   // Test case for printToPdf function
   it('handles printToPdf correctly', async () => {
@@ -82,19 +78,9 @@ describe('RecipeDetailPage', () => {
       </MemoryRouter>
     );
 
-    // Wait for the fetch function to be called once
-    //await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
- 
-    
-     
     // Spy on jsPDF constructor methods
     const jsPDFTextSpy = jest.spyOn(jsPDF.prototype, 'text');
     const jsPDFSaveSpy = jest.spyOn(jsPDF.prototype, 'save');
-
-    // Check if jsPDF.prototype.text and jsPDF.prototype.save are defined
-    if (!jsPDF.prototype.text || !jsPDF.prototype.save) {
-  throw new Error("jsPDF methods are not defined");
-    }   
 
     // Simulate clicking the 'Generate Printable PDF' button
     fireEvent.click(screen.getByText('Generate Printable PDF'));
@@ -102,27 +88,28 @@ describe('RecipeDetailPage', () => {
     // Check if jsPDF functions are called
     expect(jsPDFTextSpy).toHaveBeenCalled();
     expect(jsPDFSaveSpy).toHaveBeenCalled();
-
   });
 
   // Test case for sendEmail function
-  it('handles sendEmail correctly', async () => {
-    render(
-      <MemoryRouter initialEntries={['/recipe/1']}>
-        <Routes>
-          <Route path="/recipe/:recipeId" element={<RecipeDetailPage />} />
-        </Routes>
-      </MemoryRouter>
-    );
+	it('handles sendEmail correctly', async () => {
+	    render(
+	      <MemoryRouter initialEntries={['/recipe/1']}>
+	        <Routes>
+	          <Route path="/recipe/:recipeId" element={<RecipeDetailPage />} />
+	        </Routes>
+	      </MemoryRouter>
+	    );
 
-    // Wait for the fetch function to be called once
-    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+	    // Fill in the email input
+	    fireEvent.change(screen.getByPlaceholderText('Enter email to share'), { target: { value: 'test@example.com' } });
 
-    // Simulate clicking the 'Share via Email' button
-    fireEvent.click(screen.getByText('Share via Email'));
+	    // Simulate clicking the 'Share via Email' button
+	    fireEvent.click(screen.getByText('Share via Email'));
 
-    // Check if emailjs.sendForm is called
-    expect(emailjs.sendForm).toHaveBeenCalled();
-  });
+	    // Check if window.open is called with a mailto link
+	    expect(global.window.open).toHaveBeenCalledWith(
+	      'mailto:test@example.com?subject=Check out this recipe!&body=Here is a great recipe for you to try out: [Recipe Link]'
+	    );
+	});
+
 });
-
