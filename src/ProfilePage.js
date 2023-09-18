@@ -29,6 +29,12 @@ const UserInformation = () => {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }
         })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch comments');
+            }
+            return response.json();
+        })
         .then(data => {
             setUserInfo(data);
             setLoading(false); // Set loading to false once data is fetched
