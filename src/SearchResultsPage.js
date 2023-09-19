@@ -90,9 +90,9 @@ const RecipeCard = ({ recipe }) => {
     return (
         <div className="recipe-card">
         {/* Display recipe thumbnail */}
-            <img src={recipe.thumbnail} alt={recipe.name} />
+            <img src={recipe.image} alt={recipe.tite} />
              {/* Display recipe name */}
-            <h3>{recipe.name}</h3>
+            <h3>{recipe.title}</h3>
              {/* Display recipe description */}
             <p>{recipe.description}</p>
             {/* Link to view the full recipe details */}

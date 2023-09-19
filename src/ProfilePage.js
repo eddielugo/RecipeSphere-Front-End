@@ -29,6 +29,12 @@ const UserInformation = () => {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }
         })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch comments');
+            }
+            return response.json();
+        })
         .then(data => {
             setUserInfo(data);
             setLoading(false); // Set loading to false once data is fetched
@@ -72,7 +78,7 @@ const MyRecipes = () => {
     
 // Fetch shared recipes from Django REST API
     useEffect(() => {
-        fetch('https://be.recipesphere.net/api/api/my_recipes/', {
+        fetch('https://be.recipesphere.net/api/recipe/my_recipes/', {
             headers: {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }
@@ -109,7 +115,7 @@ const FavoriteRecipes = () => {
 
 // Fetch favorite recipes from Django REST API
     useEffect(() => {
-        fetch('https://be.recipesphere.net/api/api/profile/', {
+        fetch('https://be.recipesphere.net/api/profile/', {
             headers: {
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             }

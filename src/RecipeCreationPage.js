@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RecipeCreationPage.css';
 
 // Represents the recipe creation page where users can input details for a new recipe.
@@ -7,29 +8,39 @@ const RecipeCreationPage = () => {
     const [description, setDescription] = useState('');
     const [timeMinutes, setTimeMinutes] = useState('');
     // Initialize with one object for the first ingredient input
-    const [ingredientsList, setIngredientsList] = useState([{ key: Date.now(), value: '' }]);
+    const [ingredientsList, setIngredientsList] = useState(['']);
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState(null);
+    const [tags, setTagsList] = useState(['']);
     // State to manage the next available tag number.
-    //const [nextTag, setNextTag] = useState(1);
-
+    const navigate = useNavigate();
     // Handles the image file upload and updates the image state.
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         setImage(file);
     }
 
-    // Updates the specific ingredient value in the ingredientsList state.
-    const handleIngredientChange = (key, value) => {
-        const newIngredientsList = ingredientsList.map(ingredient => 
-            ingredient.key === key ? { ...ingredient, value } : ingredient
-        );
+     // Updates the specific ingredient value in the ingredientsList state.
+     const handleIngredientChange = (index, value) => {
+        const newIngredientsList = [...ingredientsList];
+        newIngredientsList[index] = value;
         setIngredientsList(newIngredientsList);
     }
 
-    // Adds a new ingredient input field with a unique key
+    // Updates the specific tag value in the tags state.
+    const handleTagsChange = (index, value) => {
+        const newTagsList = [...tags];
+        newTagsList[index] = value;
+        setTagsList(newTagsList);
+    }
+
+    // Adds a new empty ingredient input field by updating the ingredientsList state.
     const addIngredientInput = () => {
-        setIngredientsList([...ingredientsList, { key: Date.now() + Math.random(), value: '' }]);
+        setIngredientsList([...ingredientsList, '']);
+    }
+    // Adds a new tag input field with a unique key
+    const addTagInput = () => {
+        setTagsList([...tags, '']);
     }
 
     /*Code logic for Extracting the ID of the Newly Created Recipe:
@@ -47,22 +58,21 @@ const RecipeCreationPage = () => {
             *If the tag is available, it is added to the recipe using the endpoint https://be.recipesphere.net/api/recipe/${newRecipeId}/add_tag/.
             *If the tag is not available, the tagNumber is incremented, and the checkTagAvailability function is called recursively to check the next tag.
     */ 
-    const checkTagAvailability = (tagNumber, newRecipeId) => {
-        fetch(`https://be.recipesphere.net/api/recipe/${newRecipeId}/check_tag/${tagNumber}/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.isAvailable) {
-                // If the tag is available, add it to the recipe
+    const addTag = (tags, newRecipeId) => {
+
+        tags.forEach((v,i) => {
+            if (v != ''){
                 fetch(`https://be.recipesphere.net/api/recipe/${newRecipeId}/add_tag/`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Token ${window.sessionStorage.getItem('token')}`
+                        'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
+                        'Content-Type': 'application/json; charset=UTF-8',
                     },
-                    body: JSON.stringify({ tag: tagNumber })
+                    body: JSON.stringify({ tag: v })
                 })
                 .then(response => {
                     if (response.ok) {
-                        console.log(`Tag ${tagNumber} successfully added to recipe ${newRecipeId}`);
+                        console.log(`Successfully added tags to recipe ${newRecipeId}`);
                         // Provide feedback to the user
                         alert('Recipe and tag successfully created!');
                         // Optionally, redirect to the recipe's detail page or another appropriate page
@@ -71,56 +81,43 @@ const RecipeCreationPage = () => {
                         console.log('Error adding tag:', response);
                         alert('Error adding tag. Please try again.');
                     }
+                })
+                .catch(error => {
+                    console.log('Error checking tag availability:', error);
+                    alert('Error checking tag availability. Please try again.');
                 });
-            } else {
-                // If the tag is not available, increment and check the next one
-                tagNumber++;
-                checkTagAvailability();
             }
-        })
-        .catch(error => {
-            console.log('Error checking tag availability:', error);
-            alert('Error checking tag availability. Please try again.');
         });
     };
+ 
 
     // Handles the form submission by creating a recipe data object and sending a POST request.
    const handleSubmit = () => {
     // Form validation
-    if (!title || !description || !timeMinutes || ingredientsList.some(ingredient => !ingredient.value) || !instructions ) {
+    if (!title || !description || !timeMinutes || !ingredientsList || !instructions ) {
         alert('Please fill out all required fields.');
         return;
     }
-
-    const formData = new FormData();
-    
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('time_minutes', timeMinutes);
-    formData.append('ingredients', ingredientsList);
-    formData.append('instructions', instructions);
-    formData.append('image', image);
 
     // Convert the ingredientsList array to a JSON string and append it
     let jsonIngredients = {};
 
     ingredientsList.forEach((v,i) => jsonIngredients[i+1]=v);
-    const recipeData = {
-        title: title,
-        description: description,
-        time_minutes: timeMinutes,
-        ingredients: jsonIngredients, // Convert the array to a JSON string
-        instructions: instructions,
-        image: image // Assuming the backend can handle base64 encoded images or a file path
-    };
-    console.log('Recipe data:', recipeData);
+    const formData = new FormData();
+    
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('time_minutes', timeMinutes);
+    formData.append('ingredients', JSON.stringify(jsonIngredients));
+    formData.append('instructions', instructions);
+    formData.append('image', image);
 
     fetch('https://be.recipesphere.net/api/recipe/', {
         method: 'POST',
         headers: {
             'Authorization': `Token ${window.sessionStorage.getItem('token')}`
         },
-        body: JSON.stringify(recipeData)
+        body: formData
     })
     .then(response => {
         if (!response.ok) {
@@ -136,10 +133,10 @@ const RecipeCreationPage = () => {
         const newRecipeId = data.id;
 
         // Start the process to find the next available tag
-        let tagNumber = 1;
 
         // Call the checkTagAvailability function
-        checkTagAvailability(tagNumber, newRecipeId);
+        addTag(tags, newRecipeId);
+        navigate(`/recipe-detail/${newRecipeId}`);
     })
     .catch(error => {
         console.log('Error creating recipe:', error);
@@ -174,13 +171,13 @@ const RecipeCreationPage = () => {
             <input type="text" placeholder="Time (in minutes)" value={timeMinutes} onChange={(e) => setTimeMinutes(e.target.value)} />
             
             {/* Map through ingredientsList and render an input for each ingredient */}
-            {ingredientsList.map(ingredient => (
+            {ingredientsList.map((ingredient, index) => (
                 <input 
-                    key={ingredient.key}
+                    key={index}
                     type="text"
-                    placeholder={`Ingredient`}
-                    value={ingredient.value}
-                    onChange={(e) => handleIngredientChange(ingredient.key, e.target.value)}
+                    placeholder={'Ingredient'}
+                    value={ingredient}
+                    onChange={(e) => handleIngredientChange(index, e.target.value)}
                 />
             ))}
             {/* Button to add a new ingredient input field */}
@@ -188,6 +185,17 @@ const RecipeCreationPage = () => {
 
             <textarea placeholder="Instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)} />
             <input type="file" onChange={handleImageUpload} />
+            {/* Map through ingredientsList and render an input for each ingredient */}
+            {tags.map((tag, index) => (
+                <input 
+                    key={`Tag${index}`}
+                    type="text"
+                    placeholder={'Tag'}
+                    value={tag}
+                    onChange={(e) => handleTagsChange(index, e.target.value)}
+                />
+            ))}
+            <button onClick={addTagInput}>Add Tag</button>
             <button onClick={handleSubmit}>Submit</button>
         </div>
     );
