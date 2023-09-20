@@ -144,7 +144,7 @@ const FavoriteRecipes = () => {
                 {favoriteRecipes.map(recipe => (
                     <li key={recipe.id}>
                         {/* Wrap the recipe title in a Link component */}
-                        <Link to={`/EditRecipePage/${recipe.id}`}>{recipe.title}</Link>
+                        <Link to={`/edit-recipe/${recipe.id}`}>{recipe.title}</Link>
                     </li>
                 ))}
             </ul>
