@@ -47,7 +47,6 @@ const RecipeDetailPage = () => {
     // Additional states to handle loading and error messages
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
-
    //Fetch recipe data from Django REST API
    useEffect(() => {
     // Fetch recipe details
@@ -113,9 +112,9 @@ const RecipeDetailPage = () => {
         })
         .then(data => {
             console.log("Comment posted:", data);
-            setRecipe(prevRecipe => ({ ...prevRecipe, comments: [...prevRecipe.comments, comment] }));
             setComment('');
             setMessage('Comment posted successfully!');
+            window.location.reload(false);
         })
         .catch(error => {
             console.error("Error posting comment:", error);
@@ -188,6 +187,28 @@ const RecipeDetailPage = () => {
         .finally(() => {
             setIsLoading(false);
         });
+    };
+    const addToFav = () => {
+        fetch(`https://be.recipesphere.net/api/profile/add_favorite/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Token ${window.sessionStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ recipe: recipeId })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to add to favorites');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Added Recipe To Favorites');
+        })
+        .catch(error => {
+            console.error("Error adding to favorites:", error);
+        })
     };
 
     // New: Check if data is still being loaded
@@ -266,6 +287,7 @@ const RecipeDetailPage = () => {
         {/* Message */}
         {message && <div className="message">{message}</div>}
         </div>
+        <button onClick={addToFav}>Add To Favorites</button>
         {/* Email form to share the recipe */}
         <form onSubmit={sendEmail}>
             <input type="email" name="email" placeholder="Enter email to share" required />
