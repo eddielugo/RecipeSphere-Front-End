@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './NavigationBar.css';
@@ -28,7 +29,7 @@ useEffect(() => {
     
   })
   .catch(error => console.error('Error fetching authentication status:', error));
-}, []); // Empty dependency array means this useEffect runs once after the initial render
+}, [window.sessionStorage.getItem('token')]); //Listen for changes in the token
 
 
   // Function to check if the current path is active
@@ -63,6 +64,3 @@ useEffect(() => {
 
 
 export default NavigationBar;  // Export the NavigationBar component for use in other parts of the application
-
-
-
