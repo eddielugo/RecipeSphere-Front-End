@@ -1,6 +1,7 @@
 // Importing necessary React hooks and router utilities
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import './EditRecipePage.css';
 
 // Debug log to check when the EditRecipePage component is rendered
@@ -15,7 +16,10 @@ const EditRecipePage = () => {
     const [description, setDescription] = useState(''); // Added state for description
     const [instructions, setInstructions] = useState(''); // Added state for instructions
     const [ingredientsList, setIngredientsList] = useState([{ key: Date.now(), value: '' }]);
-
+    const [title, setTitle] = useState('');
+    const [image, setImage] = useState(null);
+    const [timeMinutes, setTimeMinutes] = useState('');
+    const navigate = useNavigate();
     // Effect hook to fetch the recipe data when the component mounts or when recipeId changes
     useEffect(() => {
         console.log("Fetching recipe data...");
@@ -35,11 +39,19 @@ const EditRecipePage = () => {
             const ingredientsArray = Object.values(data.ingredients).map(ingredient => ({ key: Date.now() + Math.random(), value: ingredient }));
             setIngredientsList(ingredientsArray);
             setRecipe(data);
+            setTitle(data.title);
+            setTimeMinutes(data.time_minutes);
             setDescription(data.description); // Set description from fetched data
             setInstructions(data.instructions); // Set instructions from fetched data
         })
         .catch(error => console.error('Error fetching recipe:', error));
     }, [recipeId]);
+
+    // Handles the image file upload and updates the image state.
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        setImage(file);
+    }
 
     const handleIngredientChange = (key, value) => {
         const newIngredientsList = ingredientsList.map(ingredient => 
@@ -58,20 +70,28 @@ const EditRecipePage = () => {
         // Convert the ingredientsList array to JSON format
         let jsonIngredients = {};
         ingredientsList.forEach((ingredient, index) => jsonIngredients[index + 1] = ingredient.value);
+        const formData = new FormData();
+        
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('time_minutes', timeMinutes);
+        formData.append('ingredients', JSON.stringify(jsonIngredients));
+        formData.append('instructions', instructions);
+        
+        if(image){
+            formData.append('image', image);
+        };
 
+        for (const value of formData.keys()) {
+            console.log(value);
+        };
         // Updating recipe data through Django REST API using fetch
         fetch(`https://be.recipesphere.net/api/recipe/${recipeId}/`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Token ${window.sessionStorage.getItem('token')}`
             },
-            body: JSON.stringify({
-                ...recipe,
-                description: description, // Include description in the update
-                instructions: instructions, // Include instructions in the update
-                ingredients: jsonIngredients  // Send the ingredients in JSON format
-            }),
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
@@ -81,6 +101,7 @@ const EditRecipePage = () => {
         })
         .then(data => {
             console.log('Recipe updated:', data);
+            navigate(`/recipe-detail/${recipeId}`);
         })
         .catch(error => {
             console.error('Error updating recipe:', error);
@@ -97,10 +118,11 @@ const EditRecipePage = () => {
         <div className="edit-recipe-page">
             <form onSubmit={handleSave}>
                 <img src={recipe.image} alt={recipe.title} />
+                <input type="file" onChange={handleImageUpload} />
                 {/* Input field for the recipe name */}
-                <input type="text" value={recipe.title} onChange={(e) => setRecipe({ ...recipe, title: e.target.value })} />
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} /> {/* Added input for description */}
-                <textarea placeholder="Instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)} /> {/* Added input for instructions */}
+                <input type="text" placeholder="Time (in minutes)" value={timeMinutes} onChange={(e) => setTimeMinutes(e.target.value)} />
                
                 <div className="ingredients">
                 <h3>Ingredients</h3>
@@ -113,17 +135,16 @@ const EditRecipePage = () => {
                         onChange={(e) => handleIngredientChange(ingredient.key, e.target.value)}
                     />
                 ))}
+                
                 <div className="button-container">
                     <button onClick={addIngredientInput}>Add Ingredient</button>
                 </div>
+                
             </div>
-            <div className="comments">
-                <h3>Comments</h3>
-                <textarea value={Array.isArray(recipe.comments) ? recipe.comments.join('\n') : recipe.comments} onChange={(e) => setRecipe({ ...recipe, comments: e.target.value.split('\n') })}></textarea>
-                <div className="button-container">
+            <textarea placeholder="Instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)} /> {/* Added input for instructions */}
+            
                 <button type="submit">Save Changes</button>
-                </div>
-            </div>
+                
             </form>
         </div>
     );
